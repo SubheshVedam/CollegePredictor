@@ -1,39 +1,70 @@
 "use client";
 import { useState } from "react";
+import InputForm from "./components/InputForm";
+import CollegeTable from "./components/CollegeTable";
+import OtpModal from "./components/OtpModal";
 
 export default function Home() {
   const [rank, setRank] = useState("");
   const [gender, setGender] = useState("Gender Neutral");
   const [category, setCategory] = useState("OPEN");
-  const [results, setResults] = useState([]);
-  const [details, setDetails] = useState(null);
+
+  const [phone, setPhone] = useState("");
+  const [otp, setOtp] = useState("");
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+  const [showOtpModal, setShowOtpModal] = useState(false);
+
   const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState([]);
   const [error, setError] = useState("");
-  const [showModal, setShowModal] = useState(false);
 
-  const categoryOptions = [
-    "OPEN",
-    "OPEN (PwD)",
-    "EWS",
-    "OBC-NCL",
-    "SC",
-    "ST",
-    "OBC-NCL (PwD)",
-    "SC (PwD)",
-    "EWS (PwD)",
-    "ST (PwD)",
-  ];
-  const genderOptions = ["Gender Neutral", "Female"];
-
-  const fetchColleges = async () => {
+  const handleSearch = async () => {
+    setError("");
     if (!rank || isNaN(rank)) {
       setError("Please enter a valid rank.");
       return;
     }
+    setShowOtpModal(true);
+  };
 
-    setError("");
+  const handleSendOtp = async () => {
+    if (!phone || phone.length < 10) {
+      setError("Please enter a valid phone number.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/send-otp", {
+        method: "POST",
+        body: JSON.stringify({ phone }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setIsOtpSent(true);
+    } catch (err) {
+      setError("Failed to send OTP: " + err.message);
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    try {
+      const res = await fetch("/api/verify-otp", {
+        method: "POST",
+        body: JSON.stringify({ phone, otp }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setIsVerified(true);
+      setShowOtpModal(false);
+      fetchColleges();
+    } catch (err) {
+      setError("OTP Verification failed: " + err.message);
+    }
+  };
+
+  const fetchColleges = async () => {
     setLoading(true);
-
     try {
       const res = await fetch(
         `/api/colleges?rank=${rank}&gender=${gender}&category=${category}`
@@ -60,153 +91,41 @@ export default function Home() {
 
       setResults(flattened);
     } catch (err) {
-      console.error(err);
       setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchDetails = async (instituteId, programName, gender, category) => {
-    try {
-      const res = await fetch(
-        `/api/program-details?institute_id=${instituteId}&program_name=${encodeURIComponent(
-          programName
-        )}&gender=${encodeURIComponent(gender)}&category=${encodeURIComponent(category)}`
-      );
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to fetch round details");
-
-      setDetails(data);
-      setShowModal(true);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to load details.");
-    }
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setDetails(null);
-  };
-
   return (
     <main className="main-container">
       <h1 className="heading">College Predictor</h1>
-
-      <div className="input-container">
-        <input
-          type="number"
-          placeholder="Enter rank"
-          value={rank}
-          onChange={(e) => setRank(e.target.value)}
-          className="input"
-        />
-        <select
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-          className="select"
-        >
-          {genderOptions.map((g) => (
-            <option key={g} value={g}>
-              {g}
-            </option>
-          ))}
-        </select>
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="select"
-        >
-          {categoryOptions.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
-        <button onClick={fetchColleges} className="button">
-          {loading ? "Loading..." : "Find Colleges"}
-        </button>
-      </div>
-
+      <InputForm
+        rank={rank}
+        setRank={setRank}
+        gender={gender}
+        setGender={setGender}
+        category={category}
+        setCategory={setCategory}
+        onSubmit={handleSearch}
+        loading={loading}
+      />
       {error && <p className="error">{error}</p>}
-
-      {results.length > 0 && (
-        <div className="table-container">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Institute</th>
-                <th>Program</th>
-                <th>Closing Rank</th>
-                <th>Quota</th>
-                <th>Details</th>
-              </tr>
-            </thead>
-            <tbody>
-              {results.map((row, idx) => (
-                <tr key={idx}>
-                  {row.showInstituteName && (
-                    <td rowSpan={row.rowspan}>{row.institute_name}</td>
-                  )}
-                  <td>{row.program_name}</td>
-                  <td>{row.closing_rank}</td>
-                  <td>{row.sub_category}</td>
-                  <td>
-                    <button
-                      onClick={() =>
-                        fetchDetails(
-                          row.institute_id,
-                          row.program_name,
-                          gender,
-                          category
-                        )
-                      }
-                      className="details-button"
-                    >
-                      View Details
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {results.length > 0 && <CollegeTable results={results} />}
+      {!loading && results.length === 0 && isVerified && !error && (
+        <p className="no-results">No results found for the given input.</p>
       )}
-
-      {!loading && results.length === 0 && !error && (
-        <p className="no-results">
-          No results yet. Please enter inputs and search.
-        </p>
-      )}
-
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2 className="modal-title row">Round-wise Details</h2>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Round</th>
-                  <th>Opening Rank</th>
-                  <th>Closing Rank</th>
-                </tr>
-              </thead>
-              <tbody>
-                {details.map((d, i) => (
-                  <tr key={i} className="row">
-                    <td>{d.round}</td>
-                    <td>{d.opening_rank}</td>
-                    <td>{d.closing_rank}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <button className="button" onClick={closeModal}>
-              Close
-            </button>
-          </div>
-        </div>
+      {showOtpModal && (
+        <OtpModal
+          phone={phone}
+          setPhone={setPhone}
+          otp={otp}
+          setOtp={setOtp}
+          isOtpSent={isOtpSent}
+          sendOtp={handleSendOtp}
+          verifyOtp={handleVerifyOtp}
+          onClose={() => setShowOtpModal(false)}
+        />
       )}
     </main>
   );

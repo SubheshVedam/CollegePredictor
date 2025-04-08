@@ -8,6 +8,7 @@ export async function GET(req) {
     const programName = searchParams.get("program_name");
     const gender = searchParams.get("gender");
     const category = searchParams.get("category");
+    const sub_category = searchParams.get("sub_category");
 
     if (!instituteId || !programName) {
       return new Response(JSON.stringify({ error: "Missing parameters" }), {
@@ -29,10 +30,10 @@ export async function GET(req) {
         AND program_name = ?
         AND gender = ?
         AND category = ?
-        AND sub_category = 'HS'
+        AND sub_category = ?
         ORDER BY round ASC
       `,
-      [instituteId, programName, gender, category]
+      [instituteId, programName, gender, category,sub_category]
     );
 
     return new Response(JSON.stringify(rows), {
