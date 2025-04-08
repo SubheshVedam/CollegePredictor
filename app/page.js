@@ -1,132 +1,78 @@
 "use client";
-import { useState } from "react";
-import InputForm from "./components/InputForm";
-import CollegeTable from "./components/CollegeTable";
-import OtpModal from "./components/OtpModal";
 
-export default function Home() {
+import { useState } from "react";
+import OtpModal from "./components/OtpModal"; // Make sure path is correct
+import CollegeTable from "./components/CollegeTable";
+
+export default function Page() {
   const [rank, setRank] = useState("");
   const [gender, setGender] = useState("Gender Neutral");
   const [category, setCategory] = useState("OPEN");
-
-  const [phone, setPhone] = useState("");
-  const [otp, setOtp] = useState("");
-  const [isOtpSent, setIsOtpSent] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
-  const [showOtpModal, setShowOtpModal] = useState(false);
-
-  const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
-  const [error, setError] = useState("");
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [verified, setVerified] = useState(false);
 
   const handleSearch = async () => {
-    setError("");
-    if (!rank || isNaN(rank)) {
-      setError("Please enter a valid rank.");
-      return;
-    }
-    setShowOtpModal(true);
-  };
+    if (!rank) return;
 
-  const handleSendOtp = async () => {
-    if (!phone || phone.length < 10) {
-      setError("Please enter a valid phone number.");
-      return;
-    }
+    const phone = sessionStorage.getItem("verifiedPhone");
+    const isVerified = sessionStorage.getItem("isVerified");
 
-    try {
-      const res = await fetch("/api/send-otp", {
-        method: "POST",
-        body: JSON.stringify({ phone }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
-      setIsOtpSent(true);
-    } catch (err) {
-      setError("Failed to send OTP: " + err.message);
+    if (phone && isVerified === "true") {
+      fetchResults();
+    } else {
+      setShowOtpModal(true);
     }
   };
 
-  const handleVerifyOtp = async () => {
-    try {
-      const res = await fetch("/api/verify-otp", {
-        method: "POST",
-        body: JSON.stringify({ phone, otp }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
-      setIsVerified(true);
-      setShowOtpModal(false);
-      fetchColleges();
-    } catch (err) {
-      setError("OTP Verification failed: " + err.message);
-    }
-  };
-
-  const fetchColleges = async () => {
-    setLoading(true);
+  const fetchResults = async () => {
     try {
       const res = await fetch(
         `/api/colleges?rank=${rank}&gender=${gender}&category=${category}`
       );
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to fetch");
-
-      const grouped = {};
-      data.forEach((row) => {
-        if (!grouped[row.institute_name]) grouped[row.institute_name] = [];
-        grouped[row.institute_name].push(row);
-      });
-
-      const flattened = [];
-      Object.entries(grouped).forEach(([institute_name, rows]) => {
-        rows.forEach((row, idx) => {
-          flattened.push({
-            ...row,
-            showInstituteName: idx === 0,
-            rowspan: rows.length,
-          });
-        });
-      });
-
-      setResults(flattened);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      setResults(data);
+    } catch (error) {
+      console.error("Failed to fetch results:", error);
     }
   };
 
+  const handleVerificationSuccess = () => {
+    sessionStorage.setItem("isVerified", "true");
+    fetchResults();
+    setShowOtpModal(false)
+  };
+
   return (
-    <main className="main-container">
-      <h1 className="heading">College Predictor</h1>
-      <InputForm
-        rank={rank}
-        setRank={setRank}
-        gender={gender}
-        setGender={setGender}
-        category={category}
-        setCategory={setCategory}
-        onSubmit={handleSearch}
-        loading={loading}
+    <div className="main-container">
+      <h1>College Predictor</h1>
+      <input
+        type="number"
+        placeholder="Enter your rank"
+        value={rank}
+        onChange={(e) => setRank(e.target.value)}
       />
-      {error && <p className="error">{error}</p>}
-      {results.length > 0 && <CollegeTable results={results} />}
-      {!loading && results.length === 0 && isVerified && !error && (
-        <p className="no-results">No results found for the given input.</p>
-      )}
+      <select value={gender} onChange={(e) => setGender(e.target.value)}>
+        <option value="Gender Neutral">Gender Neutral</option>
+        <option value="Female Only">Female Only</option>
+      </select>
+      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <option value="OPEN">OPEN</option>
+        <option value="EWS">EWS</option>
+        <option value="OBC">OBC</option>
+        <option value="SC">SC</option>
+        <option value="ST">ST</option>
+      </select>
+      <button onClick={handleSearch}>Find Colleges</button>
+
       {showOtpModal && (
         <OtpModal
-          phone={phone}
-          setPhone={setPhone}
-          otp={otp}
-          setOtp={setOtp}
-          isOtpSent={isOtpSent}
-          sendOtp={handleSendOtp}
-          verifyOtp={handleVerifyOtp}
+          onVerified={handleVerificationSuccess}
           onClose={() => setShowOtpModal(false)}
         />
       )}
-    </main>
+
+      {results.length > 0 && <CollegeTable results={results} />}
+    </div>
   );
 }
