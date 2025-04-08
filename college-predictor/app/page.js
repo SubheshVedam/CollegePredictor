@@ -8,6 +8,14 @@ export default function Home() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const RESULTS_PER_PAGE = 30;
+  const totalPages = Math.ceil(results.length / RESULTS_PER_PAGE);
+  const paginatedResults = results.slice(
+    (currentPage - 1) * RESULTS_PER_PAGE,
+    currentPage * RESULTS_PER_PAGE
+  );
 
   const fetchColleges = async () => {
     if (!rank || isNaN(rank)) {
@@ -21,6 +29,7 @@ export default function Home() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to fetch');
       setResults(data);
+      setCurrentPage(1); // Reset to page 1 on new fetch
     } catch (err) {
       console.error(err);
       setError(err.message);
@@ -68,34 +77,56 @@ export default function Home() {
         {error && <p className="error-text">{error}</p>}
 
         {results.length > 0 && (
-          <div className="table-wrapper">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Institute</th>
-                  <th>Program</th>
-                  <th>Closing Rank</th>
-                  <th>Category</th>
-                  <th>Gender</th>
-                  <th>Sub Category</th>
-                  <th>Round</th>
-                </tr>
-              </thead>
-              <tbody>
-                {results.map((row, idx) => (
-                  <tr className='row' key={idx}>
-                    <td>{row.institute_name}</td>
-                    <td>{row.program_name}</td>
-                    <td>{row.closing_rank}</td>
-                    <td>{row.category}</td>
-                    <td>{row.gender}</td>
-                    <td>{row.sub_category}</td>
-                    <td>{row.round}</td>
+          <>
+            <div className="table-wrapper">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Institute</th>
+                    <th>Program</th>
+                    <th>Closing Rank</th>
+                    <th>Category</th>
+                    <th>Gender</th>
+                    <th>Sub Category</th>
+                    <th>Round</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {paginatedResults.map((row, idx) => (
+                    <tr className="row" key={idx}>
+                      <td>{row.institute_name}</td>
+                      <td>{row.program_name}</td>
+                      <td>{row.closing_rank}</td>
+                      <td>{row.category}</td>
+                      <td>{row.gender}</td>
+                      <td>{row.sub_category}</td>
+                      <td>{row.round}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="pagination">
+              <button
+                className="pagination-button"
+                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              <span className="pagination-info">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                className="pagination-button"
+                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          </>
         )}
 
         {!loading && results.length === 0 && !error && (

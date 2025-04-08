@@ -41,6 +41,10 @@ a {
   }
 }
 
+.row {
+  color: #0a0a0a;
+}
+
 .home-container {
   padding: 40px 20px;
   background: #f9f9f9;
@@ -131,6 +135,31 @@ a {
   background-color: #1a3b7d;
 }
 
-.row {
-  color: #0a0a0a;
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.pagination-button {
+  background-color: #2563eb;
+  color: #fff;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.pagination-button:disabled {
+  background-color: #a5b4fc;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-size: 14px;
+  color: #374151;
 }
