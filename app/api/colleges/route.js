@@ -6,12 +6,13 @@ export async function GET(req) {
     const rank = parseInt(searchParams.get("rank"));
     const gender = searchParams.get("gender");
     const category = searchParams.get("category");
-    const stateId = 66; // Hardcoded as a number
+    const stateId = parseInt(searchParams.get("state_id"));
 
-    if (isNaN(rank) || !gender || !category) {
-      return new Response(JSON.stringify({ error: "Missing or invalid input" }), {
-        status: 400,
-      });
+    if (isNaN(rank) || isNaN(stateId) || !gender || !category) {
+      return new Response(
+        JSON.stringify({ error: "Missing or invalid input" }),
+        { status: 400 }
+      );
     }
 
     const [rows] = await db.query(
@@ -35,15 +36,27 @@ export async function GET(req) {
           (i.state_id = ? AND ic.sub_category = 'HS') OR
           (i.state_id != ? AND ic.sub_category = 'OS')
         )
-      ORDER BY ic.closing_rank ASC
+      ORDER BY 
+        (
+          SELECT MIN(ic2.closing_rank)
+          FROM institute_cutoffs ic2
+          WHERE ic2.institute_id = ic.institute_id
+            AND ic2.gender = ic.gender
+            AND ic2.category = ic.category
+            AND ic2.round = 5
+            AND (
+              (ic2.sub_category = 'HS' AND i.state_id = ?) OR
+              (ic2.sub_category = 'OS' AND i.state_id != ?)
+            )
+        ) ASC,
+        ic.closing_rank ASC;
       `,
-      [rank, gender, category, stateId, stateId]
+      [rank, gender, category, stateId, stateId, stateId, stateId]
     );
 
     return new Response(JSON.stringify(rows), {
       headers: { "Content-Type": "application/json" },
     });
-
   } catch (error) {
     console.error("❌ API ERROR:", error);
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {

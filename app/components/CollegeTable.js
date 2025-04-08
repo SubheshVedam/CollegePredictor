@@ -38,6 +38,16 @@ export default function CollegeTable({ results }) {
     }
   };
 
+  // Group rows by institute_name
+  const groupedRows = results.reduce((acc, row) => {
+    const key = row.institute_id;
+    if (!acc[key]) {
+      acc[key] = { name: row.institute_name, rows: [] };
+    }
+    acc[key].rows.push(row);
+    return acc;
+  }, {});
+
   return (
     <>
       <div className="college-table-container">
@@ -52,28 +62,41 @@ export default function CollegeTable({ results }) {
             </tr>
           </thead>
           <tbody>
-            {results.map((row, idx) => (
-              <tr key={idx}>
-                {row.showInstituteName && (
-                  <td rowSpan={row.rowspan}>{row.institute_name}</td>
-                )}
-                <td>{row.program_name}</td>
-                <td>{row.closing_rank}</td>
-                <td>{row.sub_category}</td>
-                <td>
-                  <button className="college-table-button" onClick={() => handleViewDetails(row)}>
-                    View Details
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {Object.entries(groupedRows).map(([key, group]) =>
+              group.rows.map((row, idx) => (
+                <tr key={`${key}-${idx}`}>
+                  {idx === 0 && (
+                    <td rowSpan={group.rows.length} style={{ verticalAlign: "top" }}>
+                      {group.name}
+                    </td>
+                  )}
+                  <td>{row.program_name}</td>
+                  <td>{row.closing_rank}</td>
+                  <td>{row.sub_category}</td>
+                  <td>
+                    <button
+                      className="college-table-button"
+                      onClick={() => handleViewDetails(row)}
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
 
       {showModal && (
-        <div className="college-table-modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="college-table-modal-content" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="college-table-modal-overlay"
+          onClick={() => setShowModal(false)}
+        >
+          <div
+            className="college-table-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h2 className="college-table-modal-title row">Program Details</h2>
 
             {loading && <p>Loading...</p>}
@@ -81,8 +104,12 @@ export default function CollegeTable({ results }) {
 
             {details && Array.isArray(details) && (
               <>
-                <p className="row"><strong>Institute:</strong> {selectedRow.institute_name}</p>
-                <p className="row"><strong>Program:</strong> {selectedRow.program_name}</p>
+                <p className="row">
+                  <strong>Institute:</strong> {selectedRow.institute_name}
+                </p>
+                <p className="row">
+                  <strong>Program:</strong> {selectedRow.program_name}
+                </p>
 
                 <div className="college-table-inner-table-wrapper">
                   <table className="college-table-inner-table">
@@ -107,7 +134,10 @@ export default function CollegeTable({ results }) {
               </>
             )}
 
-            <button className="college-table-close-button" onClick={() => setShowModal(false)}>
+            <button
+              className="college-table-close-button"
+              onClick={() => setShowModal(false)}
+            >
               Close
             </button>
           </div>
