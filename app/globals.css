@@ -163,3 +163,82 @@ a {
   font-size: 14px;
   color: #374151;
 }
+
+.home-container {
+  padding: 2rem;
+  font-family: sans-serif;
+}
+.input-grid {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.input {
+  padding: 0.5rem;
+}
+.button {
+  background: #00B386;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+}
+.button.small {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.table th, .table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
+.inner-table {
+  width: 100%;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.modal-title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.button {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #005bb5;
+}
