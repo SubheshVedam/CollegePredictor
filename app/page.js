@@ -75,10 +75,8 @@ export default function Home() {
         )}&gender=${encodeURIComponent(gender)}&category=${encodeURIComponent(category)}`
       );
       const data = await res.json();
-  
       if (!res.ok) throw new Error(data.error || "Failed to fetch round details");
-  
-      // Directly store the round-wise rank data
+
       setDetails(data);
       setShowModal(true);
     } catch (err) {
@@ -86,7 +84,6 @@ export default function Home() {
       alert("Failed to load details.");
     }
   };
-  
 
   const closeModal = () => {
     setShowModal(false);
@@ -142,6 +139,7 @@ export default function Home() {
                 <th>Institute</th>
                 <th>Program</th>
                 <th>Closing Rank</th>
+                <th>Quota</th>
                 <th>Details</th>
               </tr>
             </thead>
@@ -153,6 +151,7 @@ export default function Home() {
                   )}
                   <td>{row.program_name}</td>
                   <td>{row.closing_rank}</td>
+                  <td>{row.sub_category}</td>
                   <td>
                     <button
                       onClick={() =>
@@ -181,35 +180,34 @@ export default function Home() {
         </p>
       )}
 
-{showModal && (
-  <div className="modal-overlay">
-    <div className="modal-content">
-      <h2 className="modal-title row">Round-wise Details</h2>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Round</th>
-            <th>Opening Rank</th>
-            <th>Closing Rank</th>
-          </tr>
-        </thead>
-        <tbody>
-          {details.map((d, i) => (
-            <tr key={i} className="row">
-              <td>{d.round}</td>
-              <td>{d.opening_rank}</td>
-              <td>{d.closing_rank}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button className="button" onClick={closeModal}>
-        Close
-      </button>
-    </div>
-  </div>
-)}
-
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2 className="modal-title row">Round-wise Details</h2>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Round</th>
+                  <th>Opening Rank</th>
+                  <th>Closing Rank</th>
+                </tr>
+              </thead>
+              <tbody>
+                {details.map((d, i) => (
+                  <tr key={i} className="row">
+                    <td>{d.round}</td>
+                    <td>{d.opening_rank}</td>
+                    <td>{d.closing_rank}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <button className="button" onClick={closeModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

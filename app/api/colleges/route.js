@@ -6,6 +6,7 @@ export async function GET(req) {
     const rank = parseInt(searchParams.get("rank"));
     const gender = searchParams.get("gender");
     const category = searchParams.get("category");
+    const stateId = 66; // Hardcoded as a number
 
     if (isNaN(rank) || !gender || !category) {
       return new Response(JSON.stringify({ error: "Missing or invalid input" }), {
@@ -23,16 +24,20 @@ export async function GET(req) {
         ic.institute_id,
         ic.sub_category,
         ic.round,
-        i.full_name AS institute_name
+        i.display_name AS institute_name
       FROM institute_cutoffs ic
       JOIN institutes i ON ic.institute_id = i.id
       WHERE ic.closing_rank >= ?
         AND ic.gender = ?
         AND ic.category = ?
         AND ic.round = 5
+        AND (
+          (i.state_id = ? AND ic.sub_category = 'HS') OR
+          (i.state_id != ? AND ic.sub_category = 'OS')
+        )
       ORDER BY ic.closing_rank ASC
       `,
-      [rank, gender, category]
+      [rank, gender, category, stateId, stateId]
     );
 
     return new Response(JSON.stringify(rows), {
