@@ -73,6 +73,11 @@ export default function HomePage() {
           <option value="SC">SC</option>
           <option value="ST">ST</option>
           <option value="EWS">EWS</option>
+          <option value="OPEN (PwD)">OPEN (PwD)</option>
+          <option value="OBC-NCL (PwD)">OBC-NCL (PwD)</option>
+          <option value="SC (PwD)">SC (PwD)</option>
+          <option value="ST (PwD)">ST (PwD)</option>
+          <option value="EWS (PwD)">EWS (PwD)</option>
         </select>
 
         <select value={stateId} onChange={(e) => setStateId(e.target.value)}>
