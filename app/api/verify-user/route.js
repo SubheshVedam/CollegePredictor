@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/db";
+import { supabase } from '../../../lib/db';
 import { NextResponse } from "next/server";
 import twilio from "twilio";
 
