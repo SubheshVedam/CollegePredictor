@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { supabase } from '@/lib/db';
 
 export async function GET(req) {
   try {
@@ -15,50 +15,62 @@ export async function GET(req) {
       );
     }
 
-    const [rows] = await db.query(
-      `
-      SELECT 
-        ic.closing_rank,
-        ic.program_name,
-        ic.category,
-        ic.gender,
-        ic.institute_id,
-        ic.sub_category,
-        ic.round,
-        i.display_name AS institute_name
-      FROM institute_cutoffs ic
-      JOIN institutes i ON ic.institute_id = i.id
-      WHERE ic.closing_rank >= ?
-        AND ic.gender = ?
-        AND ic.category = ?
-        AND ic.round = 5
-        AND (
-          (i.state_id = ? AND ic.sub_category = 'HS') OR
-          (i.state_id != ? AND ic.sub_category = 'OS')
+    // Fetch all matching rows from `institute_cutoffs` joined with `institutes`
+    const { data: cutoffs, error } = await supabase
+      .from('institute_cutoffs')
+      .select(`
+        closing_rank,
+        program_name,
+        category,
+        gender,
+        institute_id,
+        sub_category,
+        round,
+        institutes (
+          display_name,
+          state_id
         )
-      ORDER BY 
-        (
-          SELECT MIN(ic2.closing_rank)
-          FROM institute_cutoffs ic2
-          WHERE ic2.institute_id = ic.institute_id
-            AND ic2.gender = ic.gender
-            AND ic2.category = ic.category
-            AND ic2.round = 5
-            AND (
-              (ic2.sub_category = 'HS' AND i.state_id = ?) OR
-              (ic2.sub_category = 'OS' AND i.state_id != ?)
-            )
-        ) ASC,
-        ic.closing_rank ASC;
-      `,
-      [rank, gender, category, stateId, stateId, stateId, stateId]
-    );
+      `)
+      .gte('closing_rank', rank)
+      .eq('gender', gender)
+      .eq('category', category)
+      .eq('round', 5);
 
-    return new Response(JSON.stringify(rows), {
+    if (error) throw error;
+
+    // Filter and sort the results manually (since Supabase SQL JOINs have limits)
+    const filtered = cutoffs.filter(ic => {
+      const instituteState = ic.institutes?.state_id;
+      const isHS = instituteState === stateId && ic.sub_category === 'HS';
+      const isOS = instituteState !== stateId && ic.sub_category === 'OS';
+      return isHS || isOS;
+    });
+
+    // Sort by min rank per institute
+    filtered.sort((a, b) => {
+      const aRank = a.closing_rank;
+      const bRank = b.closing_rank;
+      return aRank - bRank;
+    });
+
+    // Format with `institute_name` field
+    const result = filtered.map(ic => ({
+      closing_rank: ic.closing_rank,
+      program_name: ic.program_name,
+      category: ic.category,
+      gender: ic.gender,
+      institute_id: ic.institute_id,
+      sub_category: ic.sub_category,
+      round: ic.round,
+      institute_name: ic.institutes?.display_name || 'Unknown',
+    }));
+
+    return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
+
   } catch (error) {
-    console.error("❌ API ERROR:", error);
+    console.error("❌ Supabase API ERROR:", error.message || error);
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
     });
