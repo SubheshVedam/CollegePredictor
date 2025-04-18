@@ -6,7 +6,7 @@ export async function GET(req) {
     const rank = parseInt(searchParams.get("rank"));
     const gender = searchParams.get("gender");
     const category = searchParams.get("category");
-    const stateId = parseInt(searchParams.get("state_id"));
+    const stateId = parseInt(searchParams.get("stateId"));
 
     if (isNaN(rank) || isNaN(stateId) || !gender || !category) {
       return new Response(
@@ -19,6 +19,7 @@ export async function GET(req) {
     const { data: cutoffs, error } = await supabase
       .from('institute_cutoffs')
       .select(`
+        opening_rank,
         closing_rank,
         program_name,
         category,
@@ -55,6 +56,7 @@ export async function GET(req) {
 
     // Format with `institute_name` field
     const result = filtered.map(ic => ({
+      opening_rank: ic.opening_rank,
       closing_rank: ic.closing_rank,
       program_name: ic.program_name,
       category: ic.category,

@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import { Typography, Alert } from '@mui/material';
 import CollegeSearchForm from './CollegeSearchForm'; // Assuming this exists
