@@ -16,11 +16,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/api/colleges/route.js"
     ],
-    "/list/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/list/page.js"
-    ],
     "/api/program-details/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",

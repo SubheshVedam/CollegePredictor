@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -17,10 +17,12 @@ import {
   Collapse,
   IconButton,
   Chip,
-  TablePagination
+  TextField,
+  InputAdornment
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import InfoIcon from "@mui/icons-material/Info";
+import SearchIcon from "@mui/icons-material/Search";
 
 const modalStyle = {
   position: "absolute",
@@ -42,8 +44,7 @@ export default function CollegeResultsTable({ results }) {
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleViewDetails = async (row) => {
     setSelectedRow(row);
@@ -74,32 +75,59 @@ export default function CollegeResultsTable({ results }) {
     }
   };
 
+  // Filter results based on search term
+  const filteredResults = useMemo(() => {
+    if (!searchTerm) return results;
+    
+    const lowerCaseSearch = searchTerm.toLowerCase();
+    return results.filter(row => 
+      row.institute_name.toLowerCase().includes(lowerCaseSearch) ||
+      row.program_name.toLowerCase().includes(lowerCaseSearch) ||
+      row.sub_category.toLowerCase().includes(lowerCaseSearch)
+    );
+  }, [results, searchTerm]);
+
   // Group rows by institute_name
-  const groupedRows = results.reduce((acc, row) => {
+  const groupedRows = filteredResults.reduce((acc, row) => {
     const key = row.institute_id;
     if (!acc[key]) {
-      acc[key] = { name: row.institute_name, rows: [] };
+      acc[key] = {
+        name: row.institute_name,
+        rows: [],
+        rowCount: 0
+      };
     }
     acc[key].rows.push(row);
+    acc[key].rowCount += 1;
     return acc;
   }, {});
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  // Flatten grouped rows for pagination
-  const flattenedRows = Object.values(groupedRows).flatMap(group => group.rows);
-  const paginatedRows = flattenedRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-
   return (
     <>
-      <TableContainer component={Paper} elevation={3} sx={{ mt: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <TextField
+          variant="outlined"
+          size="small"
+          placeholder="Search by institute, program or quota..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          sx={{ 
+            width: { xs: '100%', sm: '350px' },
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '50px',
+            }
+          }}
+        />
+      </Box>
+
+      <TableContainer component={Paper} elevation={3} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="college results table">
           <TableHead sx={{ backgroundColor: (theme) => theme.palette.primary.main }}>
             <TableRow>
@@ -111,49 +139,80 @@ export default function CollegeResultsTable({ results }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedRows.map((row, index) => (
-              <TableRow
-                key={`${row.institute_id}-${index}`}
-                hover
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.institute_name}
-                </TableCell>
-                <TableCell>{row.program_name}</TableCell>
-                <TableCell align="right">{row.closing_rank}</TableCell>
-                <TableCell>
-                  <Chip 
-                    label={row.sub_category} 
-                    size="small"
-                    color={row.sub_category.includes('PwD') ? 'secondary' : 'primary'}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    startIcon={<InfoIcon />}
-                    onClick={() => handleViewDetails(row)}
+            {Object.values(groupedRows).length > 0 ? (
+              Object.values(groupedRows).flatMap((group, groupIndex) => {
+                const rows = group.rows.map((row, rowIndex) => (
+                  <TableRow
+                    key={`${row.institute_id}-${rowIndex}`}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    Details
-                  </Button>
+                    {rowIndex === 0 ? (
+                      <TableCell 
+                        component="th" 
+                        scope="row" 
+                        rowSpan={group.rowCount}
+                        sx={{ 
+                          verticalAlign: 'top',
+                          fontWeight: 'bold',
+                          backgroundColor: (theme) => theme.palette.grey[100]
+                        }}
+                      >
+                        {group.name}
+                      </TableCell>
+                    ) : null}
+                    <TableCell>{row.program_name}</TableCell>
+                    <TableCell align="right">{row.closing_rank}</TableCell>
+                    <TableCell>
+                      <Chip 
+                        label={row.sub_category} 
+                        size="small"
+                        color={row.sub_category.includes('PwD') ? 'secondary' : 'primary'}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        startIcon={<InfoIcon />}
+                        onClick={() => handleViewDetails(row)}
+                      >
+                        Details
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ));
+
+                // Add a full-width row after every 2 institutes
+                if (groupIndex > 0 && (groupIndex + 1) % 2 === 0 ) {
+                  return [
+                    ...rows,
+                    <TableRow key={`divider-${groupIndex}`}>
+                      <TableCell colSpan={5} sx={{ 
+                        backgroundColor: '#f5f5f5',
+                        py: 3,
+                        textAlign: 'center',
+                        fontStyle: 'italic',
+                        color: 'text.secondary'
+                      }}>
+                        <Box>Advertisement here </Box>
+                      </TableCell>
+                    </TableRow>
+                  ];
+                }
+                return rows;
+              })
+            ) : (
+              <TableRow>
+                <TableCell colSpan={5} align="center" sx={{ py: 4 }}>
+                  {searchTerm ? 'No matching results found' : 'No data available'}
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={flattenedRows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </TableContainer>
 
+      {/* Modal for Details */}
       <Modal
         open={openModal}
         onClose={() => setOpenModal(false)}
@@ -206,7 +265,6 @@ export default function CollegeResultsTable({ results }) {
                     <TableCell>Round</TableCell>
                     <TableCell align="right">Opening Rank</TableCell>
                     <TableCell align="right">Closing Rank</TableCell>
-                    <TableCell align="right">Year</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -215,7 +273,6 @@ export default function CollegeResultsTable({ results }) {
                       <TableCell>{d.round}</TableCell>
                       <TableCell align="right">{d.opening_rank}</TableCell>
                       <TableCell align="right">{d.closing_rank}</TableCell>
-                      <TableCell align="right">{d.year}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
