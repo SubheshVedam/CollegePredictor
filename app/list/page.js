@@ -1,9 +1,9 @@
 import React from 'react'
-import HomePage from './HomePage'
+import ListTable from './ListTable'
 
 const page = () => {
   return (
-    <HomePage/>
+    <ListTable/>
   )
 }
 
