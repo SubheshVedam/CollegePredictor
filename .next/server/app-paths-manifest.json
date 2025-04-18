@@ -1,4 +1,10 @@
 {
+  "/api/colleges/route": "app/api/colleges/route.js",
+  "/api/save-user/route": "app/api/save-user/route.js",
+  "/api/verify-user/route": "app/api/verify-user/route.js",
+  "/api/program-details/route": "app/api/program-details/route.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/verify-otp/route": "app/api/verify-otp/route.js",
   "/page": "app/page.js"
 }
