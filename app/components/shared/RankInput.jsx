@@ -1,7 +1,7 @@
 "use client";
 import { TextField } from "@mui/material";
 
-export default function RankInput({ value, onChange }) {
+export default function RankInput({ value = "", onChange }) {
   return (
     <TextField
       fullWidth

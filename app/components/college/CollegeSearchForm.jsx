@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import RankInput from "../shared/RankInput";
 import GenderSelector from "./GenderSelector";
 import CategorySelector from "./CategorySelector";
@@ -7,19 +6,24 @@ import StateSelector from "./StateSelector";
 import LoadingButton from "../shared/LoadingButton";
 
 export default function CollegeSearchForm({
-  rank,
+  rank = "",
   setRank,
-  gender,
+  gender = "Gender Neutral",
   setGender,
-  category,
+  category = "OPEN",
   setCategory,
-  stateId,
+  stateId = "",
   setStateId,
   onSubmit,
-  isLoading,
+  isLoading = false
 }) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ rank, gender, category, stateId });
+  };
+
   return (
-    <div className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <RankInput value={rank} onChange={setRank} />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <GenderSelector value={gender} onChange={setGender} />
@@ -27,11 +31,11 @@ export default function CollegeSearchForm({
         <StateSelector value={stateId} onChange={setStateId} />
       </div>
       <LoadingButton 
-        onClick={onSubmit} 
+        type="submit"
         loading={isLoading}
         text="Find Colleges"
         loadingText="Searching..."
       />
-    </div>
+    </form>
   );
 }

@@ -6,7 +6,7 @@ const categories = [
   "OBC-NCL (PwD)", "SC (PwD)", "EWS (PwD)", "ST (PwD)",
 ];
 
-export default function CategorySelector({ value, onChange }) {
+export default function CategorySelector({ value = "OPEN", onChange }) {
   return (
     <TextField
       select

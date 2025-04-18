@@ -86,7 +86,14 @@ const CollegePredictor = ({
   return (
     <>
       {results.length > 0 && isVerified ? (
-        <CollegeResultsTable results={results} />
+        <CollegeResultsTable results={results} onSearch={handleSearch}  rank={rank}
+        setRank={setRank}
+        gender={gender}
+        setGender={setGender}
+        category={category}
+        setCategory={setCategory}
+        stateId={stateId}
+        setStateId={setStateId} />
       ) : (
         <>
           <CollegePredictorSearch

@@ -18,11 +18,12 @@ import {
   IconButton,
   Chip,
   TextField,
-  InputAdornment
+  InputAdornment,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import InfoIcon from "@mui/icons-material/Info";
 import SearchIcon from "@mui/icons-material/Search";
+import CollegeSearchForm from "./CollegeSearchForm"; // Make sure to import your form component
 
 const modalStyle = {
   position: "absolute",
@@ -35,17 +36,36 @@ const modalStyle = {
   p: 4,
   borderRadius: 2,
   maxHeight: "80vh",
-  overflowY: "auto"
+  overflowY: "auto",
 };
 
-export default function CollegeResultsTable({ results }) {
+export default function CollegeResultsTable({
+  results,
+  onSearch,
+  rank,
+  setRank,
+  gender,
+  setGender,
+  category,
+  setCategory,
+  stateId,
+  setStateId,
+}) {
+  // Added onSearch prop
   const [selectedRow, setSelectedRow] = useState(null);
   const [details, setDetails] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [searchAgainModalOpen, setSearchAgainModalOpen] = useState(false); // New state for search again modal
+  const [searchParams, setSearchParams] = useState({
+    // State for search parameters
+    rank: "",
+    gender: "Gender Neutral",
+    category: "OPEN",
+    stateId: "",
+  });
   const handleViewDetails = async (row) => {
     setSelectedRow(row);
     setOpenModal(true);
@@ -75,15 +95,26 @@ export default function CollegeResultsTable({ results }) {
     }
   };
 
+  const handleSearchAgain = () => {
+    setSearchAgainModalOpen(true);
+  };
+
+  const handleSearchAgainSubmit = (newSearchParams) => {
+    setSearchAgainModalOpen(false);
+    setSearchParams(newSearchParams);
+    onSearch(newSearchParams); // Call the parent component's search function
+  };
+
   // Filter results based on search term
   const filteredResults = useMemo(() => {
     if (!searchTerm) return results;
-    
+
     const lowerCaseSearch = searchTerm.toLowerCase();
-    return results.filter(row => 
-      row.institute_name.toLowerCase().includes(lowerCaseSearch) ||
-      row.program_name.toLowerCase().includes(lowerCaseSearch) ||
-      row.sub_category.toLowerCase().includes(lowerCaseSearch)
+    return results.filter(
+      (row) =>
+        row.institute_name.toLowerCase().includes(lowerCaseSearch) ||
+        row.program_name.toLowerCase().includes(lowerCaseSearch) ||
+        row.sub_category.toLowerCase().includes(lowerCaseSearch)
     );
   }, [results, searchTerm]);
 
@@ -94,7 +125,7 @@ export default function CollegeResultsTable({ results }) {
       acc[key] = {
         name: row.institute_name,
         rows: [],
-        rowCount: 0
+        rowCount: 0,
       };
     }
     acc[key].rows.push(row);
@@ -104,7 +135,14 @@ export default function CollegeResultsTable({ results }) {
 
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          mb: 2,
+          width: "100%",
+        }}
+      >
         <TextField
           variant="outlined"
           size="small"
@@ -118,24 +156,83 @@ export default function CollegeResultsTable({ results }) {
               </InputAdornment>
             ),
           }}
-          sx={{ 
-            width: { xs: '100%', sm: '350px' },
-            '& .MuiOutlinedInput-root': {
-              borderRadius: '50px',
-            }
+          sx={{
+            width: { xs: "100%", sm: "350px" },
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "50px",
+            },
           }}
         />
+
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "primary.main", color: "white" }}
+          onClick={handleSearchAgain}
+        >
+          Search again!
+        </Button>
       </Box>
+
+      {/* Search Again Modal */}
+      <Modal
+        open={searchAgainModalOpen}
+        onClose={() => setSearchAgainModalOpen(false)}
+        aria-labelledby="search-again-modal"
+      >
+        <Box sx={modalStyle}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            mb={3}
+          >
+            <Typography variant="h5" component="h2">
+              Refine Your Search
+            </Typography>
+            <IconButton onClick={() => setSearchAgainModalOpen(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+
+          <CollegeSearchForm
+            rank={rank}
+            setRank={setRank}
+            gender={gender}
+            setGender={setGender}
+            category={category}
+            setCategory={setCategory}
+            stateId={stateId}
+            setStateId={setStateId}
+            onSubmit={handleSearchAgainSubmit}
+            isLoading={loading}
+          />
+        </Box>
+      </Modal>
 
       <TableContainer component={Paper} elevation={3} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="college results table">
-          <TableHead sx={{ backgroundColor: (theme) => theme.palette.primary.main }}>
+          <TableHead
+            sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
+          >
             <TableRow>
-              <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Institute</TableCell>
-              <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Program</TableCell>
-              <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }} align="right">Closing Rank</TableCell>
-              <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Quota</TableCell>
-              <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Actions</TableCell>
+              <TableCell sx={{ color: "common.white", fontWeight: "bold" }}>
+                Institute
+              </TableCell>
+              <TableCell sx={{ color: "common.white", fontWeight: "bold" }}>
+                Program
+              </TableCell>
+              <TableCell
+                sx={{ color: "common.white", fontWeight: "bold" }}
+                align="right"
+              >
+                Closing Rank
+              </TableCell>
+              <TableCell sx={{ color: "common.white", fontWeight: "bold" }}>
+                Quota
+              </TableCell>
+              <TableCell sx={{ color: "common.white", fontWeight: "bold" }}>
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -144,17 +241,17 @@ export default function CollegeResultsTable({ results }) {
                 const rows = group.rows.map((row, rowIndex) => (
                   <TableRow
                     key={`${row.institute_id}-${rowIndex}`}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     {rowIndex === 0 ? (
-                      <TableCell 
-                        component="th" 
-                        scope="row" 
+                      <TableCell
+                        component="th"
+                        scope="row"
                         rowSpan={group.rowCount}
-                        sx={{ 
-                          verticalAlign: 'top',
-                          fontWeight: 'bold',
-                          backgroundColor: (theme) => theme.palette.grey[100]
+                        sx={{
+                          verticalAlign: "top",
+                          fontWeight: "bold",
+                          backgroundColor: (theme) => theme.palette.grey[100],
                         }}
                       >
                         {group.name}
@@ -163,10 +260,14 @@ export default function CollegeResultsTable({ results }) {
                     <TableCell>{row.program_name}</TableCell>
                     <TableCell align="right">{row.closing_rank}</TableCell>
                     <TableCell>
-                      <Chip 
-                        label={row.sub_category} 
+                      <Chip
+                        label={row.sub_category}
                         size="small"
-                        color={row.sub_category.includes('PwD') ? 'secondary' : 'primary'}
+                        color={
+                          row.sub_category.includes("PwD")
+                            ? "secondary"
+                            : "primary"
+                        }
                       />
                     </TableCell>
                     <TableCell>
@@ -183,20 +284,23 @@ export default function CollegeResultsTable({ results }) {
                 ));
 
                 // Add a full-width row after every 2 institutes
-                if (groupIndex > 0 && (groupIndex + 1) % 2 === 0 ) {
+                if (groupIndex > 0 && (groupIndex + 1) % 2 === 0) {
                   return [
                     ...rows,
                     <TableRow key={`divider-${groupIndex}`}>
-                      <TableCell colSpan={5} sx={{ 
-                        backgroundColor: '#f5f5f5',
-                        py: 3,
-                        textAlign: 'center',
-                        fontStyle: 'italic',
-                        color: 'text.secondary'
-                      }}>
+                      <TableCell
+                        colSpan={5}
+                        sx={{
+                          backgroundColor: "#f5f5f5",
+                          py: 3,
+                          textAlign: "center",
+                          fontStyle: "italic",
+                          color: "text.secondary",
+                        }}
+                      >
                         <Box>Advertisement here </Box>
                       </TableCell>
-                    </TableRow>
+                    </TableRow>,
                   ];
                 }
                 return rows;
@@ -204,7 +308,9 @@ export default function CollegeResultsTable({ results }) {
             ) : (
               <TableRow>
                 <TableCell colSpan={5} align="center" sx={{ py: 4 }}>
-                  {searchTerm ? 'No matching results found' : 'No data available'}
+                  {searchTerm
+                    ? "No matching results found"
+                    : "No data available"}
                 </TableCell>
               </TableRow>
             )}
@@ -220,7 +326,12 @@ export default function CollegeResultsTable({ results }) {
         aria-describedby="program-details-description"
       >
         <Box sx={modalStyle}>
-          <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            mb={3}
+          >
             <Typography variant="h5" component="h2">
               Program Details
             </Typography>
@@ -280,11 +391,8 @@ export default function CollegeResultsTable({ results }) {
             </TableContainer>
           )}
 
-          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-            <Button
-              variant="contained"
-              onClick={() => setOpenModal(false)}
-            >
+          <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
+            <Button variant="contained" onClick={() => setOpenModal(false)}>
               Close
             </Button>
           </Box>

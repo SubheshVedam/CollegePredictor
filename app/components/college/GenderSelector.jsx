@@ -3,7 +3,7 @@ import { TextField, MenuItem } from "@mui/material";
 
 const genders = ["Gender Neutral", "Female"];
 
-export default function GenderSelector({ value, onChange }) {
+export default function GenderSelector({ value = "Gender Neutral", onChange }) {
   return (
     <TextField
       select

@@ -2,7 +2,7 @@
 import { TextField, MenuItem } from "@mui/material";
 import { stateOptions } from "@/lib/states";
 
-export default function StateSelector({ value, onChange }) {
+export default function StateSelector({ value= "", onChange }) {
   return (
     <TextField
       select
