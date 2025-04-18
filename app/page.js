@@ -104,7 +104,7 @@ export default function HomePage() {
     }
 
     // Ensure phone number has country code (91 for India)
-    const formattedPhone = phoneNumber.startsWith('+91') ? phoneNumber : `+91${phoneNumber}`;
+    const formattedPhone = phoneNumber.startsWith('91') ? phoneNumber : `91${phoneNumber}`;
     
     window.sendOtp(
       formattedPhone,
@@ -119,8 +119,8 @@ export default function HomePage() {
   };
 
   const handleVerifyOTP = (otp) => {
-    if (!otp || otp.length !== 6) {
-      alert("Please enter a valid 6-digit OTP");
+    if (!otp || otp.length !== 4) {
+      alert("Please enter a valid 4-digit OTP");
       return;
     }
 

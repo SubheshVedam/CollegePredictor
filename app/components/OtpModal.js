@@ -78,8 +78,8 @@ export default function OtpModal({
                 type="text"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
-                placeholder="Enter 6-digit OTP"
-                maxLength={6}
+                placeholder="Enter 4-digit OTP"
+                maxLength={4}
                 className="w-full p-2 border rounded"
               />
             </div>
@@ -100,7 +100,7 @@ export default function OtpModal({
               </button>
               <button
                 onClick={handleVerifyOTP}
-                disabled={otp.length !== 6 || isLoading}
+                disabled={otp.length !== 4 || isLoading}
                 className="px-4 py-2 bg-blue-600 text-white rounded disabled:bg-blue-300"
               >
                 {isLoading ? "Verifying..." : "Verify"}
