@@ -1,4 +1,8 @@
 {
-  "/page": "app/page.js",
-  "/results/page": "app/results/page.js"
+  "/api/colleges/route": "app/api/colleges/route.js",
+  "/api/save-user/route": "app/api/save-user/route.js",
+  "/api/program-details/route": "app/api/program-details/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/results/page": "app/results/page.js",
+  "/page": "app/page.js"
 }
