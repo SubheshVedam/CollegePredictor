@@ -19,6 +19,7 @@ export default function LoadingButton({
       className={className}
       {...props}
       sx={{
+        textTransform:'capitalize',
         py: 1.5,
         px: 3,
         background: {xs:"linear-gradient(225deg, #FF9900 50%, #FFFFFF 100%)",sm:"linear-gradient(45deg, #FF9900 50%, #FFFFFF 100%)"},
