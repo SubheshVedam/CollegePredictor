@@ -152,226 +152,229 @@ export default function ResultsPage() {
   }
 
   if (error) {
-    dispatch(setShowOtpModal(true))
+    dispatch(setShowOtpModal(true));
   }
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        filter: showOtpModal ? "blur(4px)" : "none",
-        transition: "filter 0.3s ease",
-      }}
-    >
-      <Backdrop
-        open={showOtpModal}
+      <Box
         sx={{
-          zIndex: (theme) => theme.zIndex.modal - 1,
-          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          position: "relative",
+          filter: showOtpModal ? "blur(4px)" : "none",
+          transition: "filter 0.3s ease",
         }}
-      />
-
-      <Container maxWidth="lg" sx={{ py: 4 }}>
-        {/* header buttons  */}
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          mb={4}
-        >
-          <Button
-            variant="outlined"
-            startIcon={<ArrowBackIcon />}
-            onClick={() => router.push("/")}
-            sx={{
-              borderRadius: "12px",
-              borderColor: "#FB7F05",
-              fontSize: "clamp(10px, 2.5vw, 16px)",
-              px: 2,
-              textTransform: "none",
-              color: "#FB7F05",
-            }}
-          >
-            Home
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<SearchIcon />}
-            onClick={handleOpenSearchModal}
-            sx={{
-              fontSize: "clamp(10px, 2.5vw, 16px)",
-              color: "#F9F9F9",
-              background:
-                "linear-gradient(95.22deg, #FB7F05 2.91%, #6C10BC 99.18%)",
-              borderRadius: "12px",
-              boxShadow: "0px 0px 11.2px rgba(255, 255, 255, 0.25)",
-              textTransform: "capitalize",
-            }}
-          >
-            New Search
-          </Button>
-        </Box>
-
-        {/* title area  */}
-        <Box
+      >
+        <Backdrop
+          open={showOtpModal}
           sx={{
-            display: "flex",
-            flexDirection: { xs: "column", sm: "row" },
-            alignItems: "center",
-            justifyContent: "center",
-            mb: 2,
-            gap: 2, // spacing between text and image
-            backgroundImage: 'url("/img/gridBg.svg")',
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            py: { xs: 3, sm: 5 },
-            borderRadius: 2,
+            zIndex: (theme) => theme.zIndex.modal - 1,
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
           }}
-        >
-          {/* Text Section */}
+        />
+
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+          {/* header buttons  */}
           <Box
-            sx={{
-              flex: 1,
-              textAlign: { xs: "center", sm: "left" },
-              display: "flex",
-              flexDirection: "column",
-              alignItems: { xs: "center", sm: "flex-start" },
-              justifyContent: "center",
-            }}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            mb={4}
           >
-            <Typography
-              variant="h4"
+            <Button
+              variant="outlined"
+              startIcon={<ArrowBackIcon />}
+              onClick={() => router.push("/")}
               sx={{
+                borderRadius: "12px",
+                borderColor: "#FB7F05",
+                fontSize: "clamp(10px, 2.5vw, 16px)",
+                px: 2,
+                textTransform: "none",
                 color: "#FB7F05",
-                fontWeight: "bold",
-                fontSize: { xs: 22, sm: 36 },
               }}
             >
-              College Predictor
-            </Typography>
-            <Typography
-              variant="subtitle1"
+              Home
+            </Button>
+            <Button
+              variant="contained"
+              startIcon={<SearchIcon />}
+              onClick={handleOpenSearchModal}
               sx={{
-                color: "#6D1D59",
-                fontSize: { xs: 12, sm: 18 },
-                fontWeight: "bold",
+                fontSize: "clamp(10px, 2.5vw, 16px)",
+                color: "#F9F9F9",
+                background:
+                  "linear-gradient(95.22deg, #FB7F05 2.91%, #6C10BC 99.18%)",
+                borderRadius: "12px",
+                boxShadow: "0px 0px 11.2px rgba(255, 255, 255, 0.25)",
+                textTransform: "capitalize",
               }}
             >
-              Category:{" "}
-              <span style={{ color: "black", fontWeight: "normal" }}>
-                {searchParams.get("category")}
-              </span>
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              sx={{
-                color: "#6D1D59",
-                fontSize: { xs: 12, sm: 18 },
-                fontWeight: "bold",
-              }}
-            >
-              JEE Main 2025 Rank:{" "}
-              <span style={{ color: "black", fontWeight: "normal" }}>
-                {searchParams.get("rank")}
-              </span>
-            </Typography>
+              New Search
+            </Button>
           </Box>
 
-          {/* Image Section */}
+          {/* title area  */}
           <Box
             sx={{
-              flex: 1,
-              position: "relative",
-              borderRadius: "16px",
-              height: { xs: 120, sm: 200 },
-              width: "100%",
-              maxWidth: 400,
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              alignItems: "center",
+              justifyContent: "center",
+              mb: 2,
+              gap: 2, // spacing between text and image
+              backgroundImage: 'url("/img/gridBg.svg")',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              py: { xs: 3, sm: 5 },
+              borderRadius: 2,
             }}
           >
-            <Image
-              src="/img/rankBg.webp"
-              alt="Rank Background"
-              fill
-              style={{ objectFit: "contain", borderRadius: "16px" }}
-              priority
-            />
-
-            {/* Foreground content */}
+            {/* Text Section */}
             <Box
               sx={{
-                position: "relative",
-                zIndex: 2,
-                height: "100%",
-                width: "100%",
+                flex: 1,
+                textAlign: { xs: "center", sm: "left" },
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
+                alignItems: { xs: "center", sm: "flex-start" },
                 justifyContent: "center",
-                textAlign: "center",
               }}
             >
               <Typography
-                variant="h5"
+                variant="h4"
                 sx={{
-                  color: "orange",
+                  color: "#FB7F05",
                   fontWeight: "bold",
-                  mb: 1,
-                  fontSize: { xs: 24, sm: 32 },
+                  fontSize: { xs: 22, sm: 36 },
                 }}
               >
-                {addOrdinalSuffix(searchParams.get("rank"))}
+                College Predictor
               </Typography>
               <Typography
-                variant="body1"
+                variant="subtitle1"
                 sx={{
-                  color: "white",
-                  fontSize: { xs: 12, sm: 16 },
-                  maxWidth: 300,
+                  color: "#6D1D59",
+                  fontSize: { xs: 12, sm: 18 },
+                  fontWeight: "bold",
                 }}
               >
-                Expected Rank According <br />
-                to Your JEE MAIN 2025 Marks
+                Category:{" "}
+                <span style={{ color: "black", fontWeight: "normal" }}>
+                  {searchParams.get("category")}
+                </span>
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  color: "#6D1D59",
+                  fontSize: { xs: 12, sm: 18 },
+                  fontWeight: "bold",
+                }}
+              >
+                JEE Main 2025 Rank:{" "}
+                <span style={{ color: "black", fontWeight: "normal" }}>
+                  {searchParams.get("rank")}
+                </span>
               </Typography>
             </Box>
-          </Box>
-        </Box>
 
-        {isVerified ? (
-          <CollegeResultsTable results={results} myRank={searchParams.get("rank")} />
-        ) : (
-          <Paper elevation={0} sx={{ p: 4, textAlign: "center" }}>
-            <Typography variant="h6" color="text.secondary">
-              Please complete OTP verification to view results
-            </Typography>
-          </Paper>
-        )}
-
-        <Modal
-          open={openSearchModal}
-          onClose={handleCloseSearchModal}
-          aria-labelledby="college-search-modal"
-        >
-          <Box sx={modalStyle}>
-            <Typography
-              variant="h5"
-              component="h2"
-              gutterBottom
-              fontWeight="bold"
+            {/* Image Section */}
+            <Box
+              sx={{
+                flex: 1,
+                position: "relative",
+                borderRadius: "16px",
+                height: { xs: 120, sm: 200 },
+                width: "100%",
+                maxWidth: 400,
+              }}
             >
-              College Search
-            </Typography>
-            <CollegeSearchForm onSearchComplete={handleCloseSearchModal} />
-          </Box>
-        </Modal>
+              <Image
+                src="/img/rankBg.webp"
+                alt="Rank Background"
+                fill
+                style={{ objectFit: "contain", borderRadius: "16px" }}
+                priority
+              />
 
-        <OtpModal
-          open={showOtpModal}
-          onClose={() => dispatch(setShowOtpModal(false))}
-          phoneNumber={phoneNumber}
-          onPhoneNumberChange={handlePhoneNumberChange}
-        />
-      </Container>
-    </Box>
+              {/* Foreground content */}
+              <Box
+                sx={{
+                  position: "relative",
+                  zIndex: 2,
+                  height: "100%",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  sx={{
+                    color: "orange",
+                    fontWeight: "bold",
+                    mb: 1,
+                    fontSize: { xs: 24, sm: 32 },
+                  }}
+                >
+                  {addOrdinalSuffix(searchParams.get("rank"))}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "white",
+                    fontSize: { xs: 12, sm: 16 },
+                    maxWidth: 300,
+                  }}
+                >
+                  Expected Rank According <br />
+                  to Your JEE MAIN 2025 Marks
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          {isVerified ? (
+            <CollegeResultsTable
+              results={results}
+              myRank={searchParams.get("rank")}
+            />
+          ) : (
+            <Paper elevation={0} sx={{ p: 4, textAlign: "center" }}>
+              <Typography variant="h6" color="text.secondary">
+                Please complete OTP verification to view results
+              </Typography>
+            </Paper>
+          )}
+
+          <Modal
+            open={openSearchModal}
+            onClose={handleCloseSearchModal}
+            aria-labelledby="college-search-modal"
+          >
+            <Box sx={modalStyle}>
+              <Typography
+                variant="h5"
+                component="h2"
+                gutterBottom
+                fontWeight="bold"
+              >
+                College Search
+              </Typography>
+              <CollegeSearchForm onSearchComplete={handleCloseSearchModal} />
+            </Box>
+          </Modal>
+
+          <OtpModal
+            open={showOtpModal}
+            onClose={() => dispatch(setShowOtpModal(false))}
+            phoneNumber={phoneNumber}
+            onPhoneNumberChange={handlePhoneNumberChange}
+          />
+        </Container>
+      </Box>
   );
 }
