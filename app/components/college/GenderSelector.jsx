@@ -1,22 +1,18 @@
 "use client";
-import { TextField, MenuItem } from "@mui/material";
-
-const genders = ["Gender Neutral", "Female"];
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 export default function GenderSelector({ value, onChange }) {
   return (
-    <TextField
-      select
-      fullWidth
-      label="Gender"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-    >
-      {genders.map((gender) => (
-        <MenuItem key={gender} value={gender}>
-          {gender}
-        </MenuItem>
-      ))}
-    </TextField>
+    <FormControl fullWidth>
+      <InputLabel>Gender</InputLabel>
+      <Select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        label="Gender"
+      >
+        <MenuItem value="Gender Neutral">Gender Neutral</MenuItem>
+        <MenuItem value="Female">Female Only</MenuItem>
+      </Select>
+    </FormControl>
   );
 }

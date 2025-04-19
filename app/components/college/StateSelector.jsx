@@ -1,22 +1,22 @@
 "use client";
-import { TextField, MenuItem } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { stateOptions } from "@/lib/states";
 
 export default function StateSelector({ value, onChange }) {
   return (
-    <TextField
-      select
-      fullWidth
-      label="State"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-    >
-      <MenuItem value="">Select State</MenuItem>
-      {stateOptions.map((state) => (
-        <MenuItem key={state.id} value={state.id}>
-          {state.name}
-        </MenuItem>
-      ))}
-    </TextField>
+    <FormControl fullWidth>
+      <InputLabel>State</InputLabel>
+      <Select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        label="State"
+      >
+        {stateOptions.map((state) => (
+          <MenuItem key={state.id} value={state.id}>
+            {state.name}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 }

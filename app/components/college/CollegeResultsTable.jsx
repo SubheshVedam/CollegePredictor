@@ -1,5 +1,11 @@
 "use client";
-import { useState } from "react";
+
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchProgramDetails,
+  setProgramDetailsModalOpen
+} from '../../redux/searchSlice';
+
 import {
   Table,
   TableBody,
@@ -8,197 +14,204 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Chip,
+  Alert,
   Button,
   Modal,
   Box,
   Typography,
   CircularProgress,
-  Alert,
-  Collapse,
-  IconButton,
-  Chip,
-  TablePagination
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import InfoIcon from "@mui/icons-material/Info";
+  IconButton
+} from '@mui/material';
 
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: { xs: "95%", md: "70%" },
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 2,
-  maxHeight: "80vh",
-  overflowY: "auto"
-};
+import InfoIcon from '@mui/icons-material/Info';
+import CloseIcon from '@mui/icons-material/Close';
 
-export default function CollegeResultsTable({ results }) {
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [details, setDetails] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+export default function CollegeResultsTable() {
+  const dispatch = useDispatch();
+  const {
+    results,
+    isLoading,
+    error,
+    programDetails,
+    programDetailsLoading,
+    programDetailsError,
+    programDetailsModalOpen
+  } = useSelector((state) => state.collegePredictor);
 
-  const handleViewDetails = async (row) => {
-    setSelectedRow(row);
-    setOpenModal(true);
-    setLoading(true);
-    setError("");
-    setDetails(null);
+  // const loremTexts = [
+  //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  //   "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //   "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+  //   "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.",
+  //   "Excepteur sint occaecat cupidatat non proident, sunt in culpa."
+  // ];
+  const loremTexts = []
 
-    try {
-      const params = new URLSearchParams({
-        institute_id: row.institute_id,
-        program_name: row.program_name,
-        gender: row.gender,
-        category: row.category,
-        sub_category: row.sub_category,
-      });
-
-      const res = await fetch(`/api/program-details?${params.toString()}`);
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || "Failed to fetch details");
-
-      setDetails(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+  const groupedResults = results.reduce((acc, result) => {
+    const collegeKey = result.institute_id;
+    if (!acc[collegeKey]) {
+      acc[collegeKey] = {
+        collegeName: result.institute_name,
+        programs: []
+      };
     }
-  };
-
-  // Group rows by institute_name
-  const groupedRows = results.reduce((acc, row) => {
-    const key = row.institute_id;
-    if (!acc[key]) {
-      acc[key] = { name: row.institute_name, rows: [] };
-    }
-    acc[key].rows.push(row);
+    acc[collegeKey].programs.push(result);
     return acc;
   }, {});
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const sortedColleges = Object.values(groupedResults)
+    .map(college => ({
+      ...college,
+      programs: college.programs.sort((a, b) => a.closing_rank - b.closing_rank)
+    }))
+    .sort((a, b) => {
+      const aMin = Math.min(...a.programs.map(p => p.closing_rank));
+      const bMin = Math.min(...b.programs.map(p => p.closing_rank));
+      return aMin - bMin;
+    });
+
+  const handleViewDetails = (row) => {
+    dispatch(fetchProgramDetails({
+      instituteId: row.institute_id,
+      programName: row.program_name,
+      gender: row.gender,
+      category: row.category,
+      sub_category: row.sub_category
+    }));
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+  const handleCloseModal = () => {
+    dispatch(setProgramDetailsModalOpen(false));
   };
 
-  // Flatten grouped rows for pagination
-  const flattenedRows = Object.values(groupedRows).flatMap(group => group.rows);
-  const paginatedRows = flattenedRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  if (isLoading) return <div className="text-center py-8">Loading...</div>;
+  if (error) return <Alert severity="error" className="my-4">{error}</Alert>;
+  if (results.length === 0) return <div className="text-center py-8 text-gray-500">No results found</div>;
+
+  let collegeCount = 0;
+  let textIndex = 0;
 
   return (
     <>
-      <TableContainer component={Paper} elevation={3} sx={{ mt: 4 }}>
-        <Table sx={{ minWidth: 650 }} aria-label="college results table">
-          <TableHead sx={{ backgroundColor: (theme) => theme.palette.primary.main }}>
+      <TableContainer component={Paper} className="mt-6 shadow-sm">
+        <Table className="min-w-full">
+          <TableHead className="bg-gray-100">
             <TableRow>
-              <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Institute</TableCell>
-              <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Program</TableCell>
-              <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }} align="right">Closing Rank</TableCell>
-              <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Quota</TableCell>
-              <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Actions</TableCell>
+              <TableCell className="font-bold">Institute</TableCell>
+              <TableCell className="font-bold">Program</TableCell>
+              <TableCell className="font-bold" align="right">Opening Rank</TableCell>
+              <TableCell className="font-bold" align="right">Closing Rank</TableCell>
+              <TableCell className="font-bold">Quota</TableCell>
+              <TableCell className="font-bold"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedRows.map((row, index) => (
-              <TableRow
-                key={`${row.institute_id}-${index}`}
-                hover
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.institute_name}
-                </TableCell>
-                <TableCell>{row.program_name}</TableCell>
-                <TableCell align="right">{row.closing_rank}</TableCell>
-                <TableCell>
-                  <Chip 
-                    label={row.sub_category} 
-                    size="small"
-                    color={row.sub_category.includes('PwD') ? 'secondary' : 'primary'}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    startIcon={<InfoIcon />}
-                    onClick={() => handleViewDetails(row)}
-                  >
-                    Details
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {sortedColleges.flatMap((college, collegeIdx) => {
+              const collegeId = college.programs[0].institute_id;
+              const rowCount = college.programs.length;
+
+              const collegeRows = college.programs.map((program, index) => (
+                <TableRow key={`${collegeId}-${index}`} hover>
+                  {index === 0 ? (
+                    <TableCell
+                      rowSpan={rowCount}
+                      style={{
+                        verticalAlign: 'middle',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      {college.collegeName}
+                    </TableCell>
+                  ) : null}
+                  <TableCell>{program.program_name}</TableCell>
+                  <TableCell align="right">{program.opening_rank}</TableCell>
+                  <TableCell align="right">{program.closing_rank}</TableCell>
+                  <TableCell>
+                    <Chip
+                      label={program.sub_category}
+                      size="small"
+                      color={program.sub_category.includes('PwD') ? 'secondary' : 'primary'}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      startIcon={<InfoIcon />}
+                      onClick={() => handleViewDetails(program)}
+                    >
+                      View Details
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ));
+
+              collegeCount++;
+
+              if (collegeCount % 2 === 0 && textIndex < loremTexts.length) {
+                collegeRows.push(
+                  <TableRow key={`lorem-${textIndex}`}>
+                    <TableCell colSpan={6}>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        sx={{ fontStyle: 'italic', py: 2 }}
+                      >
+                        {loremTexts[textIndex++]}
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                );
+              }
+
+              return collegeRows;
+            })}
           </TableBody>
         </Table>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={flattenedRows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </TableContainer>
 
+      {/* Modal for Program Details */}
       <Modal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
+        open={programDetailsModalOpen}
+        onClose={handleCloseModal}
         aria-labelledby="program-details-modal"
-        aria-describedby="program-details-description"
       >
-        <Box sx={modalStyle}>
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: { xs: '90%', md: '70%' },
+          bgcolor: 'background.paper',
+          boxShadow: 24,
+          p: 4,
+          borderRadius: 2,
+          maxHeight: '80vh',
+          overflowY: 'auto'
+        }}>
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
             <Typography variant="h5" component="h2">
               Program Details
             </Typography>
-            <IconButton onClick={() => setOpenModal(false)}>
+            <IconButton onClick={handleCloseModal}>
               <CloseIcon />
             </IconButton>
           </Box>
 
-          {selectedRow && (
-            <>
-              <Typography variant="body1" paragraph>
-                <strong>Institute:</strong> {selectedRow.institute_name}
-              </Typography>
-              <Typography variant="body1" paragraph>
-                <strong>Program:</strong> {selectedRow.program_name}
-              </Typography>
-              <Box display="flex" gap={2} mb={3}>
-                <Chip label={`Gender: ${selectedRow.gender}`} />
-                <Chip label={`Category: ${selectedRow.category}`} />
-                <Chip label={`Quota: ${selectedRow.sub_category}`} />
-              </Box>
-            </>
-          )}
-
-          <Collapse in={loading}>
+          {programDetailsLoading && (
             <Box display="flex" justifyContent="center" p={4}>
               <CircularProgress />
             </Box>
-          </Collapse>
+          )}
 
-          {error && (
+          {programDetailsError && (
             <Alert severity="error" sx={{ mb: 3 }}>
-              {error}
+              {programDetailsError}
             </Alert>
           )}
 
-          {details && Array.isArray(details) && (
+          {programDetails && (
             <TableContainer component={Paper} sx={{ mt: 2 }}>
               <Table size="small">
                 <TableHead>
@@ -206,31 +219,20 @@ export default function CollegeResultsTable({ results }) {
                     <TableCell>Round</TableCell>
                     <TableCell align="right">Opening Rank</TableCell>
                     <TableCell align="right">Closing Rank</TableCell>
-                    <TableCell align="right">Year</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {details.map((d, i) => (
+                  {programDetails.map((detail, i) => (
                     <TableRow key={i}>
-                      <TableCell>{d.round}</TableCell>
-                      <TableCell align="right">{d.opening_rank}</TableCell>
-                      <TableCell align="right">{d.closing_rank}</TableCell>
-                      <TableCell align="right">{d.year}</TableCell>
+                      <TableCell>{detail.round}</TableCell>
+                      <TableCell align="right">{detail.opening_rank}</TableCell>
+                      <TableCell align="right">{detail.closing_rank}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </TableContainer>
           )}
-
-          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-            <Button
-              variant="contained"
-              onClick={() => setOpenModal(false)}
-            >
-              Close
-            </Button>
-          </Box>
         </Box>
       </Modal>
     </>
