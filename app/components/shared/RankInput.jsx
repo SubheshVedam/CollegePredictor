@@ -1,19 +1,34 @@
 "use client";
+import { TextField } from "@mui/material";
 
 export default function RankInput({ value, onChange }) {
   return (
-    <div className="w-full">
-      <label className="block text-sm font-medium text-gray-700 mb-1">
-        JEE Rank
-      </label>
-      <input
-        type="number"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Enter your JEE Main rank"
-        min="1"
-      />
-    </div>
+    <TextField
+      fullWidth
+      label="JEE Rank"
+      type="number"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      variant="outlined"
+      size="small" // or "medium"
+      placeholder="Enter your JEE Main rank"
+      inputProps={{
+        min: "1",
+        inputMode: "numeric",
+        pattern: "[0-9]*",
+      }}
+      sx={{
+        marginBottom: 2,
+        "& .MuiInputLabel-root": {
+          color: "text.secondary",
+        },
+        "& .MuiOutlinedInput-root": {
+          borderRadius: 1, // theme shape.borderRadius
+          "&.Mui-focused fieldset": {
+            borderWidth: 1,
+          },
+        },
+      }}
+    />
   );
 }

@@ -13,6 +13,7 @@ import GenderSelector from "./GenderSelector";
 import CategorySelector from "./CategorySelector";
 import StateSelector from "./StateSelector";
 import LoadingButton from "../shared/LoadingButton";
+import { Box, Grid } from "@mui/material";
 
 export default function CollegeSearchForm({ onSearchComplete }) {
   const router = useRouter();
@@ -38,16 +39,19 @@ export default function CollegeSearchForm({ onSearchComplete }) {
         stateId,
       }).toString();
 
-      router.push(`/results?${queryParams}`);
+      router.replace(`/results?${queryParams}`);
     } catch (error) {
       console.error("Search failed:", error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <RankInput value={rank} onChange={(value) => dispatch(setRank(value))} />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <RankInput
+          value={rank}
+          onChange={(value) => dispatch(setRank(value))}
+        />
         <GenderSelector
           value={gender}
           onChange={(value) => dispatch(setGender(value))}
@@ -60,13 +64,15 @@ export default function CollegeSearchForm({ onSearchComplete }) {
           value={stateId}
           onChange={(value) => dispatch(setStateId(value))}
         />
-      </div>
-      <LoadingButton
-        type="submit"
-        loading={isLoading}
-        text="Find Colleges"
-        loadingText="Searching..."
-      />
-    </form>
+        <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
+          <LoadingButton
+            type="submit"
+            loading={isLoading}
+            text="Find Colleges"
+            loadingText="Searching..."
+          />
+        </Box>
+      </Box>
+    </Box>
   );
 }

@@ -1,17 +1,42 @@
 "use client";
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
-import CollegeSearchForm from './components/college/CollegeSearchForm';
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import CollegeSearchForm from "./components/college/CollegeSearchForm";
+import JEERankPredictorInfo from "./components/JEERankPredictorInfo";
+import { Box, Container, Typography, Paper } from "@mui/material";
 
 export default function CollegePredictorPage() {
   return (
     <Provider store={store}>
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">College Predictor</h1>
-        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-          <CollegeSearchForm />
-        </div>
-      </div>
+      <Container maxWidth="lg" sx={{ py: 4, px: { xs: 2, sm: 3 } }}>
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{
+            fontWeight: "bold",
+            color: "text.primary",
+            mb: 3,
+          }}
+        >
+          College Predictor
+        </Typography>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row", width: "100%" },
+          }}
+        >
+          <Box sx={{ width: "50%" }}>
+            
+          </Box>
+          <Box sx={{ width: "50%" }}>
+            <CollegeSearchForm onSearchComplete={() => {}} />
+          </Box>
+        </Box>
+
+        <JEERankPredictorInfo />
+      </Container>
     </Provider>
   );
 }

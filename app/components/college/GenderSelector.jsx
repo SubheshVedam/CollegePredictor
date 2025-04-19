@@ -1,19 +1,18 @@
 "use client";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 export default function GenderSelector({ value, onChange }) {
   return (
-    <div className="w-full">
-      <label className="block text-sm font-medium text-gray-700 mb-1">
-        Gender
-      </label>
-      <select
+    <FormControl fullWidth>
+      <InputLabel>Gender</InputLabel>
+      <Select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        label="Gender"
       >
-        <option value="Gender Neutral">Gender Neutral</option>
-        <option value="Female">Female Only</option>
-      </select>
-    </div>
+        <MenuItem value="Gender Neutral">Gender Neutral</MenuItem>
+        <MenuItem value="Female">Female Only</MenuItem>
+      </Select>
+    </FormControl>
   );
 }
