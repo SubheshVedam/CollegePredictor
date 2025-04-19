@@ -20,6 +20,7 @@ import {
   AccordionSummary,
   AccordionDetails,
   useMediaQuery,
+  Divider,
 } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -31,11 +32,13 @@ import {
   fetchProgramDetails,
   setProgramDetailsModalOpen,
 } from "../../redux/searchSlice";
+import { useState } from "react";
 
-export default function CollegeResultsTable() {
+export default function CollegeResultsTable({ myRank }) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [selectedProgram, setSelectedProgram] = useState(null);
 
   const {
     results,
@@ -73,6 +76,13 @@ export default function CollegeResultsTable() {
     });
 
   const handleViewDetails = (row) => {
+    setSelectedProgram({
+      collegeName: row.institute_name,
+      programName: row.program_name,
+      quota: row.sub_category,
+      openingRank: row.opening_rank,
+      closingRank: row.closing_rank,
+    });
     dispatch(
       fetchProgramDetails({
         instituteId: row.institute_id,
@@ -86,6 +96,7 @@ export default function CollegeResultsTable() {
 
   const handleCloseModal = () => {
     dispatch(setProgramDetailsModalOpen(false));
+    setSelectedProgram(null);
   };
 
   if (isLoading) return <div className="text-center py-8">Loading...</div>;
@@ -161,7 +172,11 @@ export default function CollegeResultsTable() {
                       <Chip
                         label={program.sub_category}
                         size="small"
-                        color={program.sub_category === "HS" ? "primary" :"secondary"}
+                        color={
+                          program.sub_category === "HS"
+                            ? "primary"
+                            : "secondary"
+                        }
                       />
                     </TableCell>
                     <TableCell>
@@ -206,7 +221,10 @@ export default function CollegeResultsTable() {
                       p: 2,
                     }}
                   >
-                    <Typography variant="subtitle1" sx={{fontSize:{xs:12,sm:16}}}>
+                    <Typography
+                      variant="subtitle1"
+                      sx={{ fontSize: { xs: 12, sm: 16 } }}
+                    >
                       {program.program_name}
                     </Typography>
                     <Box
@@ -224,7 +242,10 @@ export default function CollegeResultsTable() {
                           alignItems: "center",
                         }}
                       >
-                        <Typography variant="body2" sx={{fontSize:{xs:12,sm:16}}}>
+                        <Typography
+                          variant="body2"
+                          sx={{ fontSize: { xs: 12, sm: 16 } }}
+                        >
                           <strong>OR:</strong> {program.opening_rank} |{" "}
                           <strong>CR:</strong> {program.closing_rank}
                         </Typography>
@@ -232,7 +253,7 @@ export default function CollegeResultsTable() {
                           label={program.sub_category}
                           size="small"
                           color={"secondary"}
-                          sx={{fontSize:{xs:12,sm:16}}}
+                          sx={{ fontSize: { xs: 12, sm: 16 } }}
                         />
                       </Box>
                       <IconButton
@@ -243,8 +264,8 @@ export default function CollegeResultsTable() {
                           border: "1px solid #ccc",
                           borderRadius: "4px",
                           width: "32px",
-                          height: "32px", // match width to make it a square
-                          padding: 0, // remove extra padding
+                          height: "32px",
+                          padding: 0,
                         }}
                       >
                         <ArrowForwardIosIcon
@@ -273,28 +294,59 @@ export default function CollegeResultsTable() {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: { xs: "90%", md: "70%" },
+            width: { xs: "95%", md: "40%" },
             bgcolor: "background.paper",
             boxShadow: 24,
-            p: 4,
+            p: 3,
+            pt:2,
             borderRadius: 2,
             maxHeight: "80vh",
             overflowY: "auto",
           }}
         >
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            mb={3}
-          >
-            <Typography variant="h5" component="h2">
-              Program Details
-            </Typography>
-            <IconButton onClick={handleCloseModal}>
-              <CloseIcon />
+          <Box display="flex" justifyContent="flex-end" sx={{ p: 0, m: 0 }}>
+            <IconButton onClick={handleCloseModal} sx={{ p: 0, m: 0 }}>
+              <CloseIcon sx={{ p: 0, m: 0 }} />
             </IconButton>
           </Box>
+
+          {selectedProgram && (
+            <Box mb={3}>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontSize: { xs: 12, sm: 16 },
+                  fontWeight: 500,
+                  color: "#848484",
+                }}
+              >
+                {selectedProgram.collegeName}
+              </Typography>
+
+              <Typography
+                variant="h6"
+                sx={{ fontSize: { xs: 14, sm: 20 }, fontWeight: 600 }}
+              >
+                {selectedProgram.programName}
+              </Typography>
+              <Divider sx={{ my: { xs: 1, sm: 2 } }} />
+              <Typography
+                variant="subtitle1"
+                sx={{ fontSize: { xs: 12, sm: 16 }, fontWeight: 500 }}
+              >
+                Round-wise Yearly Closing Ranks
+              </Typography>
+              <Typography
+                variant="caption"
+                sx={{ fontSize: { xs: 12, sm: 16 }, fontWeight: 350 }}
+              >
+                Your JEE Main Rank -&nbsp;
+                <span style={{ color: "#FFA41A", fontWeight: "bold" }}>
+                  {myRank}
+                </span>
+              </Typography>
+            </Box>
+          )}
 
           {programDetailsLoading && (
             <Box display="flex" justifyContent="center" p={4}>
@@ -309,70 +361,71 @@ export default function CollegeResultsTable() {
           )}
 
           {programDetails && (
-            <TableContainer component={Paper} sx={{ mt: 2 }}>
-              <Table size="small">
-                <TableHead>
-                  <TableRow sx={{ backgroundColor: "#7e22ce" }}>
-                    <TableCell
-                      sx={{
-                        color: "white",
-                        fontWeight: "bold",
-                        border: "1px solid #ccc",
-                      }}
-                    >
-                      Round
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        color: "white",
-                        fontWeight: "bold",
-                        border: "1px solid #ccc",
-                      }}
-                      align="right"
-                    >
-                      Opening Rank
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        color: "white",
-                        fontWeight: "bold",
-                        border: "1px solid #ccc",
-                      }}
-                      align="right"
-                    >
-                      Closing Rank
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {programDetails.map((detail, i) => (
-                    <TableRow
-                      key={i}
-                      sx={{
-                        backgroundColor:
-                          i % 2 === 0 ? "rgba(108, 16, 188, 0.2)" : "white",
-                      }}
-                    >
-                      <TableCell sx={{ border: "1px solid #ccc" }}>
-                        {detail.round}
+            <>
+              <TableContainer
+                component={Paper}
+                sx={{ mt: 1, borderRadius: "16px" }}
+              >
+                <Table size="small">
+                  <TableHead>
+                    <TableRow sx={{ backgroundColor: "#7e22ce" }}>
+                      <TableCell
+                        sx={{
+                          color: "white",
+                          border: "1px solid #ccc",
+                        }}
+                      >
+                        Round
                       </TableCell>
                       <TableCell
-                        sx={{ border: "1px solid #ccc" }}
+                        sx={{
+                          color: "white",
+                          border: "1px solid #ccc",
+                        }}
                         align="right"
                       >
-                        {detail.opening_rank}
+                        Opening Rank'24
                       </TableCell>
                       <TableCell
-                        sx={{ border: "1px solid #ccc" }}
+                        sx={{
+                          color: "white",
+                          border: "1px solid #ccc",
+                        }}
                         align="right"
                       >
-                        {detail.closing_rank}
+                        Closing Rank'24
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {programDetails.map((detail, i) => (
+                      <TableRow
+                        key={i}
+                        sx={{
+                          backgroundColor: "white",
+                        }}
+                      >
+                        <TableCell sx={{ border: "1px solid #ccc" }}>
+                          {detail.round}
+                        </TableCell>
+                        <TableCell
+                          sx={{ border: "1px solid #ccc" }}
+                          align="right"
+                        >
+                          {detail.opening_rank}
+                        </TableCell>
+                        <TableCell
+                          sx={{ border: "1px solid #ccc" }}
+                          align="right"
+                        >
+                          {detail.closing_rank}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </>
           )}
         </Box>
       </Modal>

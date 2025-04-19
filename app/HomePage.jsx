@@ -1,15 +1,14 @@
 "use client";
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
+
 import CollegeSearchForm from "./components/college/CollegeSearchForm";
 import JEERankPredictorInfo from "./components/JEERankPredictorInfo";
-import { Box, Container, Typography, Paper } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import Image from "next/image";
 
 export default function CollegePredictorPage() {
   return (
-    <Provider store={store}>
+    <>
       <Box
         sx={{
           display: "flex",
@@ -114,6 +113,6 @@ export default function CollegePredictorPage() {
       </Box>
 
       <JEERankPredictorInfo />
-    </Provider>
+    </>
   );
 }

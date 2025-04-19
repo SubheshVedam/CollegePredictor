@@ -152,20 +152,7 @@ export default function ResultsPage() {
   }
 
   if (error) {
-    return (
-      <Container maxWidth="md" sx={{ py: 4 }}>
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-        <Button
-          variant="contained"
-          onClick={() => router.push("/")}
-          sx={{ mt: 2 }}
-        >
-          Go to Homepage
-        </Button>
-      </Container>
-    );
+    dispatch(setShowOtpModal(true))
   }
 
   return (
@@ -351,7 +338,7 @@ export default function ResultsPage() {
         </Box>
 
         {isVerified ? (
-          <CollegeResultsTable results={results} />
+          <CollegeResultsTable results={results} myRank={searchParams.get("rank")} />
         ) : (
           <Paper elevation={0} sx={{ p: 4, textAlign: "center" }}>
             <Typography variant="h6" color="text.secondary">

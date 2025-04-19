@@ -7,7 +7,6 @@ import { store } from './redux/store'
 const page = () => {
   return (
     <Provider store={store}>
-
     <HomePage/>
     </Provider>
   )
