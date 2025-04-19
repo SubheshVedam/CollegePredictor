@@ -21,6 +21,8 @@ export default function LoadingButton({
       sx={{
         py: 1.5,
         px: 3,
+        background: {xs:"linear-gradient(225deg, #FF9900 50%, #FFFFFF 100%)",sm:"linear-gradient(45deg, #FF9900 50%, #FFFFFF 100%)"},
+        color: "black", // Set text color to black
         "&:hover": {
           backgroundColor: "primary.dark",
         },
@@ -32,6 +34,9 @@ export default function LoadingButton({
           opacity: 0.75,
           cursor: "not-allowed",
         }),
+        ...(props.disabled && {
+          color: "white", // Ensures the text color is white when disabled
+        }),
         ...props.sx,
       }}
     >
@@ -41,7 +46,7 @@ export default function LoadingButton({
             size={16}
             thickness={5}
             sx={{
-              color: "common.white",
+              color: "white",
               mr: 1,
             }}
           />

@@ -1,5 +1,5 @@
 "use client";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, Select, Box, Typography, MenuItem } from "@mui/material";
 
 export default function CategorySelector({ value, onChange }) {
   const categories = [
@@ -8,20 +8,58 @@ export default function CategorySelector({ value, onChange }) {
   ];
 
   return (
-    <FormControl fullWidth>
-      <InputLabel>Category</InputLabel>
-      <Select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        label="Category"
-        variant="outlined"
+    <Box
+      sx={{
+        backgroundColor: 'transparent',
+        mb: 1
+      }}
+    >
+      <Typography 
+        variant="subtitle1" 
+        component="h3"
+        sx={{
+          color: 'white'   ,
+                 fontSize:{xs:14,sm:16}
+
+        }}
       >
-        {categories.map((category) => (
-          <MenuItem key={category} value={category}>
-            {category}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+        Select Category
+      </Typography>
+      
+      <FormControl fullWidth>
+        <Select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: 2,
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: 'grey.300',
+                borderRadius: 2
+              },
+              "&:hover fieldset": {
+                borderColor: 'primary.main',
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: 'primary.main',
+                borderWidth: 2,
+              },
+            },
+            "& .MuiSelect-select": {
+              py: 1.5,
+              fontWeight: 'medium',
+              fontSize: '1rem',
+            },
+          }}
+        >
+          {categories.map((category) => (
+            <MenuItem key={category} value={category}>
+              {category}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 }

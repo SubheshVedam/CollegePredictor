@@ -1,18 +1,56 @@
 "use client";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, Select, Box, Typography, MenuItem } from "@mui/material";
 
 export default function GenderSelector({ value, onChange }) {
   return (
-    <FormControl fullWidth>
-      <InputLabel>Gender</InputLabel>
-      <Select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        label="Gender"
+    <Box
+      sx={{
+        backgroundColor: 'transparent',
+        mb: 1
+      }}
+    >
+      <Typography 
+        variant="subtitle1" 
+        component="h3"
+        sx={{
+          color: 'white',          fontSize:{xs:14,sm:16}
+
+        }}
       >
-        <MenuItem value="Gender Neutral">Gender Neutral</MenuItem>
-        <MenuItem value="Female">Female Only</MenuItem>
-      </Select>
-    </FormControl>
+        Select Gender Category
+      </Typography>
+      
+      <FormControl fullWidth>
+        <Select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: 2,
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: 'grey.300',
+                borderRadius: 2
+              },
+              "&:hover fieldset": {
+                borderColor: 'primary.main',
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: 'primary.main',
+                borderWidth: 2,
+              },
+            },
+            "& .MuiSelect-select": {
+              py: 1.5,
+              fontWeight: 'medium',
+              fontSize: '1rem',
+            },
+          }}
+        >
+          <MenuItem value="Gender Neutral">Gender Neutral</MenuItem>
+          <MenuItem value="Female">Female Only</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
   );
 }

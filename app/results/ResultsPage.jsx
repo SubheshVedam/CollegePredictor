@@ -1,5 +1,5 @@
 "use client";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
@@ -41,6 +41,7 @@ const modalStyle = {
 
 export default function ResultsPage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const dispatch = useDispatch();
   const { 
     results, 
@@ -81,7 +82,6 @@ export default function ResultsPage() {
       document.body.appendChild(script);
 
       return () => {
-        // Clean up the script when component unmounts or showOtpModal changes
         document.body.removeChild(script);
       };
     }
@@ -94,14 +94,14 @@ export default function ResultsPage() {
     const stateId = searchParams.get('stateId');
 
     if (rank && gender && category && stateId) {
-      // Check sessionStorage for verification status
       const verified = sessionStorage.getItem('isVerified') === 'true';
       dispatch(setIsVerified(verified));
       
       if (!verified) {
         dispatch(setShowOtpModal(true));
       } else {
-        dispatch(fetchCollegeResults({ rank, gender, category, stateId }));
+        setShowOtpModal(false)
+
       }
     }
   }, [searchParams, dispatch]);
@@ -110,12 +110,10 @@ export default function ResultsPage() {
   const handleCloseSearchModal = () => setOpenSearchModal(false);
 
   const handleOtpVerificationSuccess = () => {
-    // Store verification in sessionStorage (persists only for current session)
     sessionStorage.setItem('isVerified', 'true');
     dispatch(setIsVerified(true));
     dispatch(setShowOtpModal(false));
     
-    // Fetch results after successful verification
     const rank = searchParams.get('rank');
     const gender = searchParams.get('gender');
     const category = searchParams.get('category');
@@ -141,6 +139,13 @@ export default function ResultsPage() {
         <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
+        <Button 
+          variant="contained" 
+          onClick={() => router.push('/')}
+          sx={{ mt: 2 }}
+        >
+          Go to Homepage
+        </Button>
       </Container>
     );
   }
@@ -161,23 +166,33 @@ export default function ResultsPage() {
       
       <Container maxWidth="xl" sx={{ py: 4 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-          <Typography variant="h4" component="h1" fontWeight="bold">
-            Search Results
-          </Typography>
-          <Button
-            variant="contained"
-            startIcon={<SearchIcon />}
-            onClick={handleOpenSearchModal}
-            sx={{
-              borderRadius: '50px',
-              px: 4,
-              py: 1.5,
-              textTransform: 'none',
-              fontWeight: 'medium'
-            }}
-          >
-            New Search
-          </Button>
+
+            <Button
+              variant="outlined"
+              onClick={() => router.push('/')}
+              sx={{
+                borderRadius: '50px',
+                px: 4,
+                py: 1.5,
+                textTransform: 'none'
+              }}
+            >
+              Home
+            </Button>
+            <Button
+              variant="contained"
+              startIcon={<SearchIcon />}
+              onClick={handleOpenSearchModal}
+              sx={{
+                borderRadius: '50px',
+                px: 4,
+                py: 1.5,
+                textTransform: 'none',
+                fontWeight: 'medium'
+              }}
+            >
+              New Search
+            </Button>
         </Box>
 
         {isVerified ? (
@@ -190,7 +205,6 @@ export default function ResultsPage() {
           </Paper>
         )}
 
-        {/* Search Form Modal */}
         <Modal
           open={openSearchModal}
           onClose={handleCloseSearchModal}
@@ -204,7 +218,6 @@ export default function ResultsPage() {
           </Box>
         </Modal>
 
-        {/* OTP Verification Modal */}
         <OtpModal
           open={showOtpModal}
           onClose={() => dispatch(setShowOtpModal(false))}

@@ -39,14 +39,7 @@ export default function CollegeResultsTable() {
     programDetailsModalOpen
   } = useSelector((state) => state.collegePredictor);
 
-  // const loremTexts = [
-  //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  //   "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //   "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-  //   "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.",
-  //   "Excepteur sint occaecat cupidatat non proident, sunt in culpa."
-  // ];
-  const loremTexts = []
+  const loremTexts = [];
 
   const groupedResults = results.reduce((acc, result) => {
     const collegeKey = result.institute_id;
@@ -96,14 +89,29 @@ export default function CollegeResultsTable() {
     <>
       <TableContainer component={Paper} className="mt-6 shadow-sm">
         <Table className="min-w-full">
-          <TableHead className="bg-gray-100">
-            <TableRow>
-              <TableCell className="font-bold">Institute</TableCell>
-              <TableCell className="font-bold">Program</TableCell>
-              <TableCell className="font-bold" align="right">Opening Rank</TableCell>
-              <TableCell className="font-bold" align="right">Closing Rank</TableCell>
-              <TableCell className="font-bold">Quota</TableCell>
-              <TableCell className="font-bold"></TableCell>
+          <TableHead>
+            <TableRow sx={{ backgroundColor: '#7e22ce' }}>
+              <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Institute</TableCell>
+              <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Program</TableCell>
+              <TableCell 
+                sx={{ 
+                  color: 'white', 
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  borderBottom: 'none'
+                }} 
+                colSpan={2}
+              >Rank</TableCell>
+              <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Quota</TableCell>
+              <TableCell sx={{ color: 'white', fontWeight: 'bold' }}></TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: '#7e22ce' }}>
+              <TableCell sx={{ color: 'white' }}></TableCell>
+              <TableCell sx={{ color: 'white' }}></TableCell>
+              <TableCell sx={{ color: 'white', fontWeight: 'bold', textAlign: 'right' }}>Opening</TableCell>
+              <TableCell sx={{ color: 'white', fontWeight: 'bold', textAlign: 'right' }}>Closing</TableCell>
+              <TableCell sx={{ color: 'white' }}></TableCell>
+              <TableCell sx={{ color: 'white' }}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -112,38 +120,39 @@ export default function CollegeResultsTable() {
               const rowCount = college.programs.length;
 
               const collegeRows = college.programs.map((program, index) => (
-                <TableRow key={`${collegeId}-${index}`} hover>
-                  {index === 0 ? (
-                    <TableCell
-                      rowSpan={rowCount}
-                      style={{
-                        verticalAlign: 'middle',
-                        fontWeight: 'bold'
-                      }}
-                    >
-                      {college.collegeName}
-                    </TableCell>
-                  ) : null}
-                  <TableCell>{program.program_name}</TableCell>
-                  <TableCell align="right">{program.opening_rank}</TableCell>
-                  <TableCell align="right">{program.closing_rank}</TableCell>
-                  <TableCell>
-                    <Chip
-                      label={program.sub_category}
-                      size="small"
-                      color={program.sub_category.includes('PwD') ? 'secondary' : 'primary'}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      startIcon={<InfoIcon />}
-                      onClick={() => handleViewDetails(program)}
-                    >
-                      View Details
-                    </Button>
-                  </TableCell>
+                <TableRow
+                  key={`${collegeId}-${index}`}
+                  hover
+                  sx={{
+                    backgroundColor: index % 2 === 0 ? '#fce7f3' : 'white'
+                  }}
+                >{index === 0 ? (
+                  <TableCell
+                    rowSpan={rowCount}
+                    sx={{
+                      verticalAlign: 'middle',
+                      fontWeight: 'bold',
+                      backgroundColor: index % 2 === 0 ? '#fce7f3' : 'white'
+                    }}
+                  >{college.collegeName}</TableCell>
+                ) : null}<TableCell>{program.program_name}</TableCell>
+                <TableCell align="right">{program.opening_rank}</TableCell>
+                <TableCell align="right">{program.closing_rank}</TableCell>
+                <TableCell>
+                  <Chip
+                    label={program.sub_category}
+                    size="small"
+                    color={program.sub_category.includes('PwD') ? 'secondary' : 'primary'}
+                  />
+                </TableCell>
+                <TableCell>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    startIcon={<InfoIcon />}
+                    onClick={() => handleViewDetails(program)}
+                  >View Details</Button>
+                </TableCell>
                 </TableRow>
               ));
 
@@ -151,17 +160,13 @@ export default function CollegeResultsTable() {
 
               if (collegeCount % 2 === 0 && textIndex < loremTexts.length) {
                 collegeRows.push(
-                  <TableRow key={`lorem-${textIndex}`}>
-                    <TableCell colSpan={6}>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        sx={{ fontStyle: 'italic', py: 2 }}
-                      >
-                        {loremTexts[textIndex++]}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
+                  <TableRow key={`lorem-${textIndex}`}><TableCell colSpan={6}>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      sx={{ fontStyle: 'italic', py: 2 }}
+                    >{loremTexts[textIndex++]}</Typography>
+                  </TableCell></TableRow>
                 );
               }
 
@@ -191,42 +196,38 @@ export default function CollegeResultsTable() {
           overflowY: 'auto'
         }}>
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-            <Typography variant="h5" component="h2">
-              Program Details
-            </Typography>
-            <IconButton onClick={handleCloseModal}>
-              <CloseIcon />
-            </IconButton>
+            <Typography variant="h5" component="h2">Program Details</Typography>
+            <IconButton onClick={handleCloseModal}><CloseIcon /></IconButton>
           </Box>
 
           {programDetailsLoading && (
-            <Box display="flex" justifyContent="center" p={4}>
-              <CircularProgress />
-            </Box>
+            <Box display="flex" justifyContent="center" p={4}><CircularProgress /></Box>
           )}
 
           {programDetailsError && (
-            <Alert severity="error" sx={{ mb: 3 }}>
-              {programDetailsError}
-            </Alert>
+            <Alert severity="error" sx={{ mb: 3 }}>{programDetailsError}</Alert>
           )}
 
           {programDetails && (
             <TableContainer component={Paper} sx={{ mt: 2 }}>
               <Table size="small">
                 <TableHead>
-                  <TableRow>
-                    <TableCell>Round</TableCell>
-                    <TableCell align="right">Opening Rank</TableCell>
-                    <TableCell align="right">Closing Rank</TableCell>
+                  <TableRow sx={{ backgroundColor: '#7e22ce' }}>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Round</TableCell>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">Opening Rank</TableCell>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">Closing Rank</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {programDetails.map((detail, i) => (
-                    <TableRow key={i}>
-                      <TableCell>{detail.round}</TableCell>
-                      <TableCell align="right">{detail.opening_rank}</TableCell>
-                      <TableCell align="right">{detail.closing_rank}</TableCell>
+                    <TableRow
+                      key={i}
+                      sx={{
+                        backgroundColor: i % 2 === 0 ? '#fce7f3' : 'white'
+                      }}
+                    ><TableCell>{detail.round}</TableCell>
+                    <TableCell align="right">{detail.opening_rank}</TableCell>
+                    <TableCell align="right">{detail.closing_rank}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

@@ -13,7 +13,7 @@ import GenderSelector from "./GenderSelector";
 import CategorySelector from "./CategorySelector";
 import StateSelector from "./StateSelector";
 import LoadingButton from "../shared/LoadingButton";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 
 export default function CollegeSearchForm({ onSearchComplete }) {
   const router = useRouter();
@@ -22,8 +22,15 @@ export default function CollegeSearchForm({ onSearchComplete }) {
     (state) => state.collegePredictor || {}
   );
 
+  // Check if all fields are selected
+  const isFormValid = rank && gender && category && stateId;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isFormValid) {
+      return; // Do nothing if form is invalid
+    }
+
     onSearchComplete();
     try {
       // Dispatch the search action
@@ -47,7 +54,14 @@ export default function CollegeSearchForm({ onSearchComplete }) {
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: { xs: 1, sm: 2 },
+          color: "white",
+        }}
+      >
         <RankInput
           value={rank}
           onChange={(value) => dispatch(setRank(value))}
@@ -64,12 +78,14 @@ export default function CollegeSearchForm({ onSearchComplete }) {
           value={stateId}
           onChange={(value) => dispatch(setStateId(value))}
         />
+
         <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
           <LoadingButton
             type="submit"
             loading={isLoading}
-            text="Find Colleges"
+            text={isFormValid ? "Find Colleges" : "*Please Select All Fields"}
             loadingText="Searching..."
+            disabled={!isFormValid}
           />
         </Box>
       </Box>
