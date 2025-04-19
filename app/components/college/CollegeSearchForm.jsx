@@ -34,9 +34,9 @@ export default function CollegeSearchForm({ onSearchComplete }) {
     onSearchComplete();
     try {
       // Dispatch the search action
-      await dispatch(
-        fetchCollegeResults({ rank, gender, category, stateId })
-      ).unwrap();
+      // await dispatch(
+      //   fetchCollegeResults({ rank, gender, category, stateId })
+      // ).unwrap();
 
       // Redirect to results page with query parameters
       const queryParams = new URLSearchParams({
