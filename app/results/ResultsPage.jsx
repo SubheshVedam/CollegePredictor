@@ -6,7 +6,8 @@ import {
   fetchCollegeResults, 
   setIsVerified,
   setShowOtpModal,
-  setPhoneNumber
+  setPhoneNumber,
+  setError
 } from '../redux/searchSlice';
 import CollegeResultsTable from '../components/college/CollegeResultsTable';
 import CollegeSearchForm from '../components/college/CollegeSearchForm';
@@ -51,6 +52,40 @@ export default function ResultsPage() {
   } = useSelector((state) => state.collegePredictor);
   
   const [openSearchModal, setOpenSearchModal] = useState(false);
+
+  // Initialize Msg91 OTP widget
+  useEffect(() => {
+    if (showOtpModal && typeof window !== "undefined") {
+      const configuration = {
+        widgetId: process.env.NEXT_PUBLIC_MSG91_WIDGET_ID,
+        tokenAuth: process.env.NEXT_PUBLIC_MSG91_AUTH_KEY,
+        exposeMethods: true,
+        success: (data) => {
+          console.log('Verification success:', data);
+          sessionStorage.setItem("isVerified", "true");
+          handleOtpVerificationSuccess();
+        },
+        failure: (error) => {
+          console.error('Verification failed:', error);
+          dispatch(setError("OTP verification failed. Please try again."));
+        }
+      };
+
+      const script = document.createElement('script');
+      script.src = 'https://control.msg91.com/app/assets/otp-provider/otp-provider.js';
+      script.onload = () => {
+        if (window.initSendOTP) {
+          window.initSendOTP(configuration);
+        }
+      };
+      document.body.appendChild(script);
+
+      return () => {
+        // Clean up the script when component unmounts or showOtpModal changes
+        document.body.removeChild(script);
+      };
+    }
+  }, [showOtpModal, dispatch]);
 
   useEffect(() => {
     const rank = searchParams.get('rank');
@@ -175,7 +210,6 @@ export default function ResultsPage() {
           onClose={() => dispatch(setShowOtpModal(false))}
           phoneNumber={phoneNumber}
           onPhoneNumberChange={handlePhoneNumberChange}
-          onVerificationSuccess={handleOtpVerificationSuccess}
         />
       </Container>
     </Box>
