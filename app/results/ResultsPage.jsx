@@ -281,28 +281,19 @@ export default function ResultsPage() {
           {/* Image Section - Modified for mobile */}
           <Box
             sx={{
-              flex: 1,
               position: "relative",
               borderRadius: "16px",
-              height: { xs: 250, sm: 300 }, // Reduced mobile height slightly to fit better
-              width: { xs: "90%", sm: "auto" }, // Take more width on mobile
-              maxWidth: { xs: 350, sm: 400 }, // Adjusted maxWidth for mobile
-              minWidth: { xs: 300, sm: "auto" }, // Ensure minimum width on mobile
+              height: { xs: 120, sm: 300 },
+              width: { xs: "90%", sm: 400 },
+              maxWidth: { xs: "90%", sm: 400 },
+              minWidth: { xs: 200, sm: 400 },
+              mx: "auto",
+              backgroundImage: "url(/img/rankBg.webp)",
+              backgroundSize: "contain",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
             }}
           >
-            <Image
-              src="/img/rankBg.webp"
-              alt="Rank Background"
-              fill
-              style={{
-                objectFit: "contain",
-                borderRadius: "16px",
-                width: "100%",
-                height: "100%",
-              }}
-              priority
-            />
-
             {/* Foreground content */}
             <Box
               sx={{
