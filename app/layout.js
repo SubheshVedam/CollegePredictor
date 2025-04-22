@@ -28,13 +28,16 @@ const geistMono = Geist_Mono({
 export default function RootLayout({ children }) {
   return (
     <Provider store={store}>
-    <html lang="en" className={roboto.variable}>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        </AppRouterCacheProvider>
-      </body>
-    </html>
+      <html lang="en" className={roboto.variable}>
+        <head>
+          <link rel="icon" href="./favicon.ico" />
+        </head>
+        <body className={`${geistSans.variable} ${geistMono.variable}`}>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          </AppRouterCacheProvider>
+        </body>
+      </html>
     </Provider>
   );
 }
