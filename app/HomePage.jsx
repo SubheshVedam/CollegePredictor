@@ -67,11 +67,11 @@ export default function CollegePredictorPage() {
                 sx={{ gap: 2, display: "flex", flexDirection: "column", mt: 3 }}
               >
                 <Typography sx={{ display: "flex", color: "#FFFFFF" }}>
-                  <VerifiedIcon />
-                  Predict rank & college based on the obtained marks.
+                  <VerifiedIcon sx={{mr:1}}/>
+                  Predict College based on JEE MAIN 2025 Rank
                 </Typography>
                 <Typography sx={{ display: "flex", color: "#37FF00" }}>
-                  <VerifiedIcon />
+                  <VerifiedIcon sx={{mr:1}} />
                   No Hidden Charges, 100% Free
                 </Typography>
               </Box>

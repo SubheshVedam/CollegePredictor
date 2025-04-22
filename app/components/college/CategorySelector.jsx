@@ -23,7 +23,7 @@ export default function CategorySelector({ value, onChange }) {
 
         }}
       >
-        Select Category
+        Category
       </Typography>
       
       <FormControl fullWidth>

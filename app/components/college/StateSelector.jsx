@@ -6,46 +6,46 @@ export default function StateSelector({ value, onChange }) {
   return (
     <Box
       sx={{
-        backgroundColor: 'transparent',
-        mb: 1
+        backgroundColor: "transparent",
+        mb: 1,
       }}
     >
-      <Typography 
-        variant="subtitle1" 
+      <Typography
+        variant="subtitle1"
         component="h4"
         sx={{
-          color: 'white',
-          fontSize:{xs:14,sm:16}
+          color: "white",
+          fontSize: { xs: 14, sm: 16 },
         }}
       >
-        Select State
+        Domicile State{" "}
       </Typography>
-      
+
       <FormControl fullWidth>
         <Select
           value={value}
           onChange={(e) => onChange(e.target.value)}
           displayEmpty
           sx={{
-            backgroundColor: 'white',
+            backgroundColor: "white",
             borderRadius: 2,
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: 'grey.300',
-                borderRadius: 2
+                borderColor: "grey.300",
+                borderRadius: 2,
               },
               "&:hover fieldset": {
-                borderColor: 'primary.main',
+                borderColor: "primary.main",
               },
               "&.Mui-focused fieldset": {
-                borderColor: 'primary.main',
+                borderColor: "primary.main",
                 borderWidth: 2,
               },
             },
             "& .MuiSelect-select": {
               py: 1.5,
-              fontSize: '1rem',
-              color: value === "" ? 'grey' : 'black', // Placeholder color
+              fontSize: "1rem",
+              color: value === "" ? "grey" : "black", // Placeholder color
               opacity: value === "" ? 1 : undefined,
             },
           }}

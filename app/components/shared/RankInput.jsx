@@ -17,7 +17,7 @@ export default function RankInput({ value, onChange }) {
           fontSize: { xs: 14, sm: 16 },
         }}
       >
-        JEE Main Ranks
+        JEE Main Rank
       </Typography>
 
       <TextField

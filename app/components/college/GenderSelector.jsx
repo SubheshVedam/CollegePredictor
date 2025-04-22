@@ -5,45 +5,45 @@ export default function GenderSelector({ value, onChange }) {
   return (
     <Box
       sx={{
-        backgroundColor: 'transparent',
-        mb: 1
+        backgroundColor: "transparent",
+        mb: 1,
       }}
     >
-      <Typography 
-        variant="subtitle1" 
+      <Typography
+        variant="subtitle1"
         component="h3"
         sx={{
-          color: 'white',          fontSize:{xs:14,sm:16}
-
+          color: "white",
+          fontSize: { xs: 14, sm: 16 },
         }}
       >
-        Select Gender Category
+        Seat Pool{" "}
       </Typography>
-      
+
       <FormControl fullWidth>
         <Select
           value={value}
           onChange={(e) => onChange(e.target.value)}
           sx={{
-            backgroundColor: 'white',
+            backgroundColor: "white",
             borderRadius: 2,
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: 'grey.300',
-                borderRadius: 2
+                borderColor: "grey.300",
+                borderRadius: 2,
               },
               "&:hover fieldset": {
-                borderColor: 'primary.main',
+                borderColor: "primary.main",
               },
               "&.Mui-focused fieldset": {
-                borderColor: 'primary.main',
+                borderColor: "primary.main",
                 borderWidth: 2,
               },
             },
             "& .MuiSelect-select": {
               py: 1.5,
-              fontWeight: 'normal',
-              fontSize: '1rem',
+              fontWeight: "normal",
+              fontSize: "1rem",
             },
           }}
         >
