@@ -5,6 +5,7 @@ import {
   fetchCollegeResults,
   setCategory,
   setGender,
+  setIsLoading,
   setRank,
   setStateId,
 } from "../../redux/searchSlice";
@@ -27,6 +28,7 @@ export default function CollegeSearchForm({ onSearchComplete }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setIsLoading(true))
     if (!isFormValid) {
       return; // Do nothing if form is invalid
     }
@@ -39,6 +41,7 @@ export default function CollegeSearchForm({ onSearchComplete }) {
       // ).unwrap();
 
       // Redirect to results page with query parameters
+      dispatch(setIsLoading(false))
       const queryParams = new URLSearchParams({
         rank,
         gender,
@@ -83,7 +86,7 @@ export default function CollegeSearchForm({ onSearchComplete }) {
           <LoadingButton
             type="submit"
             loading={isLoading}
-            text={isFormValid ? "Find Colleges" : "*Please Fill All Fields"}
+            text={isFormValid ? "Predict College" : "*Please Fill All Fields"}
             loadingText="Searching..."
             disabled={!isFormValid}
           />

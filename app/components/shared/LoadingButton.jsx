@@ -22,7 +22,7 @@ export default function LoadingButton({
         textTransform: 'capitalize',
         py: 1.5,
         px: 3,
-        background: "#FF9900",
+        background: "#F97D03",
         color: "white",
         "&:hover": {
           backgroundColor: "#FF9900",
@@ -36,7 +36,7 @@ export default function LoadingButton({
           cursor: "not-allowed",
         }),
         "&.Mui-disabled": {
-          backgroundColor: "#FF9900",
+          backgroundColor: "#F97D03",
           cursor:'none',
           color: "white",
         },

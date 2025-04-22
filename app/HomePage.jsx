@@ -16,13 +16,13 @@ export default function CollegePredictorPage() {
           flexDirection: { xs: "column", sm: "row" },
           height: { xs: "auto", sm: "80vh" },
           background:
-            "linear-gradient(135deg, #FF9900 0%,#6C10BC 28%,#401565 50%,#41007A 59%,#5F15A0 64%,#310756 80%,#52118B 86%,#6C10BC 94%)",
+            "linear-gradient(-45deg, #FF9900 0%,#6C10BC 28%,#401565 50%,#41007A 59%,#5F15A0 64%,#310756 80%,#52118B 86%,#6C10BC 94%)",
         }}
       >
         <Box
           sx={{
             py: 5,
-            p: 3,
+            p: 2,
             flex: 1,
             pl: { xs: "none", sm: "10%", lg: "20%" },
             background: "transparent",
@@ -36,26 +36,25 @@ export default function CollegePredictorPage() {
               justifyContent: "space-between",
             }}
           >
-            {/* <Box sx={{ width: { xs: 120, sm: 200 }, visibility:'hidden' }}>
-              <Image
-                width={200}
-                height={0}
-                src={"/img/Vedam_Final_Logo_White.png"}
-                alt="logo"
-                style={{ width: "100%", height: "auto" }}
-              />
-            </Box> */}
-            <Box sx={{mt:7}}>
-              <Typography sx={{ color: "#FFFFFF" }}>Most Accurate</Typography>
+            <Box sx={{ mt: { xs: 2, sm: 7 } }}>
+              <Typography
+                sx={{ color: "#FFFFFF", fontSize: { xs: 18, sm: 24 } }}
+              >
+                Most Accurate
+              </Typography>
               <Typography
                 variant="h3"
-                sx={{ fontWeight: "bold", fontSize: { xs: 32, sm: 48 },color: "#FFFFFF" }}
+                sx={{
+                  fontWeight: "medium",
+                  fontSize: { xs: 32, sm: 45 },
+                  color: "#FFFFFF",
+                }}
               >
                 College{" "}
                 <span
                   style={{
                     background:
-                      "linear-gradient(45deg, #FF9900 50%, #FFFFFF 100%)",
+                      "linear-gradient(45deg, #F97D03 50%, #FFFFFF 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     display: "inline-block",
@@ -79,7 +78,10 @@ export default function CollegePredictorPage() {
             </Box>
             <Box sx={{ mt: 4 }}>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography variant="subtitle1" sx={{ fontSize: 14, mb: 1,color: "#FFFFFF" }}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontSize: 14, mb: 1, color: "#FFFFFF" }}
+                >
                   Developed By Experts working at
                 </Typography>
                 <Box sx={{ display: "flex", gap: 3 }}>
@@ -90,7 +92,6 @@ export default function CollegePredictorPage() {
                     src={"/img/Google_Microsoft_with_White.png"}
                     alt="logo"
                   />{" "}
-                
                 </Box>
               </Box>
             </Box>

@@ -16,10 +16,25 @@
       "static/chunks/main-app.js",
       "static/chunks/app/results/page.js"
     ],
-    "/terms/page": [
+    "/api/save-user/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/terms/page.js"
+      "static/chunks/app/api/save-user/route.js"
+    ],
+    "/api/colleges/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/colleges/route.js"
+    ],
+    "/api/program-details/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/program-details/route.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }
