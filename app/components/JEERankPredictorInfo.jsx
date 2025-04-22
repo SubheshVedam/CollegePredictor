@@ -18,14 +18,9 @@ export default function JEERankPredictorInfo() {
         "Advanced algorithms analyse your marks and percentile to generate accurate rank estimates.",
     },
     {
-      title: "Early Insights",
-      description:
-        "Anticipate your All India Rank (AIR) before official results are declared.",
-    },
-    {
       title: "College Matchmaking",
       description:
-        "Identify the colleges most suited to your predicted rank, simplifying the decision-making process.",
+        "Identify the colleges most suited based on your rank, simplifying the decision-making process.",
     },
     {
       title: "Personalised Guidance",
@@ -36,45 +31,35 @@ export default function JEERankPredictorInfo() {
 
   const benefits = [
     {
-      title: "Accurate Rank Estimation",
-      description: "Predict your competitive standing among JEE aspirants.",
+      title: "Precise College Matching",
+      description: "Find colleges that align with your actual JEE rank and category.",
     },
     {
-      title: "Strategic College Planning",
+      title: "Save Time and Stress",
       description:
-        "Proactively identify colleges where you're most likely to secure admission.",
+        "Skip manual research. Get a clear picture of your options in seconds.",
     },
     {
-      title: "Informed Decision-Making",
+      title: "Stay Ahead",
       description:
-        "Gain early insights into rank vs. college trends for better academic planning.",
-    },
-    {
-      title: "Preparation Support",
-      description:
-        "Use rank predictions to identify areas of improvement for your next mock test or exam attempt.",
-    },
-    {
-      title: "Comprehensive Guidance",
-      description:
-        "Research fees, courses, and placement opportunities at predicted colleges.",
+        "Plan your next steps early—whether it’s counselling, course selection, or admission strategy.",
     },
   ];
 
   const steps = [
     {
-      title: "Input Your Marks",
-      description: "Enter your expected scores or percentile.",
+      title: "Enter Your JEE Rank",
+      description: "Input your All India Rank (AIR) and select your category and home state.",
     },
     {
-      title: "Data Analysis",
+      title: "Data-Driven Matching",
       description:
         "The tool compares your performance with historical JEE data, including previous years' cutoffs, score distributions, and category-based trends.",
     },
     {
-      title: "Rank and College Prediction",
+      title: "College Prediction",
       description:
-        "It estimates your rank and matches you with colleges based on seat availability, cutoff trends, and your predicted ranks.",
+        "Instantly see a list of colleges and branches where you're likely to get admission—customised just for you.",
     },
   ];
 
@@ -82,11 +67,7 @@ export default function JEERankPredictorInfo() {
     <Container maxWidth="md" sx={{ py: 6}}>
       <Box>
         <Typography variant="body1" paragraph>
-          Estimate Your Rank and Discover Potential Colleges Based on Your Marks
-          or Percentile for JEE Main 2025. This enhanced tool provides insights
-          into marks vs. rank and percentile vs. rank trends, along with
-          category-specific predictions, helping you navigate your academic
-          journey effectively.
+        Input your JEE Main 2025 rank and unlock a personalised list of engineering colleges and branches you're likely to get into. This powerful tool uses historical cutoffs and category-specific trends to help you make confident, data-driven choices during counselling.
         </Typography>
         <Typography variant="body1" paragraph>
           Crafted by <strong>experts of Google & Microsoft Engineers</strong>,
@@ -98,7 +79,7 @@ export default function JEERankPredictorInfo() {
       {/* Features Section */}
       <Box>
         <Typography variant="h6" sx={{ color: "#6C10BC", fontWeight: "bold" }}>
-          JEE College and Rank Predictor 2025 (FREE)
+          JEE College Predictor 2025 (FREE)
         </Typography>
         <List sx={{ mt: 1 }}>
           {features.map((feature, index) => (
@@ -123,7 +104,7 @@ export default function JEERankPredictorInfo() {
           variant="h6"
           sx={{ color: "#6C10BC", fontWeight: "bold", mt: 4 }}
         >
-          How Does the JEE College and Rank Predictor Work?
+          How Does the JEE College Predictor Work?
         </Typography>
         <List sx={{ mt: 1 }}>
           {steps.map((step, index) => (
@@ -156,7 +137,7 @@ export default function JEERankPredictorInfo() {
       {/* Benefits Section */}
       <Box sx={{mb:2}}>
         <Typography variant="h6" sx={{ color: "#6C10BC", fontWeight: "bold" }}>
-          Benefits of the JEE College and Rank Predictor 2025
+          Benefits of the JEE College Predictor 2025
         </Typography>
         <List sx={{ mt: 1 }}>
           {benefits.map((benefit, index) => (
@@ -177,7 +158,7 @@ export default function JEERankPredictorInfo() {
       </Box>
 
       <Typography variant="body1" paragraph>
-      Take the next step in your JEE journey—use the <strong>College and Rank Predictor 2025</strong> today to set yourself up for academic success!
+      Take the next step in your JEE journey—use the <strong>College Predictor 2025</strong> today to set yourself up for academic success!
         </Typography>
     </Container>
   );
