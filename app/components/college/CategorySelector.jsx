@@ -48,7 +48,7 @@ export default function CategorySelector({ value, onChange }) {
             },
             "& .MuiSelect-select": {
               py: 1.5,
-              fontWeight: 'medium',
+              fontWeight: 'normal',
               fontSize: '1rem',
             },
           }}

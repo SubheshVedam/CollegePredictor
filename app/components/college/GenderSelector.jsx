@@ -42,7 +42,7 @@ export default function GenderSelector({ value, onChange }) {
             },
             "& .MuiSelect-select": {
               py: 1.5,
-              fontWeight: 'medium',
+              fontWeight: 'normal',
               fontSize: '1rem',
             },
           }}

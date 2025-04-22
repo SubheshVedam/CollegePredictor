@@ -14,18 +14,18 @@ export default function LoadingButton({
       fullWidth
       type={type}
       variant="contained"
-      color="primary"
+      color="white"
       disabled={loading}
       className={className}
       {...props}
       sx={{
-        textTransform:'capitalize',
+        textTransform: 'capitalize',
         py: 1.5,
         px: 3,
-        background: {xs:"linear-gradient(225deg, #FF9900 50%, #FFFFFF 100%)",sm:"linear-gradient(45deg, #FF9900 50%, #FFFFFF 100%)"},
-        color: "black", // Set text color to black
+        background: "#FF9900",
+        color: "white",
         "&:hover": {
-          backgroundColor: "primary.dark",
+          backgroundColor: "#FF9900",
         },
         "&:focus": {
           outline: "none",
@@ -35,11 +35,14 @@ export default function LoadingButton({
           opacity: 0.75,
           cursor: "not-allowed",
         }),
-        ...(props.disabled && {
-          color: "white", // Ensures the text color is white when disabled
-        }),
+        "&.Mui-disabled": {
+          backgroundColor: "#FF9900",
+          cursor:'none',
+          color: "white",
+        },
         ...props.sx,
       }}
+      
     >
       {loading ? (
         <Box display="flex" alignItems="center">

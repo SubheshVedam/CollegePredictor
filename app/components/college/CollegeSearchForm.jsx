@@ -83,7 +83,7 @@ export default function CollegeSearchForm({ onSearchComplete }) {
           <LoadingButton
             type="submit"
             loading={isLoading}
-            text={isFormValid ? "Find Colleges" : "*Please Select All Fields"}
+            text={isFormValid ? "Find Colleges" : "*Please Fill All Fields"}
             loadingText="Searching..."
             disabled={!isFormValid}
           />

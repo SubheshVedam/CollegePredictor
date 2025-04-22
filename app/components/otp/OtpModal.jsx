@@ -9,8 +9,10 @@ import {
   Divider,
   Alert,
   InputAdornment,
+  IconButton,
 } from "@mui/material";
 import StyledInput from "../shared/StyledInput";
+import CloseIcon from "@mui/icons-material/Close";
 
 // Validation functions
 const validateEmail = (email) => {
@@ -27,6 +29,7 @@ const validateName = (name) => {
 };
 
 export default function OtpModal({
+  router,
   open,
   onClose,
   phoneNumber,
@@ -122,6 +125,10 @@ export default function OtpModal({
     );
   };
 
+  const handleModalClose = () => {
+    router.push('/')
+  }
+
   const handleVerifyOTP = async () => {
     if (!otp || otp.length !== 4) {
       setError("Please enter a valid 4-digit OTP");
@@ -135,11 +142,11 @@ export default function OtpModal({
       otp,
       async (data) => {
         console.log("OTP verified successfully:", data);
-        
+
         try {
           // Save user data to the database
           await saveUserData();
-          
+
           setSuccess("Verification successful!");
           setIsLoading(false);
           setTimeout(() => {
@@ -198,7 +205,14 @@ export default function OtpModal({
       aria-labelledby="otp-modal-title"
       aria-describedby="otp-modal-description"
     >
-      <Box sx={modalStyle}>
+      <Box sx={modalStyle} position='relative'>
+        <IconButton
+          onClick={handleModalClose}
+          sx={{ position: "absolute", top: 12, right: 12 }}
+          aria-label="close"
+        >
+          <CloseIcon />
+        </IconButton>
         <Typography id="otp-modal-title" variant="h6" mb={2}>
           Sign in to view the list
         </Typography>
@@ -356,7 +370,7 @@ export default function OtpModal({
           mt={2}
         >
           By clicking Sign Up, you agree to our{" "}
-          <a href="/" target="_blank" rel="noopener noreferrer" style={{color:'text.secondary'}}>
+          <a href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: 'text.secondary' }}>
             Terms & Conditions
           </a>
         </Typography>

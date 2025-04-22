@@ -366,6 +366,7 @@ export default function ResultsPage() {
         </Modal>
 
         <OtpModal
+        router={router}
           open={showOtpModal}
           onClose={() => dispatch(setShowOtpModal(false))}
           phoneNumber={phoneNumber}

@@ -36,17 +36,17 @@ export default function CollegePredictorPage() {
               justifyContent: "space-between",
             }}
           >
-            <Box sx={{ width: { xs: 120, sm: 200 } }}>
+            {/* <Box sx={{ width: { xs: 120, sm: 200 }, visibility:'hidden' }}>
               <Image
                 width={200}
-                height={110}
+                height={0}
                 src={"/img/Vedam_Final_Logo_White.png"}
                 alt="logo"
                 style={{ width: "100%", height: "auto" }}
               />
-            </Box>
-            <Box>
-              <Typography sx={{ color: "#FFFFFF" }}>JEE MAINS 2025</Typography>
+            </Box> */}
+            <Box sx={{mt:7}}>
+              <Typography sx={{ color: "#FFFFFF" }}>Most Accurate</Typography>
               <Typography
                 variant="h3"
                 sx={{ fontWeight: "bold", fontSize: { xs: 32, sm: 48 },color: "#FFFFFF" }}
@@ -85,17 +85,12 @@ export default function CollegePredictorPage() {
                 <Box sx={{ display: "flex", gap: 3 }}>
                   {" "}
                   <Image
-                    width={70}
-                    height={25}
-                    src={"/img/google.webp"}
+                    width={200}
+                    height={40}
+                    src={"/img/Google_Microsoft_with_White.png"}
                     alt="logo"
                   />{" "}
-                  <Image
-                    width={80}
-                    height={25}
-                    src={"/img/microsoft-logo.png"}
-                    alt="logo"
-                  />
+                
                 </Box>
               </Box>
             </Box>
