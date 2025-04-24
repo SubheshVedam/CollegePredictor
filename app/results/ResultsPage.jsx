@@ -243,9 +243,13 @@ export default function ResultsPage() {
             <Typography
               variant="h4"
               sx={{
-                color: "#FB7F05",
-                fontWeight: "bold",
-                fontSize: { xs: 22, sm: 36 },
+                background:
+                  "linear-gradient(95.22deg, #FB7F05 2.91%, #6C10BC 99.18%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                display: "inline-block",
+                fontWeight: "500",
+                fontSize: { xs: 28, sm: 38 },
               }}
             >
               College Predictor
