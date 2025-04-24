@@ -250,48 +250,18 @@ export default function ResultsPage() {
             >
               College Predictor
             </Typography>
-            <Typography
-              variant="subtitle1"
-              sx={{
-                color: "#6D1D59",
-                fontSize: { xs: 12, sm: 18 },
-                fontWeight: "bold",
-              }}
-            >
-              Category:{" "}
-              <span style={{ color: "black", fontWeight: "normal" }}>
-                {searchParams.get("category")}
-              </span>
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              sx={{
-                color: "#6D1D59",
-                fontSize: { xs: 12, sm: 18 },
-                fontWeight: "bold",
-              }}
-            >
-              JEE Main 2025 Rank:{" "}
-              <span style={{ color: "black", fontWeight: "normal" }}>
-                {searchParams.get("rank")}
-              </span>
-            </Typography>
           </Box>
 
           {/* Image Section - Modified for mobile */}
           <Box
             sx={{
-              position: "relative",
-              borderRadius: "16px",
-              height: { xs: 120, sm: 300 },
-              width: { xs: "90%", sm: 400 },
-              maxWidth: { xs: "90%", sm: 400 },
-              minWidth: { xs: 200, sm: 400 },
-              mx: "auto",
-              backgroundImage: "url(/img/rankBg.webp)",
-              backgroundSize: "contain",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
+              display: "flex",
+              width: { xs: "100%", sm: "25%" },
+              flexDirection: { xs: "row", sm: "column" },
+              bgcolor: "#2a135b",
+              py: 1,
+              borderRadius: "100px 0 0 100px",
+              boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.5)", // added bottom-only shadow
             }}
           >
             {/* Foreground content */}
@@ -303,32 +273,29 @@ export default function ResultsPage() {
                 width: "100%",
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
+                alignItems: { xs: "center", sm: "flex-start" },
                 justifyContent: "center",
-                textAlign: "center",
+                pl: { xs: 0, sm: 3 },
               }}
             >
               <Typography
-                variant="h5"
-                sx={{
-                  color: "orange",
-                  fontWeight: "bold",
-                  mb: 1,
-                  fontSize: { xs: 24, sm: 32 },
-                }}
-              >
-                {addOrdinalSuffix(searchParams.get("rank"))}
-              </Typography>
-              <Typography
-                variant="body1"
+                variant="subtitle1"
                 sx={{
                   color: "white",
-                  fontSize: { xs: 12, sm: 16 },
-                  maxWidth: 300,
+                  fontSize: { xs: 12, sm: 18 },
                 }}
               >
-                Expected Rank According <br />
-                to Your JEE MAIN 2025 Marks
+                Category:&nbsp;{searchParams.get("category")}
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  color: "white",
+                  textAlign: "left",
+                  fontSize: { xs: 12, sm: 18 },
+                }}
+              >
+                JEE Main 2025 Rank:&nbsp;{searchParams.get("rank")}
               </Typography>
             </Box>
           </Box>
@@ -366,7 +333,7 @@ export default function ResultsPage() {
         </Modal>
 
         <OtpModal
-        router={router}
+          router={router}
           open={showOtpModal}
           onClose={() => dispatch(setShowOtpModal(false))}
           phoneNumber={phoneNumber}

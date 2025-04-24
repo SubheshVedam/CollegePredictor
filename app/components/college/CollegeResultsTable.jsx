@@ -132,8 +132,8 @@ export default function CollegeResultsTable({ myRank }) {
         <Box sx={{ width: "100%", height: "auto" }}>
           <a href={"www.google.com"} target="_blank" rel="noopener noreferrer">
             <Image
-              width={20000}
-              height={50000}
+              width={1500}
+              height={500}
               src={"/img/noResultAd.jpeg"}
               alt="No Result"
               style={{ width: "100%", height: "100%" }}
@@ -247,25 +247,24 @@ export default function CollegeResultsTable({ myRank }) {
                       return (
                         <TableRow>
                           <TableCell colSpan={6} sx={{ p: 0 }}>
-                            <Box sx={{ width: "100%", height: "auto" }}>
-                              <a
-                                href={adData.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <Image
-                                  width={800}
-                                  height={400}
-                                  src={adData.imgurl}
-                                  alt={adData.text}
-                                  style={{
-                                    width: "100%",
-                                    height: "auto",
-                                    objectFit: "cover",
-                                  }}
-                                />
-                              </a>
-                            </Box>
+                            <a
+                              href={adData.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Image
+                                width={1500}
+                                height={500}
+                                src={adData.imgurl}
+                                alt={adData.text}
+                                loading="lazy"
+                                style={{
+                                  width: "100%",
+                                  height: "auto",
+                                  objectFit: "cover",
+                                }}
+                              />
+                            </a>
                           </TableCell>
                         </TableRow>
                       );
@@ -361,27 +360,25 @@ export default function CollegeResultsTable({ myRank }) {
                   if (!adData) return null;
 
                   return (
-                    <TableRow>
-                      <TableCell colSpan={6} sx={{ p: 0 }}>
-                          <a
-                            href={adData.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <Image
-                              width={800}
-                              height={400}
-                              src={adData.imgurl}
-                              alt={adData.text}
-                              style={{
-                                width: "100%",
-                                height: "60px",
-                                objectFit: "contain",
-                              }}
-                            />
-                          </a>
-                      </TableCell>
-                    </TableRow>
+                    <Box sx={{ width: "100%", height: "auto" }}>
+                      <a
+                        href={adData.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Image
+                          width={1200}
+                          height={400}
+                          src={adData.imgurl}
+                          alt={adData.text}
+                          style={{
+                            width: "100%",
+                            height: "60px",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </a>
+                    </Box>
                   );
                 })()}
             </React.Fragment>

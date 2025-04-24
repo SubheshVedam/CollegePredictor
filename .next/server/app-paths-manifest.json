@@ -1,6 +1,5 @@
 {
-  "/api/save-user/route": "app/api/save-user/route.js",
   "/api/colleges/route": "app/api/colleges/route.js",
-  "/page": "app/page.js",
-  "/results/page": "app/results/page.js"
+  "/results/page": "app/results/page.js",
+  "/page": "app/page.js"
 }
