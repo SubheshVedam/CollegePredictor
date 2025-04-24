@@ -33,6 +33,7 @@ import {
 } from "../../redux/searchSlice";
 import React, { useState } from "react";
 import Image from "next/image";
+import ErrorIcon from "@mui/icons-material/Error";
 
 const interspersedMessages = [
   {
@@ -69,7 +70,8 @@ const interspersedMessagesMobile = [
   },
 ];
 
-const adPositioning = [0, 2, 3];
+const adPositioningMob = [0, 3, 6];
+const adPositioning = [0, 2, 4];
 
 export default function CollegeResultsTable({ myRank }) {
   const dispatch = useDispatch();
@@ -147,11 +149,31 @@ export default function CollegeResultsTable({ myRank }) {
     return (
       <div className="text-center py-8 text-gray-500">
         <Box sx={{ width: "100%", height: "auto" }}>
-          <Typography
-            sx={{ fontSize: { xs: 14, sm: 20 }, textAlign: "center",width:'100%', mb:2 }}
+          <Box
+            sx={{
+              backgroundColor: "#fee5cd",
+              borderRadius: "20px",
+              py: 2,
+              mb: { xs: 5, sm: 10 },
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
           >
-            Sorry, Your Rank is not eligible for any&nbsp;NITs,&nbsp;IIITs&nbsp;or&nbsp;GFTIs
-          </Typography>
+            <ErrorIcon sx={{ color: "orange", fontSize: "50px", mb: 1 }} />
+            <Typography
+              sx={{
+                fontSize: { xs: 14, sm: 20 },
+                textAlign: "center",
+                width: "100%",
+              }}
+            >
+              Sorry, Your Rank is not eligible for
+              any&nbsp;NITs,&nbsp;IIITs&nbsp;or&nbsp;GFTIs
+            </Typography>
+          </Box>
+
           <a href={"www.google.com"} target="_blank" rel="noopener noreferrer">
             <Image
               width={1500}
@@ -374,9 +396,9 @@ export default function CollegeResultsTable({ myRank }) {
                 </AccordionDetails>
               </Accordion>
 
-              {adPositioning.includes(idx) &&
+              {adPositioningMob.includes(idx) &&
                 (() => {
-                  const adIndex = adPositioning.indexOf(idx);
+                  const adIndex = adPositioningMob.indexOf(idx);
                   const adData = interspersedMessagesMobile[adIndex];
 
                   if (!adData) return null;
@@ -395,8 +417,8 @@ export default function CollegeResultsTable({ myRank }) {
                           alt={adData.text}
                           style={{
                             width: "100%",
-                            height: "60px",
-                            objectFit: "inherit",
+                            height: "auto",
+                            objectFit: "contain",
                           }}
                         />
                       </a>
