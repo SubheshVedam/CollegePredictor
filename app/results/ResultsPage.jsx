@@ -59,7 +59,7 @@ export default function ResultsPage() {
         exposeMethods: true,
         success: (data) => {
           console.log("Verification success:", data);
-          sessionStorage.setItem("isVerified", "true");
+          localStorage.setItem("isVerified", "true");
           handleOtpVerificationSuccess();
         },
         failure: (error) => {
@@ -91,7 +91,7 @@ export default function ResultsPage() {
     const stateId = searchParams.get("stateId");
 
     if (rank && gender && category && stateId) {
-      const verified = sessionStorage.getItem("isVerified") === "true";
+      const verified = localStorage.getItem("isVerified") === "true";
       dispatch(setIsVerified(verified));
 
       if (!verified) {
@@ -123,7 +123,7 @@ export default function ResultsPage() {
   };
 
   const handleOtpVerificationSuccess = () => {
-    sessionStorage.setItem("isVerified", "true");
+    localStorage.setItem("isVerified", "true");
     dispatch(setIsVerified(true));
     dispatch(setShowOtpModal(false));
 

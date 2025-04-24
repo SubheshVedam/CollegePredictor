@@ -24,7 +24,6 @@ import {
 } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import InfoIcon from "@mui/icons-material/Info";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTheme } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,7 +31,28 @@ import {
   fetchProgramDetails,
   setProgramDetailsModalOpen,
 } from "../../redux/searchSlice";
-import { useState } from "react";
+import React, { useState } from "react";
+import Image from "next/image";
+
+const interspersedMessages = [
+  {
+    text: "Explore more opportunities on our portal!",
+    href: "/explore",
+    imgurl: "/img/AD1.jpeg",
+  },
+  {
+    text: "Not seeing your dream college? Try adjusting filters.",
+    href: "/filters",
+    imgurl: "/img/AD2.jpeg",
+  },
+  {
+    text: "Check past trends to set realistic expectations.",
+    href: "/trends",
+    imgurl: "/img/AD3.jpeg",
+  },
+];
+
+const adPositioning = [0, 2, 3];
 
 export default function CollegeResultsTable({ myRank }) {
   const dispatch = useDispatch();
@@ -108,7 +128,19 @@ export default function CollegeResultsTable({ myRank }) {
     );
   if (results.length === 0)
     return (
-      <div className="text-center py-8 text-gray-500">No results found</div>
+      <div className="text-center py-8 text-gray-500">
+        <Box sx={{ width: "100%", height: "auto" }}>
+          <a href={"www.google.com"} target="_blank" rel="noopener noreferrer">
+            <Image
+              width={20000}
+              height={50000}
+              src={"/img/noResultAd.jpeg"}
+              alt="No Result"
+              style={{ width: "100%", height: "100%" }}
+            />
+          </a>
+        </Box>
+      </div>
     );
 
   return (
@@ -141,143 +173,218 @@ export default function CollegeResultsTable({ myRank }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {sortedColleges.map((college) =>
-                college.programs.map((program, idx) => (
-                  <TableRow
-                    key={`${program.institute_id}-${idx}`}
-                    sx={{
-                      backgroundColor:
-                        idx % 2 === 0 ? "rgba(108, 16, 188, 0.2)" : "white",
-                    }}
-                  >
-                    {idx === 0 && (
-                      <TableCell
-                        rowSpan={college.programs.length}
-                        sx={{
-                          fontWeight: "bold",
-                          backgroundColor: "white",
-                          verticalAlign: "top",
-                          fontSize: 20,
-                          textWrap: "pretty",
-                          border: "1px solid #ccc",
-                        }}
-                      >
-                        {college.collegeName}
-                      </TableCell>
-                    )}
-                    <TableCell>{program.program_name}</TableCell>
-                    <TableCell align="right">{program.opening_rank}</TableCell>
-                    <TableCell align="right">{program.closing_rank}</TableCell>
-                    <TableCell>
-                      <Chip
-                        label={program.sub_category}
-                        size="small"
-                        color={
-                          program.sub_category === "HS"
-                            ? "primary"
-                            : "secondary"
-                        }
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        variant="text"
-                        size="small"
-                        onClick={() => handleViewDetails(program)}
-                      >
-                        <Typography
+              {sortedColleges.map((college, idx) => (
+                <React.Fragment key={idx}>
+                  {college.programs.map((program, pIdx) => (
+                    <TableRow
+                      key={`${program.institute_id}-${pIdx}`}
+                      sx={{
+                        backgroundColor:
+                          pIdx % 2 === 0 ? "rgba(108, 16, 188, 0.2)" : "white",
+                      }}
+                    >
+                      {pIdx === 0 && (
+                        <TableCell
+                          rowSpan={college.programs.length}
                           sx={{
-                            color: "#6C10BC",
-                            textTransform: "capitalize",
-                            fontSize: 14,
+                            fontWeight: "bold",
+                            backgroundColor: "white",
+                            verticalAlign: "top",
+                            fontSize: 20,
+                            textWrap: "pretty",
+                            border: "1px solid #ccc",
                           }}
                         >
-                          Round&nbsp;Wise&nbsp;Details
-                        </Typography>
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
+                          {college.collegeName}
+                        </TableCell>
+                      )}
+                      <TableCell>{program.program_name}</TableCell>
+                      <TableCell align="right">
+                        {program.opening_rank}
+                      </TableCell>
+                      <TableCell align="right">
+                        {program.closing_rank}
+                      </TableCell>
+                      <TableCell>
+                        <Chip
+                          label={program.sub_category}
+                          size="small"
+                          color={
+                            program.sub_category === "HS"
+                              ? "primary"
+                              : "secondary"
+                          }
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          variant="text"
+                          size="small"
+                          onClick={() => handleViewDetails(program)}
+                        >
+                          <Typography
+                            sx={{
+                              color: "#6C10BC",
+                              textTransform: "capitalize",
+                              fontSize: 14,
+                            }}
+                          >
+                            Round&nbsp;Wise&nbsp;Details
+                          </Typography>
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+
+                  {/* Inserting messages every 2 colleges */}
+                  {adPositioning.includes(idx) &&
+                    (() => {
+                      const adIndex = adPositioning.indexOf(idx);
+                      const adData = interspersedMessages[adIndex];
+
+                      if (!adData) return null;
+
+                      return (
+                        <TableRow>
+                          <TableCell colSpan={6} sx={{ p: 0 }}>
+                            <Box sx={{ width: "100%", height: "auto" }}>
+                              <a
+                                href={adData.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Image
+                                  width={800}
+                                  height={400}
+                                  src={adData.imgurl}
+                                  alt={adData.text}
+                                  style={{
+                                    width: "100%",
+                                    height: "auto",
+                                    objectFit: "cover",
+                                  }}
+                                />
+                              </a>
+                            </Box>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })()}
+                </React.Fragment>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
       ) : (
         <Box mt={3}>
           {sortedColleges.map((college, idx) => (
-            <Accordion key={idx} sx={{ mb: 1 }}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ backgroundColor: "rgba(108, 16, 188, 0.3)" }}
-              >
-                <Typography>{college.collegeName}</Typography>
-              </AccordionSummary>
-              <AccordionDetails sx={{ p: 0, m: 0 }}>
-                {college.programs.map((program, i) => (
-                  <Box
-                    key={`${college.collegeName}-${i}`}
-                    sx={{
-                      backgroundColor: i % 2 === 0 ? "#ede9fe" : "#fff",
-                      p: 2,
-                    }}
-                  >
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ fontSize: { xs: 12, sm: 16 } }}
-                    >
-                      {program.program_name}
-                    </Typography>
+            <React.Fragment key={idx}>
+              <Accordion sx={{ mb: 1 }}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  sx={{ backgroundColor: "rgba(108, 16, 188, 0.3)" }}
+                >
+                  <Typography>{college.collegeName}</Typography>
+                </AccordionSummary>
+                <AccordionDetails sx={{ p: 0, m: 0 }}>
+                  {college.programs.map((program, i) => (
                     <Box
+                      key={`${college.collegeName}-${i}`}
                       sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
+                        backgroundColor: i % 2 === 0 ? "#ede9fe" : "#fff",
+                        p: 2,
                       }}
                     >
+                      <Typography
+                        variant="subtitle1"
+                        sx={{ fontSize: { xs: 12, sm: 16 } }}
+                      >
+                        {program.program_name}
+                      </Typography>
                       <Box
                         sx={{
                           display: "flex",
-                          flexDirection: "row",
-                          gap: 1,
+                          justifyContent: "space-between",
                           alignItems: "center",
                         }}
                       >
-                        <Typography
-                          variant="body2"
-                          sx={{ fontSize: { xs: 12, sm: 16 } }}
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: 1,
+                            alignItems: "center",
+                          }}
                         >
-                          <strong>OR:</strong> {program.opening_rank} |{" "}
-                          <strong>CR:</strong> {program.closing_rank}
-                        </Typography>
-                        <Chip
-                          label={program.sub_category}
+                          <Typography
+                            variant="body2"
+                            sx={{ fontSize: { xs: 12, sm: 16 } }}
+                          >
+                            <strong>OR:</strong> {program.opening_rank} |{" "}
+                            <strong>CR:</strong> {program.closing_rank}
+                          </Typography>
+                          <Chip
+                            label={program.sub_category}
+                            size="small"
+                            color={"secondary"}
+                            sx={{ fontSize: { xs: 12, sm: 16 } }}
+                          />
+                        </Box>
+                        <IconButton
                           size="small"
-                          color={"secondary"}
-                          sx={{ fontSize: { xs: 12, sm: 16 } }}
-                        />
+                          onClick={() => handleViewDetails(program)}
+                          sx={{
+                            backgroundColor: "lightgray",
+                            border: "1px solid #ccc",
+                            borderRadius: "4px",
+                            width: "32px",
+                            height: "32px",
+                            padding: 0,
+                          }}
+                        >
+                          <ArrowForwardIosIcon
+                            fontSize="small"
+                            sx={{ color: "black" }}
+                          />
+                        </IconButton>
                       </Box>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleViewDetails(program)}
-                        sx={{
-                          backgroundColor: "lightgray",
-                          border: "1px solid #ccc",
-                          borderRadius: "4px",
-                          width: "32px",
-                          height: "32px",
-                          padding: 0,
-                        }}
-                      >
-                        <ArrowForwardIosIcon
-                          fontSize="small"
-                          sx={{ color: "black" }}
-                        />
-                      </IconButton>
                     </Box>
-                  </Box>
-                ))}
-              </AccordionDetails>
-            </Accordion>
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+
+              {adPositioning.includes(idx) &&
+                (() => {
+                  const adIndex = adPositioning.indexOf(idx);
+                  const adData = interspersedMessages[adIndex];
+
+                  if (!adData) return null;
+
+                  return (
+                    <TableRow>
+                      <TableCell colSpan={6} sx={{ p: 0 }}>
+                          <a
+                            href={adData.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Image
+                              width={800}
+                              height={400}
+                              src={adData.imgurl}
+                              alt={adData.text}
+                              style={{
+                                width: "100%",
+                                height: "60px",
+                                objectFit: "contain",
+                              }}
+                            />
+                          </a>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })()}
+            </React.Fragment>
           ))}
         </Box>
       )}
@@ -298,7 +405,7 @@ export default function CollegeResultsTable({ myRank }) {
             bgcolor: "background.paper",
             boxShadow: 24,
             p: 3,
-            pt:2,
+            pt: 2,
             borderRadius: 2,
             maxHeight: "80vh",
             overflowY: "auto",
