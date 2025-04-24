@@ -26,6 +26,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
+import useUtmTracking from "@/hooks/useUtmTracking";
 
 const modalStyle = {
   position: "absolute",
@@ -42,6 +43,7 @@ const modalStyle = {
 };
 
 export default function ResultsPage() {
+  useUtmTracking();
   const searchParams = useSearchParams();
   const router = useRouter();
   const dispatch = useDispatch();
