@@ -51,6 +51,23 @@ const interspersedMessages = [
     imgurl: "/img/AD3.jpeg",
   },
 ];
+const interspersedMessagesMobile = [
+  {
+    text: "Explore more opportunities on our portal!",
+    href: "/explore",
+    imgurl: "/img/AD1_Mobile.jpeg",
+  },
+  {
+    text: "Not seeing your dream college? Try adjusting filters.",
+    href: "/filters",
+    imgurl: "/img/AD2_Mobile.jpeg",
+  },
+  {
+    text: "Check past trends to set realistic expectations.",
+    href: "/trends",
+    imgurl: "/img/AD3_Mobile.jpeg",
+  },
+];
 
 const adPositioning = [0, 2, 3];
 
@@ -355,7 +372,7 @@ export default function CollegeResultsTable({ myRank }) {
               {adPositioning.includes(idx) &&
                 (() => {
                   const adIndex = adPositioning.indexOf(idx);
-                  const adData = interspersedMessages[adIndex];
+                  const adData = interspersedMessagesMobile[adIndex];
 
                   if (!adData) return null;
 
@@ -374,7 +391,7 @@ export default function CollegeResultsTable({ myRank }) {
                           style={{
                             width: "100%",
                             height: "60px",
-                            objectFit: "cover",
+                            objectFit: "inherit",
                           }}
                         />
                       </a>

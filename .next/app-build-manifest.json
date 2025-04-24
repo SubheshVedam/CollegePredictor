@@ -16,11 +16,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/results/page.js"
     ],
-    "/api/save-user/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/save-user/route.js"
-    ],
     "/api/colleges/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
