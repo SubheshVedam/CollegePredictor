@@ -11,6 +11,8 @@ import { store } from "./redux/store";
 import Script from "next/script"; // ✅ import Script from next/script
 import { Suspense, useEffect } from "react";
 import { storeUtmParams, sendUtmToAnalytics } from "../utils/utm";
+import GoogleAnalytics from "./components/google-analytics";
+
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -45,7 +47,7 @@ export default function RootLayout({ children }) {
         <head>
           <link rel="icon" href="./favicon.ico" />
           <Suspense fallback={null}>
-            {/* <GoogleAnalytics /> */}
+            <GoogleAnalytics />
           </Suspense>
           <Script
           id="microsoft-clarity"
