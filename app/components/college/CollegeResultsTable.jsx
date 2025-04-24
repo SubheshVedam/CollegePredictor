@@ -147,6 +147,11 @@ export default function CollegeResultsTable({ myRank }) {
     return (
       <div className="text-center py-8 text-gray-500">
         <Box sx={{ width: "100%", height: "auto" }}>
+          <Typography
+            sx={{ fontSize: { xs: 14, sm: 20 }, textAlign: "center",width:'100%', mb:2 }}
+          >
+            Sorry, Your Rank is not eligible for any&nbsp;NITs,&nbsp;IIITs&nbsp;or&nbsp;GFTIs
+          </Typography>
           <a href={"www.google.com"} target="_blank" rel="noopener noreferrer">
             <Image
               width={1500}
