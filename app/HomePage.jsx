@@ -5,8 +5,24 @@ import JEERankPredictorInfo from "./components/JEERankPredictorInfo";
 import { Box, Typography } from "@mui/material";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import Image from "next/image";
+import useUtmTracking from "../hooks/useUtmTracking";
+import { useEffect } from "react";
+import { getStoredUtmParams } from "../utils/utm";
 
 export default function CollegePredictorPage() {
+  // Use the UTM tracking hook to track page views with UTM parameters
+  useUtmTracking();
+  
+  // Log UTM parameters for debugging (optional, can be removed in production)
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      const utmParams = getStoredUtmParams();
+      if (Object.keys(utmParams).length > 0) {
+        console.log('UTM Parameters:', utmParams);
+      }
+    }
+  }, []);
+  
   return (
     <>
       <Box

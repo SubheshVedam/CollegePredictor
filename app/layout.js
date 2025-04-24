@@ -9,7 +9,8 @@ import theme from "../theme";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import Script from "next/script"; // ✅ import Script from next/script
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
+import { storeUtmParams, sendUtmToAnalytics } from "../utils/utm";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -29,6 +30,15 @@ const geistMono = Geist_Mono({
 });
 
 export default function RootLayout({ children }) {
+  // Capture and store UTM parameters when the app loads
+  useEffect(() => {
+    // Store UTM parameters from URL to localStorage
+    storeUtmParams();
+    
+    // Send UTM data to Google Analytics
+    sendUtmToAnalytics();
+  }, []);
+
   return (
     <Provider store={store}>
       <html lang="en" className={poppins.variable}>
@@ -48,7 +58,11 @@ export default function RootLayout({ children }) {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-EJQV1XVPZC');
+              gtag('config', 'G-EJQV1XVPZC', { 
+                send_page_view: true,
+                cookie_flags: 'SameSite=None;Secure',
+                cookie_domain: 'auto'
+              });
             `}
           </Script>
         </head>
