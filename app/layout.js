@@ -51,6 +51,44 @@ export default function RootLayout({ children }) {
               gtag('config', 'G-EJQV1XVPZC');
             `}
           </Script>
+          <Script id="google-analytics-utm" strategy="afterInteractive">
+  {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-EJQV1XVPZC');
+
+    function getQueryParams() {
+      return window.location.search
+        .substring(1)
+        .split("&")
+        .reduce(function(acc, pair) {
+          var [key, val] = pair.split("=");
+          if (key) acc[decodeURIComponent(key)] = decodeURIComponent(val || "");
+          return acc;
+        }, {});
+    }
+
+    (function() {
+      var params = getQueryParams();
+      var utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+      var utmData = {};
+
+      utmKeys.forEach(function(k) {
+        if (params[k]) {
+          utmData[k] = params[k];
+          document.cookie = k + "=" + encodeURIComponent(params[k]) + "; path=/; max-age=" + (60*60*24*30);
+        }
+      });
+
+      gtag('event', 'page_view', {
+        'page_path': window.location.pathname + window.location.search,
+        ...utmData
+      });
+    })();
+  `}
+</Script>
+
         </head>
         <body
           className={`${poppins.className} ${geistSans.variable} ${geistMono.variable}`}
