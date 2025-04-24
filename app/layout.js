@@ -45,10 +45,10 @@ export default function RootLayout({ children }) {
     <Provider store={store}>
       <html lang="en" className={poppins.variable}>
         <head>
-          <link rel="icon" href="./favicon.ico" />
           <Suspense fallback={null}>
             <GoogleAnalytics />
           </Suspense>
+          <link rel="icon" href="./favicon.ico" />
           <Script
           id="microsoft-clarity"
           strategy="afterInteractive"
