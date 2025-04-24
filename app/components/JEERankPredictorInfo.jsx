@@ -137,7 +137,7 @@ export default function JEERankPredictorInfo() {
       {/* Benefits Section */}
       <Box sx={{mb:2}}>
         <Typography variant="h6" sx={{ color: "#6C10BC", fontWeight: "bold" }}>
-          Benefits of the JEE College Predictor 2025
+          Benefit of the JEE College Predictor 2025
         </Typography>
         <List sx={{ mt: 1 }}>
           {benefits.map((benefit, index) => (
