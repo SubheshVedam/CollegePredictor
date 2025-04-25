@@ -62,26 +62,51 @@ export default function OtpModal({
 
   const saveUserData = async () => {
     try {
-      const response = await fetch('/api/save-user', {
-        method: 'POST',
+      const response = await fetch("/api/save-user", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           phone: phoneNumber,
           name: fullName,
-          email: email
+          email: email,
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to save user data');
+        throw new Error("Failed to save user data");
       }
 
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error('Error saving user data:', error);
+      console.error("Error saving user data:", error);
+      throw error;
+    }
+  };
+  const saveUtmData = async () => {
+    try {
+      const response = await fetch("/api/utm-tracking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          utmParam: window.document.cookie,
+          isVerified: true,
+          phone: phoneNumber,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save utm data");
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error saving user data:", error);
       throw error;
     }
   };
@@ -126,8 +151,8 @@ export default function OtpModal({
   };
 
   const handleModalClose = () => {
-    router.push('/')
-  }
+    router.push("/");
+  };
 
   const handleVerifyOTP = async () => {
     if (!otp || otp.length !== 4) {
@@ -146,7 +171,7 @@ export default function OtpModal({
         try {
           // Save user data to the database
           await saveUserData();
-
+          await saveUtmData();
           setSuccess("Verification successful!");
           setIsLoading(false);
           setTimeout(() => {
@@ -205,7 +230,7 @@ export default function OtpModal({
       aria-labelledby="otp-modal-title"
       aria-describedby="otp-modal-description"
     >
-      <Box sx={modalStyle} position='relative'>
+      <Box sx={modalStyle} position="relative">
         <IconButton
           onClick={handleModalClose}
           sx={{ position: "absolute", top: 12, right: 12 }}
@@ -370,7 +395,12 @@ export default function OtpModal({
           mt={2}
         >
           By clicking Sign Up, you agree to our{" "}
-          <a href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: 'text.secondary' }}>
+          <a
+            href="/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "text.secondary" }}
+          >
             Terms & Conditions
           </a>
         </Typography>

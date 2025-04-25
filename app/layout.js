@@ -13,7 +13,6 @@ import { Suspense, useEffect } from "react";
 import { storeUtmParams, sendUtmToAnalytics } from "../utils/utm";
 import GoogleAnalytics from "./components/google-analytics";
 
-
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
@@ -36,7 +35,7 @@ export default function RootLayout({ children }) {
   useEffect(() => {
     // Store UTM parameters from URL to localStorage
     storeUtmParams();
-    
+
     // Send UTM data to Google Analytics
     sendUtmToAnalytics();
   }, []);
@@ -45,23 +44,21 @@ export default function RootLayout({ children }) {
     <Provider store={store}>
       <html lang="en" className={poppins.variable}>
         <head>
-          <Suspense fallback={null}>
-            {/* <GoogleAnalytics /> */}
-          </Suspense>
+          <Suspense fallback={null}>{/* <GoogleAnalytics /> */}</Suspense>
           <link rel="icon" href="./favicon.ico" />
           <Script
-          id="microsoft-clarity"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
+            id="microsoft-clarity"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
               (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "r96wsf86es");
             `,
-          }}
-        />
+            }}
+          />
 
           {/* ✅ Load the gtag.js script using next/script */}
           <Script
@@ -81,7 +78,7 @@ export default function RootLayout({ children }) {
             `}
           </Script>
           <Script id="google-analytics-utm" strategy="afterInteractive">
-  {`
+            {`
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
@@ -116,8 +113,7 @@ export default function RootLayout({ children }) {
       });
     })();
   `}
-</Script>
-
+          </Script>
         </head>
         <body
           className={`${poppins.className} ${geistSans.variable} ${geistMono.variable}`}
