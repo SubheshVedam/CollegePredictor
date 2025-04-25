@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
       <html lang="en" className={poppins.variable}>
         <head>
           <Suspense fallback={null}>
-            <GoogleAnalytics />
+            {/* <GoogleAnalytics /> */}
           </Suspense>
           <link rel="icon" href="./favicon.ico" />
           <Script
