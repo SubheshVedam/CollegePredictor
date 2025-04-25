@@ -38,34 +38,34 @@ import ErrorIcon from "@mui/icons-material/Error";
 const interspersedMessages = [
   {
     text: "Explore more opportunities on our portal!",
-    href: "/explore",
+    href: "https://www.vedam.org",
     imgurl: "/img/AD1.jpeg",
   },
   {
     text: "Not seeing your dream college? Try adjusting filters.",
-    href: "/filters",
+    href: "https://www.vedam.org",
     imgurl: "/img/AD2.jpeg",
   },
   {
     text: "Check past trends to set realistic expectations.",
-    href: "/trends",
+    href: "https://www.vedam.org",
     imgurl: "/img/AD3.jpeg",
   },
 ];
 const interspersedMessagesMobile = [
   {
     text: "Explore more opportunities on our portal!",
-    href: "/explore",
+    href: "https://www.vedam.org",
     imgurl: "/img/AD1_Mobile.jpeg",
   },
   {
     text: "Not seeing your dream college? Try adjusting filters.",
-    href: "/filters",
+    href: "https://www.vedam.org",
     imgurl: "/img/AD2_Mobile.jpeg",
   },
   {
     text: "Check past trends to set realistic expectations.",
-    href: "/trends",
+    href: "https://www.vedam.org",
     imgurl: "/img/AD3_Mobile.jpeg",
   },
 ];
@@ -174,11 +174,11 @@ export default function CollegeResultsTable({ myRank }) {
             </Typography>
           </Box>
 
-          <a href={"www.google.com"} target="_blank" rel="noopener noreferrer">
+          <a href="https://www.vedam.org" target="_blank" rel="noreferrer">
             <Image
               width={1500}
               height={500}
-              src={"/img/noResultAd.jpeg"}
+              src="/img/noResultAd.jpeg"
               alt="No Result"
               style={{ width: "100%", height: "100%" }}
             />
