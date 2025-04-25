@@ -184,9 +184,7 @@ const DashBoard = () => {
           label: (context) => {
             const label = context.label || '';
             const value = context.raw || 0;
-            const total = context.chart.data.total;
-            const percentage = ((value / total) * 100).toFixed(1) + '%';
-            return `${label}: ${value} (${percentage})`;
+            return `${label}: ${value} `;
           }
         }
       }
@@ -203,9 +201,7 @@ const DashBoard = () => {
           label: (context) => {
             const label = context.label || '';
             const value = context.raw || 0;
-            const total = context.chart.data.total;
-            const percentage = ((value / total) * 100).toFixed(1) + '%';
-            return `${label}: ${value} (${percentage})`;
+            return `${label}: ${value} `;
           }
         }
       }
