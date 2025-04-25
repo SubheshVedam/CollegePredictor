@@ -106,7 +106,7 @@ export default function OtpModal({
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error("Error saving user data:", error);
+      console.error("Error saving utm data:", error);
       throw error;
     }
   };
