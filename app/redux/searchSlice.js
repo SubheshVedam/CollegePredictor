@@ -47,6 +47,7 @@ const initialState = {
   rank: '',
   gender: 'Gender Neutral',
   category: 'OPEN',
+  year: '2025',
   stateId: '',
   results: [],
   dummyResults: [],
@@ -75,6 +76,9 @@ const searchSlice = createSlice({
     },
     setCategory: (state, action) => {
       state.category = action.payload;
+    },
+    setYear: (state, action) => {
+      state.year = action.payload;
     },
     setStateId: (state, action) => {
       state.stateId = action.payload;
@@ -149,6 +153,7 @@ export const {
   setRank,
   setGender,
   setCategory,
+  setYear,
   setStateId,
   setResults,
   setDummyResults,

@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import StyledInput from "../shared/StyledInput";
 import CloseIcon from "@mui/icons-material/Close";
+import { useSelector } from "react-redux";
 
 // Validation functions
 const validateEmail = (email) => {
@@ -50,6 +51,8 @@ export default function OtpModal({
   const [verificationFailed, setVerificationFailed] = useState(false);
   const [showUpdateNumber, setShowUpdateNumber] = useState(false);
 
+  const { year } = useSelector((state) => state.collegePredictor || {});
+
   const handleBlur = (field) => () => {
     setTouched({ ...touched, [field]: true });
   };
@@ -71,6 +74,7 @@ export default function OtpModal({
           phone: phoneNumber,
           name: fullName,
           email: email,
+          year:year
         }),
       });
 

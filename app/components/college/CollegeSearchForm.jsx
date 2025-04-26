@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchCollegeResults,
+  setYear,
   setCategory,
   setGender,
   setIsLoading,
@@ -15,20 +15,21 @@ import CategorySelector from "./CategorySelector";
 import StateSelector from "./StateSelector";
 import LoadingButton from "../shared/LoadingButton";
 import { Box } from "@mui/material";
+import YearSelector from "./YearSelector";
 
 export default function CollegeSearchForm({ onSearchComplete }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { rank, gender, category, stateId, isLoading } = useSelector(
+  const { rank, gender, category, year, stateId, isLoading } = useSelector(
     (state) => state.collegePredictor || {}
   );
 
   // Check if all fields are selected
-  const isFormValid = rank && gender && category && stateId;
+  const isFormValid = rank && gender && category && year && stateId;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(setIsLoading(true))
+    dispatch(setIsLoading(true));
     if (!isFormValid) {
       return; // Do nothing if form is invalid
     }
@@ -41,7 +42,7 @@ export default function CollegeSearchForm({ onSearchComplete }) {
       // ).unwrap();
 
       // Redirect to results page with query parameters
-      dispatch(setIsLoading(false))
+      dispatch(setIsLoading(false));
       const queryParams = new URLSearchParams({
         rank,
         gender,
@@ -76,6 +77,10 @@ export default function CollegeSearchForm({ onSearchComplete }) {
         <CategorySelector
           value={category}
           onChange={(value) => dispatch(setCategory(value))}
+        />
+        <YearSelector
+          value={year}
+          onChange={(value) => dispatch(setYear(value))}
         />
         <StateSelector
           value={stateId}

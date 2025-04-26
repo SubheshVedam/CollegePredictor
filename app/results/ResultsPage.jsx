@@ -107,22 +107,6 @@ export default function ResultsPage() {
   const handleOpenSearchModal = () => setOpenSearchModal(true);
   const handleCloseSearchModal = () => setOpenSearchModal(false);
 
-  const addOrdinalSuffix = (n) => {
-    const j = n % 10;
-    const k = n % 100;
-    let suffix = "th";
-
-    if (j === 1 && k !== 11) suffix = "st";
-    else if (j === 2 && k !== 12) suffix = "nd";
-    else if (j === 3 && k !== 13) suffix = "rd";
-
-    return (
-      <>
-        {n}
-        <sup>{suffix}</sup>
-      </>
-    );
-  };
 
   const handleOtpVerificationSuccess = () => {
     localStorage.setItem("isVerified", "true");
