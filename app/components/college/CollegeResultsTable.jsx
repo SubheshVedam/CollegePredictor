@@ -38,34 +38,34 @@ import ErrorIcon from "@mui/icons-material/Error";
 const interspersedMessages = [
   {
     text: "Explore more opportunities on our portal!",
-    href: "https://vedam.org/?utm_source=CollegePredictor&utm_medium=banner_ads&utm_campaign=b1_1l_linesofcode",
+    href: "https://tinyurl.com/collegepredictor-b1",
     imgurl: "/img/AD1.jpg",
   },
   {
     text: "Not seeing your dream college? Try adjusting filters.",
-    href: "https://apply.vedam.org/?utm_source=CollegePredictor&utm_medium=banner_ads&utm_campaign=b2_scholarship",
+    href: "https://tinyurl.com/collegepredictor-b2",
     imgurl: "/img/AD2.jpg",
   },
   {
     text: "Check past trends to set realistic expectations.",
-    href: "https://vedam.org/?utm_source=CollegePredictor&utm_medium=banner_ads&utm_campaign=b3_jobs0f2029",
+    href: "https://tinyurl.com/collegepredictor-b3",
     imgurl: "/img/AD3.jpg",
   },
 ];
 const interspersedMessagesMobile = [
   {
     text: "Explore more opportunities on our portal!",
-    href: "https://vedam.org/?utm_source=CollegePredictor&utm_medium=banner_ads&utm_campaign=b1_1l_linesofcode",
+    href: "https://tinyurl.com/collegepredictor-b1",
     imgurl: "/img/AD1_Mobile.jpeg",
   },
   {
     text: "Not seeing your dream college? Try adjusting filters.",
-    href: "https://apply.vedam.org/?utm_source=CollegePredictor&utm_medium=banner_ads&utm_campaign=b2_scholarship",
+    href: "https://tinyurl.com/collegepredictor-b2",
     imgurl: "/img/AD2_Mobile.jpeg",
   },
   {
     text: "Check past trends to set realistic expectations.",
-    href: "https://vedam.org/?utm_source=CollegePredictor&utm_medium=banner_ads&utm_campaign=b3_jobs0f2029",
+    href: "https://tinyurl.com/collegepredictor-b3",
     imgurl: "/img/AD3_Mobile.jpeg",
   },
 ];
@@ -174,7 +174,7 @@ export default function CollegeResultsTable({ myRank }) {
             </Typography>
           </Box>
 
-          <a href="https://vedam.org/?utm_source=CollegePredictor&utm_medium=banner_ads&utm_campaign=b4_curriculumbymaang" target="_blank" rel="noreferrer">
+          <a href="https://tinyurl.com/collegepredictor-b4" target="_blank" rel="noreferrer">
             <Image
               width={1500}
               height={500}

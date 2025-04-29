@@ -1,5 +1,13 @@
 {
   "/api/utm-tracking/route": "app/api/utm-tracking/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/program-details/route": "app/api/program-details/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/api/save-user/route": "app/api/save-user/route.js",
+  "/api/colleges/route": "app/api/colleges/route.js",
+  "/api/verify-otp/route": "app/api/verify-otp/route.js",
+  "/admin/page": "app/admin/page.js",
+  "/results/page": "app/results/page.js",
   "/page": "app/page.js",
-  "/admin/page": "app/admin/page.js"
+  "/terms/page": "app/terms/page.js"
 }
