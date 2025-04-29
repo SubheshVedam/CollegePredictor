@@ -11,15 +11,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/results/page": [
+    "/admin/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/results/page.js"
+      "static/chunks/app/admin/page.js"
     ],
-    "/api/colleges/route": [
+    "/api/utm-tracking/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/colleges/route.js"
+      "static/chunks/app/api/utm-tracking/route.js"
     ]
   }
 }
