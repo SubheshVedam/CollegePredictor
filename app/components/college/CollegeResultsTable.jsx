@@ -51,6 +51,16 @@ const interspersedMessages = [
     href: "https://tinyurl.com/collegepredictor-b3",
     imgurl: "/img/AD3.jpg",
   },
+  {
+    text: "USPs",
+    href: "https://tinyurl.com/collegepredictor-b5",
+    imgurl: "/img/AD4.jpeg",
+  },
+  {
+    text: "99% of the Engineers will fail the AI revolution! Are you prepared?",
+    href: "https://tinyurl.com/collegepredictor-b6",
+    imgurl: "/img/AD5.jpeg",
+  },
 ];
 const interspersedMessagesMobile = [
   {
@@ -68,10 +78,20 @@ const interspersedMessagesMobile = [
     href: "https://tinyurl.com/collegepredictor-b3",
     imgurl: "/img/AD3_Mobile.jpeg",
   },
+  {
+    text: "USPs",
+    href: "https://tinyurl.com/collegepredictor-b5",
+    imgurl: "/img/AD4_Mobile.jpg",
+  },
+  {
+    text: "99% of the Engineers will fail the AI revolution! Are you prepared?",
+    href: "https://tinyurl.com/collegepredictor-b6",
+    imgurl: "/img/AD5_Mobile.jpg",
+  },
 ];
 
-const adPositioningMob = [0, 3, 6];
-const adPositioning = [0, 2, 4];
+const adPositioningMob = [0, 4, 8, 12, 16];
+const adPositioning = [0, 2, 4, 6, 8];
 
 export default function CollegeResultsTable({ myRank }) {
   const dispatch = useDispatch();
