@@ -500,7 +500,7 @@ export default function CollegeResultsTable({ myRank }) {
         zIndex: 1000,
       }}>
         <a
-          href="https://tinyurl.com/collegepredictor-fixedtab"
+          href="https://tinyurl.com/collegepredictor-fixedtab-down"
           target="_blank"
           rel="noopener noreferrer"
         >
