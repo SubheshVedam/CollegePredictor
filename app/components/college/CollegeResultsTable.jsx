@@ -37,61 +37,91 @@ import ErrorIcon from "@mui/icons-material/Error";
 
 const interspersedMessages = [
   {
-    text: "Explore more opportunities on our portal!",
-    href: "https://tinyurl.com/collegepredictor-b1",
-    imgurl: "/img/AD1.jpg",
+    text: "99% of the Engineers will fail the AI revolution! Are you prepared?",
+    href: "https://tinyurl.com/collegepredictor-b6ytvideo",
+    imgurl: "/img/AD01.jpeg",
   },
   {
-    text: "Not seeing your dream college? Try adjusting filters.",
+    text: "VSAT: Your Gateway to Advanced Tech CS[AI] Program with 100% Scholarships!",
     href: "https://tinyurl.com/collegepredictor-b2",
-    imgurl: "/img/AD2.jpg",
+    imgurl: "/img/AD02.jpg",
   },
   {
-    text: "Check past trends to set realistic expectations.",
-    href: "https://tinyurl.com/collegepredictor-b3",
-    imgurl: "/img/AD3.jpg",
+    text: "B.Tech in CS & AI that lets you build the next WhatsApp, not just study it.",
+    href: "https://tinyurl.com/collegepredictor-b9-wapp",
+    imgurl: "/img/AD03.jpeg",
+  },
+  {
+    text: "No chemistry or Physics! Start coding from day 1!",
+    href: "https://tinyurl.com/collegepredictor-b6nopcm",
+    imgurl: "/img/AD04.jpeg",
+  },
+  {
+    text: "Code over 1,00,000+ lines during your journey here.",
+    href: "https://tinyurl.com/collegepredictor-b1",
+    imgurl: "/img/AD05.jpg",
+  },
+  {
+    text: "Top engineers from Google and Microsoft built this college with AI-first curriculum.",
+    href: "https://tinyurl.com/collegepredictor-b8-techminds",
+    imgurl: "/img/AD06.jpeg",
   },
   {
     text: "USPs",
     href: "https://tinyurl.com/collegepredictor-b5",
-    imgurl: "/img/AD4.jpeg",
+    imgurl: "/img/AD08.jpeg",
   },
   {
-    text: "99% of the Engineers will fail the AI revolution! Are you prepared?",
-    href: "https://tinyurl.com/collegepredictor-b6",
-    imgurl: "/img/AD5.jpeg",
+    text: "Prepare for the jobs of 2029 and beyond with an AI-first curriculum.",
+    href: "https://tinyurl.com/collegepredictor-b3",
+    imgurl: "/img/AD09.jpg",
   },
 ];
 const interspersedMessagesMobile = [
   {
-    text: "Explore more opportunities on our portal!",
-    href: "https://tinyurl.com/collegepredictor-b1",
-    imgurl: "/img/AD1_Mobile.jpeg",
+    text: "99% of the Engineers will fail the AI revolution! Are you prepared?",
+    href: "https://tinyurl.com/collegepredictor-b6ytvideo",
+    imgurl: "/img/AD01_Mobile.jpg",
   },
   {
-    text: "Not seeing your dream college? Try adjusting filters.",
+    text: "VSAT: Your Gateway to Advanced Tech CS[AI] Program with 100% Scholarships!",
     href: "https://tinyurl.com/collegepredictor-b2",
-    imgurl: "/img/AD2_Mobile.jpeg",
+    imgurl: "/img/AD02_Mobile.jpeg",
   },
   {
-    text: "Check past trends to set realistic expectations.",
-    href: "https://tinyurl.com/collegepredictor-b3",
-    imgurl: "/img/AD3_Mobile.jpeg",
+    text: "B.Tech in CS & AI that lets you build the next WhatsApp, not just study it.",
+    href: "https://tinyurl.com/collegepredictor-b9-wapp",
+    imgurl: "/img/AD03_Mobile.jpg",
+  },
+  {
+    text: "No chemistry or Physics! Start coding from day 1!",
+    href: "https://tinyurl.com/collegepredictor-b6nopcm",
+    imgurl: "/img/AD04_Mobile.jpg",
+  },
+  {
+    text: "Code over 1,00,000+ lines during your journey here.",
+    href: "https://tinyurl.com/collegepredictor-b1",
+    imgurl: "/img/AD05_Mobile.jpeg",
+  },
+  {
+    text: "Top engineers from Google and Microsoft built this college with AI-first curriculum.",
+    href: "https://tinyurl.com/collegepredictor-b8-techminds",
+    imgurl: "/img/AD06_Mobile.jpg",
   },
   {
     text: "USPs",
     href: "https://tinyurl.com/collegepredictor-b5",
-    imgurl: "/img/AD4_Mobile.jpg",
+    imgurl: "/img/AD08_Mobile.jpg",
   },
   {
-    text: "99% of the Engineers will fail the AI revolution! Are you prepared?",
-    href: "https://tinyurl.com/collegepredictor-b6",
-    imgurl: "/img/AD5_Mobile.jpg",
+    text: "Prepare for the jobs of 2029 and beyond with an AI-first curriculum.",
+    href: "https://tinyurl.com/collegepredictor-b3",
+    imgurl: "/img/AD09_Mobile.jpeg",
   },
 ];
 
-const adPositioningMob = [0, 4, 8, 12, 16];
-const adPositioning = [0, 2, 4, 6, 8];
+const adPositioningMob = [0, 4, 8, 12, 16, 20, 24, 28];
+const adPositioning = [0, 2, 4, 6, 8, 10, 12, 14];
 
 export default function CollegeResultsTable({ myRank }) {
   const dispatch = useDispatch();
