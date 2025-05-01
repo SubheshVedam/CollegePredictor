@@ -138,6 +138,7 @@ export default function CollegeResultsTable({ myRank }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [selectedProgram, setSelectedProgram] = useState(null);
+  const [showBanner, setShowBanner] = useState(true);
 
   const {
     results,
@@ -490,33 +491,53 @@ export default function CollegeResultsTable({ myRank }) {
         </Box>
       )}
 
-      {/* Fixed/Permanent Banner at the bottom */}
-      <Box sx={{ 
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        width: '100%',
-        zIndex: 1000,
-      }}>
-        <a
+      {/* Fixed/Permanent Banner at the bottom with close button */}
+      {showBanner && (
+        <Box sx={{ 
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          width: '100%',
+          zIndex: 1000,
+        }}>
+          <Box sx={{ position: 'relative' }}>
+            <a
           href="https://tinyurl.com/collegepredictor-fixedtab-down"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            width={1500}
-            height={500}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                width={1500}
+                height={500}
             src={isMobile ? "/img/Banner_Mobile.png" : "/img/Banner_Desktop.png"}
-            alt="99% of the Engineers will fail the AI revolution! Are you prepared?"
-            style={{
-              width: '100%',
-              height: 'auto',
-              display: 'block',
-            }}
-          />
-        </a>
-      </Box>
+                alt="99% of the Engineers will fail the AI revolution! Are you prepared?"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block'
+                }}
+              />
+            </a>
+            <IconButton
+              sx={{
+                position: 'absolute',
+                top: 8,
+                right: 8,
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: 'rgba(0,0,0,0.7)',
+                }
+              }}
+              size="small"
+              onClick={() => setShowBanner(false)}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </Box>
+        </Box>
+      )}
 
       {/* Modal for Program Details */}
       <Modal
