@@ -76,6 +76,11 @@ const interspersedMessages = [
     href: "https://tinyurl.com/collegepredictor-b3",
     imgurl: "/img/AD09.jpg",
   },
+  {
+    text: "50+ Real Projects. Build apps like Netflix, LinkedIn, Hotstar & more before you graduate.",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD10.jpg",
+  },
 ];
 const interspersedMessagesMobile = [
   {
@@ -118,10 +123,15 @@ const interspersedMessagesMobile = [
     href: "https://tinyurl.com/collegepredictor-b3",
     imgurl: "/img/AD09_Mobile.jpeg",
   },
+  {
+    text: "50+ Real Projects. Build apps like Netflix, LinkedIn, Hotstar & more before you graduate.",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD10_Mobile.jpg",
+  },
 ];
 
-const adPositioningMob = [0, 4, 8, 12, 16, 20, 24, 28];
-const adPositioning = [0, 2, 4, 6, 8, 10, 12, 14];
+const adPositioningMob = [0, 4, 8, 12, 16, 20, 24, 28, 32];
+const adPositioning = [0, 2, 4, 6, 8, 10, 12, 14, 16];
 
 export default function CollegeResultsTable({ myRank }) {
   const dispatch = useDispatch();
@@ -238,7 +248,7 @@ export default function CollegeResultsTable({ myRank }) {
     );
 
   return (
-    <>
+    <Box sx={{ position: 'relative', pb: isMobile ? '120px' : '100px' }}>
       {!isMobile ? (
         <TableContainer component={Paper} className="mt-6 shadow-sm">
           <Table className="min-w-full">
@@ -480,6 +490,34 @@ export default function CollegeResultsTable({ myRank }) {
         </Box>
       )}
 
+      {/* Fixed/Permanent Banner at the bottom */}
+      <Box sx={{ 
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        width: '100%',
+        zIndex: 1000,
+      }}>
+        <a
+          href="https://tinyurl.com/collegepredictor-fixedtab"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            width={1500}
+            height={500}
+            src={isMobile ? "/img/Banner_Mobile.png" : "/img/Banner_Desktop.png"}
+            alt="99% of the Engineers will fail the AI revolution! Are you prepared?"
+            style={{
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+            }}
+          />
+        </a>
+      </Box>
+
       {/* Modal for Program Details */}
       <Modal
         open={programDetailsModalOpen}
@@ -627,6 +665,6 @@ export default function CollegeResultsTable({ myRank }) {
           )}
         </Box>
       </Modal>
-    </>
+    </Box>
   );
 }
