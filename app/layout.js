@@ -13,63 +13,6 @@ import { Suspense, useEffect } from "react";
 import { storeUtmParams, sendUtmToAnalytics } from "../utils/utm";
 import GoogleAnalytics from "./components/google-analytics";
 
-export const metadata = {
-  title: {
-    default: "The College Predictor – AI-Powered JEE College Prediction Tool",
-    template: "%s | The College Predictor",
-  },
-  description:
-    "The College Predictor is an AI-powered tool that helps JEE aspirants predict their college admission chances based on their ranks, preferences, and category. Make informed decisions with our comprehensive college prediction system.",
-  keywords: [
-    "college predictor",
-    "the college predictor",
-    "JEE college predictor",
-    "college admission predictor",
-    "college chances predictor",
-    "engineering college predictor",
-    "college prediction",
-    "AI college predictor",
-    "JEE Main 2025",
-    "college admission predictor",
-    "JEE Advanced predictor",
-    "college prediction tool",
-    "thecollegepredictor.com",
-  ],
-  authors: [{ name: "The College Predictor", url: "https://www.thecollegepredictor.com" }],
-  openGraph: {
-    title: {
-      default: "The College Predictor – AI-Powered JEE College Prediction Tool",
-      template: "%s | The College Predictor",
-    },
-    description:
-      "Utilize The College Predictor's AI-driven platform to forecast your engineering college admissions based on JEE ranks and preferences. Empowering students to make data-informed choices for their future.",
-    url: "https://www.thecollegepredictor.com",
-    siteName: "The College Predictor",
-    images: [
-      {
-        url: "",
-        width: 1200,
-        height: 630,
-        alt: "The College Predictor – AI-Powered JEE College Prediction Tool",
-      },
-    ],
-    locale: "en_IN",
-    type: "website",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-};
-
-
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
