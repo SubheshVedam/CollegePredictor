@@ -250,7 +250,7 @@ export default function ResultsPage() {
               flexDirection: { xs: "row", sm: "column" },
               bgcolor: "#2a135b",
               py: 1,
-              borderRadius: "100px 0 0 100px",
+              borderRadius: "100px 100px 100px 100px",
               boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.5)", // added bottom-only shadow
             }}
           >
