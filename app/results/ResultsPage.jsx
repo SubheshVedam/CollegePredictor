@@ -27,6 +27,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
 import useUtmTracking from "@/hooks/useUtmTracking";
+import ShareButtons from "../components/shared/ShareButton";
 
 const modalStyle = {
   position: "absolute",
@@ -224,6 +225,7 @@ export default function ResultsPage() {
               flexDirection: "column",
               alignItems: { xs: "center", sm: "flex-start" },
               justifyContent: "center",
+              gap:2
             }}
           >
             <Typography
@@ -240,6 +242,8 @@ export default function ResultsPage() {
             >
               College Predictor
             </Typography>
+            <ShareButtons/>
+
           </Box>
 
           {/* Image Section - Modified for mobile */}
