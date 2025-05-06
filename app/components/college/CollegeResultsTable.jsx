@@ -510,7 +510,7 @@ export default function CollegeResultsTable({ myRank }) {
               <Image
                 width={1500}
                 height={500}
-            src={isMobile ? "/img/Banner_Mobile.png" : "/img/Banner_Desktop.png"}
+            src={isMobile ? "/img/Banner_Mobile.jpg" : "/img/Banner_Desktop.jpg"}
                 alt="99% of the Engineers will fail the AI revolution! Are you prepared?"
                 style={{
                   width: '100%',
