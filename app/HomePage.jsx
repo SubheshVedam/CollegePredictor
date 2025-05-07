@@ -33,15 +33,34 @@ export default function CollegePredictorPage() {
           height: { xs: "auto", sm: "80vh" },
           background:
             "linear-gradient(-45deg, #FF9900 0%,#6C10BC 28%,#401565 50%,#41007A 59%,#5F15A0 64%,#310756 80%,#52118B 86%,#6C10BC 94%)",
+          position: "relative"
         }}
       >
         <Box
           sx={{
+            position: "absolute",
+            top: { xs: 10, sm: 20 },
+            left: { xs: -8, sm: 20 },
+            zIndex: 1,
+            pl: { xs: -2, sm: 0 }
+          }}
+        >
+          <Image
+            width={200}
+            height={60}
+            src="/img/Vedam_Final_Logo_White.png"
+            alt="Vedam Logo"
+            style={{ objectFit: 'contain' }}
+          />
+        </Box>
+        <Box
+          sx={{
             py: 5,
-            p: 2,
+            p: { xs: 0, sm: 2 },
             flex: 1,
-            pl: { xs: "none", sm: "10%", lg: "20%" },
+            pl: { xs: 2, sm: "10%", lg: "20%" },
             background: "transparent",
+            mt: 12
           }}
         >
           <Box
@@ -52,7 +71,7 @@ export default function CollegePredictorPage() {
               justifyContent: "space-between",
             }}
           >
-            <Box sx={{ mt: { xs: 2, sm: 7 } }}>
+            <Box sx={{ mt: { xs: 0, sm: 7 } }}>
               <Typography
                 sx={{ color: "#FFFFFF", fontSize: { xs: 18, sm: 24 } }}
               >
