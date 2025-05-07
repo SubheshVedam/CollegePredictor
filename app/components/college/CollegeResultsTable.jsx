@@ -47,6 +47,11 @@ const interspersedMessages = [
     imgurl: "/img/AD02.jpg",
   },
   {
+    text: "Top engineers from Google and Microsoft built this college with AI-first curriculum.",
+    href: "https://tinyurl.com/collegepredictor-b8-techminds",
+    imgurl: "/img/AD06.jpeg",
+  },
+  {
     text: "B.Tech in CS & AI that lets you build the next WhatsApp, not just study it.",
     href: "https://tinyurl.com/collegepredictor-b9-wapp",
     imgurl: "/img/AD03.jpeg",
@@ -57,19 +62,19 @@ const interspersedMessages = [
     imgurl: "/img/AD04.jpeg",
   },
   {
-    text: "Code over 1,00,000+ lines during your journey here.",
-    href: "https://tinyurl.com/collegepredictor-b1",
-    imgurl: "/img/AD05.jpg",
-  },
-  {
-    text: "Top engineers from Google and Microsoft built this college with AI-first curriculum.",
-    href: "https://tinyurl.com/collegepredictor-b8-techminds",
-    imgurl: "/img/AD06.jpeg",
+    text: "50+ Real Projects. Build apps like Netflix, LinkedIn, Hotstar & more before you graduate.",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD10.jpg",
   },
   {
     text: "USPs",
     href: "https://tinyurl.com/collegepredictor-b5",
     imgurl: "/img/AD08.jpeg",
+  },
+  {
+    text: "Code over 1,00,000+ lines during your journey here.",
+    href: "https://tinyurl.com/collegepredictor-b1",
+    imgurl: "/img/AD05.jpg",
   },
   {
     text: "Prepare for the jobs of 2029 and beyond with an AI-first curriculum.",
@@ -94,6 +99,11 @@ const interspersedMessagesMobile = [
     imgurl: "/img/AD02_Mobile.jpeg",
   },
   {
+    text: "Top engineers from Google and Microsoft built this college with AI-first curriculum.",
+    href: "https://tinyurl.com/collegepredictor-b8-techminds",
+    imgurl: "/img/AD06_Mobile.jpg",
+  },
+  {
     text: "B.Tech in CS & AI that lets you build the next WhatsApp, not just study it.",
     href: "https://tinyurl.com/collegepredictor-b9-wapp",
     imgurl: "/img/AD03_Mobile.jpg",
@@ -104,14 +114,9 @@ const interspersedMessagesMobile = [
     imgurl: "/img/AD04_Mobile.jpg",
   },
   {
-    text: "Code over 1,00,000+ lines during your journey here.",
-    href: "https://tinyurl.com/collegepredictor-b1",
-    imgurl: "/img/AD05_Mobile.jpeg",
-  },
-  {
-    text: "Top engineers from Google and Microsoft built this college with AI-first curriculum.",
-    href: "https://tinyurl.com/collegepredictor-b8-techminds",
-    imgurl: "/img/AD06_Mobile.jpg",
+    text: "50+ Real Projects. Build apps like Netflix, LinkedIn, Hotstar & more before you graduate.",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD10_Mobile.jpg",
   },
   {
     text: "USPs",
@@ -119,14 +124,14 @@ const interspersedMessagesMobile = [
     imgurl: "/img/AD08_Mobile.jpg",
   },
   {
+    text: "Code over 1,00,000+ lines during your journey here.",
+    href: "https://tinyurl.com/collegepredictor-b1",
+    imgurl: "/img/AD05_Mobile.jpeg",
+  },
+  {
     text: "Prepare for the jobs of 2029 and beyond with an AI-first curriculum.",
     href: "https://tinyurl.com/collegepredictor-b3",
     imgurl: "/img/AD09_Mobile.jpeg",
-  },
-  {
-    text: "50+ Real Projects. Build apps like Netflix, LinkedIn, Hotstar & more before you graduate.",
-    href: "https://tinyurl.com/collegepredictor-b10-realproj",
-    imgurl: "/img/AD10_Mobile.jpg",
   },
 ];
 
