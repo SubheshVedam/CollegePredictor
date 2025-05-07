@@ -110,7 +110,12 @@ export default function ShareButton() {
           px: 2,
         }}
       >
-        <Typography sx={{ color: "white" }}>
+        <Typography
+          sx={{
+            color: "white",
+            fontSize: { xs: "0.7rem", sm: "0.7rem", md: "0.9rem" }, // Responsive text size
+          }}
+        >
           Share this FREE Predictor Tool
         </Typography>
         <WhatsApp sx={{ pl: 1, color: "white" }} />
