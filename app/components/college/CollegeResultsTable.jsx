@@ -43,7 +43,7 @@ const interspersedMessages = [
   },
   {
     text: "VSAT: Your Gateway to Advanced Tech CS[AI] Program with 100% Scholarships!",
-    href: "https://tinyurl.com/collegepredictor-b2",
+    href: "https://tinyurl.com/collegepredictor-b2-scholar",
     imgurl: "/img/AD02.jpg",
   },
   {
@@ -68,23 +68,18 @@ const interspersedMessages = [
   },
   {
     text: "USPs",
-    href: "https://tinyurl.com/collegepredictor-b5",
+    href: "https://tinyurl.com/collegepredictor-b5-usps",
     imgurl: "/img/AD08.jpeg",
   },
   {
     text: "Code over 1,00,000+ lines during your journey here.",
-    href: "https://tinyurl.com/collegepredictor-b1",
+    href: "https://tinyurl.com/collegepredictor-b1-code",
     imgurl: "/img/AD05.jpg",
   },
   {
     text: "Prepare for the jobs of 2029 and beyond with an AI-first curriculum.",
-    href: "https://tinyurl.com/collegepredictor-b3",
+    href: "https://tinyurl.com/collegepredictor-b3-jobs2029",
     imgurl: "/img/AD09.jpg",
-  },
-  {
-    text: "50+ Real Projects. Build apps like Netflix, LinkedIn, Hotstar & more before you graduate.",
-    href: "https://tinyurl.com/collegepredictor-b10-realproj",
-    imgurl: "/img/AD10.jpg",
   },
 ];
 const interspersedMessagesMobile = [
@@ -95,7 +90,7 @@ const interspersedMessagesMobile = [
   },
   {
     text: "VSAT: Your Gateway to Advanced Tech CS[AI] Program with 100% Scholarships!",
-    href: "https://tinyurl.com/collegepredictor-b2",
+    href: "https://tinyurl.com/collegepredictor-b2-scholar",
     imgurl: "/img/AD02_Mobile.jpeg",
   },
   {
@@ -120,17 +115,17 @@ const interspersedMessagesMobile = [
   },
   {
     text: "USPs",
-    href: "https://tinyurl.com/collegepredictor-b5",
+    href: "https://tinyurl.com/collegepredictor-b5-usps",
     imgurl: "/img/AD08_Mobile.jpg",
   },
   {
     text: "Code over 1,00,000+ lines during your journey here.",
-    href: "https://tinyurl.com/collegepredictor-b1",
+    href: "https://tinyurl.com/collegepredictor-b1-code",
     imgurl: "/img/AD05_Mobile.jpeg",
   },
   {
     text: "Prepare for the jobs of 2029 and beyond with an AI-first curriculum.",
-    href: "https://tinyurl.com/collegepredictor-b3",
+    href: "https://tinyurl.com/collegepredictor-b3-jobs2029",
     imgurl: "/img/AD09_Mobile.jpeg",
   },
 ];
@@ -508,7 +503,7 @@ export default function CollegeResultsTable({ myRank }) {
         }}>
           <Box sx={{ position: 'relative' }}>
             <a
-          href="https://tinyurl.com/collegepredictor-fixedtab-down"
+          href="https://tinyurl.com/collegepredictor-b4-curriculum"
               target="_blank"
               rel="noopener noreferrer"
             >
