@@ -34,6 +34,7 @@ import {
 import React, { useState } from "react";
 import Image from "next/image";
 import ErrorIcon from "@mui/icons-material/Error";
+import AnnouncementBanner from "../AnnouncementBanner";
 
 const interspersedMessages = [
   {
@@ -501,41 +502,7 @@ export default function CollegeResultsTable({ myRank }) {
           width: '100%',
           zIndex: 1000,
         }}>
-          <Box sx={{ position: 'relative' }}>
-            <a
-          href="https://tinyurl.com/collegepredictor-b4-curriculum"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Image
-                width={1500}
-                height={500}
-            src={isMobile ? "/img/Banner_Mobile.jpg" : "/img/Banner_Desktop.jpg"}
-                alt="99% of the Engineers will fail the AI revolution! Are you prepared?"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  display: 'block'
-                }}
-              />
-            </a>
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: 8,
-                right: 8,
-                backgroundColor: 'rgba(0,0,0,0.5)',
-                color: 'white',
-                '&:hover': {
-                  backgroundColor: 'rgba(0,0,0,0.7)',
-                }
-              }}
-              size="small"
-              onClick={() => setShowBanner(false)}
-            >
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </Box>
+          <AnnouncementBanner />
         </Box>
       )}
 
