@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
   Button,
   Snackbar,
@@ -32,33 +33,12 @@ export default function ShareButton() {
   const shareText = "Check out this FREE Rank Predictor website!";
 
   const handleShare = async () => {
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: document.title,
-          text: shareText,
-          url: currentUrl,
-        });
-      } else {
-        setOpenFallback(true);
-      }
-    } catch (err) {
-      console.log("Share was canceled");
-    }
+    setOpenFallback(true);
   };
 
-  const copyToClipboard = () => {
-    try {
-      if (typeof navigator !== "undefined" && navigator.clipboard) {
-        navigator.clipboard.writeText(currentUrl);
-        setSnackbarOpen(true);
-      }
-    } catch (err) {
-      setSnackbarOpen(true);
-    } finally {
-      setSnackbarOpen(true);
-      setOpenFallback(false);
-    }
+  const handleCopySuccess = () => {
+    setSnackbarOpen(true);
+    setOpenFallback(false);
   };
 
   const socialShares = [
@@ -108,14 +88,12 @@ export default function ShareButton() {
           backgroundColor: "darkgreen",
           borderRadius: 20,
           px: 2,
+          '&:hover': {
+            backgroundColor: "green" // Remove hover effect by setting same color
+          }
         }}
       >
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: { xs: "0.7rem", sm: "0.7rem", md: "0.9rem" }, // Responsive text size
-          }}
-        >
+        <Typography sx={{ color: "white" }}>
           Share this FREE Predictor Tool
         </Typography>
         <WhatsApp sx={{ pl: 1, color: "white" }} />
@@ -132,9 +110,11 @@ export default function ShareButton() {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={copyToClipboard}>
-                    <ContentCopy />
-                  </IconButton>
+                  <CopyToClipboard text={currentUrl} onCopy={handleCopySuccess}>
+                    <IconButton sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
+                      <ContentCopy />
+                    </IconButton>
+                  </CopyToClipboard>
                 </InputAdornment>
               ),
             }}
@@ -161,6 +141,9 @@ export default function ShareButton() {
                   flexDirection: "column",
                   width: 80,
                   height: 80,
+                  '&:hover': {
+                    backgroundColor: 'transparent'
+                  }
                 }}
               >
                 {social.icon}
@@ -176,7 +159,11 @@ export default function ShareButton() {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button color="secondary" onClick={() => setOpenFallback(false)}>
+          <Button 
+            color="secondary" 
+            onClick={() => setOpenFallback(false)}
+            sx={{ '&:hover': { backgroundColor: 'transparent' } }}
+          >
             Close
           </Button>
         </DialogActions>
@@ -196,6 +183,7 @@ export default function ShareButton() {
               aria-label="close"
               color="inherit"
               onClick={() => setSnackbarOpen(false)}
+              sx={{ '&:hover': { backgroundColor: 'transparent' } }}
             >
               <Close fontSize="small" />
             </IconButton>
