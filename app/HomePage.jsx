@@ -46,8 +46,8 @@ export default function CollegePredictorPage() {
           }}
         >
           <Image
-            width={200}
-            height={60}
+            width={150}
+            height={45}
             src="/img/Vedam_Final_Logo_White.png"
             alt="Vedam Logo"
             style={{ objectFit: 'contain' }}
@@ -60,7 +60,7 @@ export default function CollegePredictorPage() {
             flex: 1,
             pl: { xs: 2, sm: "10%", lg: "20%" },
             background: "transparent",
-            mt: 12
+            mt: { xs: 13, sm: 6 },
           }}
         >
           <Box
