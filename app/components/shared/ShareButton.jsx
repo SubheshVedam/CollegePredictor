@@ -88,9 +88,12 @@ export default function ShareButton() {
           backgroundColor: "darkgreen",
           borderRadius: 20,
           px: 2,
+          transition: "all 0.3s ease",
           '&:hover': {
-            backgroundColor: "green" // Remove hover effect by setting same color
-          }
+            backgroundColor: "green",
+            transform: "scale(1.05)",
+            boxShadow: "0 4px 20px rgba(0, 128, 0, 0.3)",
+          },
         }}
       >
         <Typography sx={{ color: "white" }}>
