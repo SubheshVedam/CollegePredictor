@@ -43,6 +43,7 @@ export default function AnnouncementBanner() {
     <Box
       sx={{
         background: "linear-gradient(95.22deg, #FB7F05 2.91%, #6C10BC 99.18%)",
+        alignItems: 'center',
         color: "white",
         opacity: 0.95,
         py: 1,
@@ -57,15 +58,17 @@ export default function AnnouncementBanner() {
         alignItems="center"
         justifyContent="center"
         spacing={{ xs: 0.5, sm: 2 }}
-        sx={{ px: 2 }}
+        sx={{ px: 2, textAlign: 'center' }} // Added textAlign here
       >
-        <Typography
-          variant="body2"
-          component="span"
-          sx={{ fontSize: { xs: 11, sm: 16 } }}
-        >
-          ⏳ Hurry up! Application for VSAT 2025 are closing in
-        </Typography>
+        <Box sx={{ textAlign: 'center' }}> {/* Wrapped text in a Box with textAlign */}
+          <Typography
+            variant="body2"
+            component="span"
+            sx={{ fontSize: { xs: 11, sm: 16 } }}
+          >
+            Secure Your Spot in <strong>B.Tech CS (Al)</strong> | Get Up to <strong>100% Scholarships</strong> | Application for <strong>VSAT 2025</strong> are closing in
+          </Typography>
+        </Box>
 
         {!timeLeft.expired ? (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
