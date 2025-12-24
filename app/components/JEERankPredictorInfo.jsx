@@ -67,7 +67,7 @@ export default function JEERankPredictorInfo() {
     <Container maxWidth="md" sx={{ py: 6}}>
       <Box>
         <Typography variant="body1" paragraph>
-        Input your JEE Main 2025 rank and unlock a personalised list of engineering colleges and branches you're likely to get into. This powerful tool uses historical cutoffs and category-specific trends to help you make confident, data-driven choices during counselling.
+        Input your JEE Main 2026 rank and unlock a personalised list of engineering colleges and branches you're likely to get into. This powerful tool uses historical cutoffs and category-specific trends to help you make confident, data-driven choices during counselling.
         </Typography>
         <Typography variant="body1" paragraph>
           Crafted by <strong>experts of Google & Microsoft Engineers</strong>,
@@ -79,7 +79,7 @@ export default function JEERankPredictorInfo() {
       {/* Features Section */}
       <Box>
         <Typography variant="h6" sx={{ color: "#6C10BC", fontWeight: "bold" }}>
-          JEE College Predictor 2025 (FREE)
+          JEE College Predictor 2026 (FREE)
         </Typography>
         <List sx={{ mt: 1 }}>
           {features.map((feature, index) => (
@@ -137,7 +137,7 @@ export default function JEERankPredictorInfo() {
       {/* Benefits Section */}
       <Box sx={{mb:2}}>
         <Typography variant="h6" sx={{ color: "#6C10BC", fontWeight: "bold" }}>
-          Benefit of the JEE College Predictor 2025
+          Benefit of the JEE College Predictor 2026
         </Typography>
         <List sx={{ mt: 1 }}>
           {benefits.map((benefit, index) => (
@@ -158,7 +158,7 @@ export default function JEERankPredictorInfo() {
       </Box>
 
       <Typography variant="body1" paragraph>
-      Take the next step in your JEE journey—use the <strong>College Predictor 2025</strong> today to set yourself up for academic success!
+      Take the next step in your JEE journey—use the <strong>College Predictor 2026</strong> today to set yourself up for academic success!
         </Typography>
     </Container>
   );

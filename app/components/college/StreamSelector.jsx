@@ -1,8 +1,12 @@
 "use client";
 import { FormControl, Select, Box, Typography, MenuItem } from "@mui/material";
 
-export default function YearSelector({ value, onChange }) {
-  const years = [ "2026","2025","2024 or Before"];
+export default function StreamSelector({ value, onChange }) {
+  const streams = [
+    "PCM",
+    "PCB",
+    "Others",
+  ];
 
   return (
     <Box
@@ -16,15 +20,15 @@ export default function YearSelector({ value, onChange }) {
         component="h3"
         sx={{
           color: 'white',
-          fontSize: {xs: 14, sm: 16}
+          fontSize: { xs: 14, sm: 16 }
         }}
       >
-        12th Passout Year
+        Preferred Stream
       </Typography>
       
       <FormControl fullWidth>
         <Select
-          value={value}
+          value={value || 'PCM'}
           onChange={(e) => onChange(e.target.value)}
           sx={{
             backgroundColor: 'white',
@@ -49,9 +53,9 @@ export default function YearSelector({ value, onChange }) {
             },
           }}
         >
-          {years.map((year) => (
-            <MenuItem key={year} value={year}>
-              {year}
+          {streams.map((stream) => (
+            <MenuItem key={stream} value={stream}>
+              {stream}
             </MenuItem>
           ))}
         </Select>
@@ -59,3 +63,4 @@ export default function YearSelector({ value, onChange }) {
     </Box>
   );
 }
+

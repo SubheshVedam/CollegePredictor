@@ -51,7 +51,7 @@ export default function OtpModal({
   const [verificationFailed, setVerificationFailed] = useState(false);
   const [showUpdateNumber, setShowUpdateNumber] = useState(false);
 
-  const { year } = useSelector((state) => state.collegePredictor || {});
+  const { year, stream } = useSelector((state) => state.collegePredictor || {});
 
   const handleBlur = (field) => () => {
     setTouched({ ...touched, [field]: true });
@@ -74,7 +74,8 @@ export default function OtpModal({
           phone: phoneNumber,
           name: fullName,
           email: email,
-          year:year
+          year: year,
+          stream: stream
         }),
       });
 

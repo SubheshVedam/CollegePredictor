@@ -3,7 +3,7 @@ import { Box, Typography, Stack } from "@mui/material";
 import { useState, useEffect } from "react";
 
 export default function AnnouncementBanner() {
-  const targetDate = new Date("2025-05-29T23:59:59").getTime();
+  const targetDate = new Date("2026-05-29T23:59:59").getTime();
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
@@ -66,7 +66,7 @@ export default function AnnouncementBanner() {
             component="span"
             sx={{ fontSize: { xs: 11, sm: 16 } }}
           >
-            Secure Your Spot in <strong>B.Tech CS (Al)</strong> | Get Up to <strong>100% Scholarships</strong> | Application for <strong>VSAT 2025</strong> are closing in
+            Secure Your Spot in <strong>B.Tech CS (Al)</strong> | Get Up to <strong>100% Scholarships</strong> | Application for <strong>VSAT 2026</strong> are closing in
           </Typography>
         </Box>
 

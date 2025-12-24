@@ -47,7 +47,8 @@ const initialState = {
   rank: '',
   gender: 'Gender Neutral',
   category: 'OPEN',
-  year: '2025',
+  year: '2026',
+  stream: 'PCM',
   stateId: '',
   results: [],
   dummyResults: [],
@@ -79,6 +80,9 @@ const collegePredictorSlice = createSlice({
     },
     setYear: (state, action) => {
       state.year = action.payload;
+    },
+    setStream: (state, action) => {
+      state.stream = action.payload;
     },
     setStateId: (state, action) => {
       state.stateId = action.payload;
@@ -154,6 +158,7 @@ export const {
   setGender,
   setCategory,
   setYear,
+  setStream,
   setStateId,
   setResults,
   setDummyResults,

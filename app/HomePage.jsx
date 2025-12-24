@@ -103,7 +103,7 @@ export default function CollegePredictorPage() {
               >
                 <Typography sx={{ display: "flex", color: "#FFFFFF" }}>
                   <VerifiedIcon sx={{mr:1}}/>
-                  Predict College based on JEE MAIN 2025 Rank
+                  Predict College based on JEE MAIN 2026 Rank
                 </Typography>
                 <Typography sx={{ display: "flex", color: "#37FF00" }}>
                   <VerifiedIcon sx={{mr:1}} />

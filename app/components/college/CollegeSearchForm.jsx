@@ -7,12 +7,14 @@ import {
   setGender,
   setIsLoading,
   setRank,
+  setStream,
   setStateId,
-} from "../../redux/searchSlice";
+} from "../../../features/collegePredictor/collegePredictorSlice";
 import RankInput from "../shared/RankInput";
 import GenderSelector from "./GenderSelector";
 import CategorySelector from "./CategorySelector";
 import StateSelector from "./StateSelector";
+import StreamSelector from "./StreamSelector";
 import LoadingButton from "../shared/LoadingButton";
 import { Box } from "@mui/material";
 import YearSelector from "./YearSelector";
@@ -20,12 +22,12 @@ import YearSelector from "./YearSelector";
 export default function CollegeSearchForm({ onSearchComplete }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { rank, gender, category, year, stateId, isLoading } = useSelector(
+  const { rank, gender, category, year, stream, stateId, isLoading } = useSelector(
     (state) => state.collegePredictor || {}
   );
 
   // Check if all fields are selected
-  const isFormValid = rank && gender && category && year && stateId;
+  const isFormValid = rank && gender && category && year && stream && stateId;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +49,7 @@ export default function CollegeSearchForm({ onSearchComplete }) {
         rank,
         gender,
         category,
+        stream,
         stateId,
       }).toString();
 
@@ -81,6 +84,10 @@ export default function CollegeSearchForm({ onSearchComplete }) {
         <YearSelector
           value={year}
           onChange={(value) => dispatch(setYear(value))}
+        />
+        <StreamSelector
+          value={stream}
+          onChange={(value) => dispatch(setStream(value))}
         />
         <StateSelector
           value={stateId}

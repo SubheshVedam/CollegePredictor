@@ -2,7 +2,7 @@ import { supabase } from "../../../lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
-  const { phone, name, email, year } = await req.json();
+  const { phone, name, email, year, stream } = await req.json();
 
   try {
     // First check if phone number already exists
@@ -22,7 +22,7 @@ export async function POST(req) {
       const { error: insertError } = await supabase
         .from("verified_users")
         .insert([
-          { phone_number: phone, name, email, twelfth_passing_year: year },
+          { phone_number: phone, name, email, twelfth_passing_year: year, stream },
         ]);
 
       if (insertError) throw insertError;

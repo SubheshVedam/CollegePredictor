@@ -30,7 +30,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProgramDetails,
   setProgramDetailsModalOpen,
-} from "../../redux/searchSlice";
+} from "../../../features/collegePredictor/collegePredictorSlice";
 import React, { useState } from "react";
 import Image from "next/image";
 import ErrorIcon from "@mui/icons-material/Error";

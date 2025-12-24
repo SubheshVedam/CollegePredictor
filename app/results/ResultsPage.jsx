@@ -8,7 +8,7 @@ import {
   setShowOtpModal,
   setPhoneNumber,
   setError,
-} from "../redux/searchSlice";
+} from "../../features/collegePredictor/collegePredictorSlice";
 import CollegeResultsTable from "../components/college/CollegeResultsTable";
 import CollegeSearchForm from "../components/college/CollegeSearchForm";
 import OtpModal from "../components/otp/OtpModal";
@@ -91,16 +91,17 @@ export default function ResultsPage() {
     const rank = searchParams.get("rank");
     const gender = searchParams.get("gender");
     const category = searchParams.get("category");
+    const stream = searchParams.get("stream");
     const stateId = searchParams.get("stateId");
 
-    if (rank && gender && category && stateId) {
+    if (rank && gender && category && stream && stateId) {
       const verified = localStorage.getItem("isVerified") === "true";
       dispatch(setIsVerified(verified));
 
       if (!verified) {
         dispatch(setShowOtpModal(true));
       } else {
-        dispatch(fetchCollegeResults({ rank, gender, category, stateId }));
+        dispatch(fetchCollegeResults({ rank, gender, category, stream, stateId }));
       }
     }
   }, [searchParams, dispatch]);
@@ -117,8 +118,9 @@ export default function ResultsPage() {
     const rank = searchParams.get("rank");
     const gender = searchParams.get("gender");
     const category = searchParams.get("category");
+    const stream = searchParams.get("stream");
     const stateId = searchParams.get("stateId");
-    dispatch(fetchCollegeResults({ rank, gender, category, stateId }));
+    dispatch(fetchCollegeResults({ rank, gender, category, stream, stateId }));
   };
 
   const handlePhoneNumberChange = (number) => {
@@ -289,7 +291,7 @@ export default function ResultsPage() {
                   fontSize: { xs: 12, sm: 18 },
                 }}
               >
-                JEE Main 2025 Rank:&nbsp;{searchParams.get("rank")}
+                JEE Main 2026 Rank:&nbsp;{searchParams.get("rank")}
               </Typography>
             </Box>
           </Box>
