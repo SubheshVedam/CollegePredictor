@@ -48,7 +48,6 @@ export default function OtpModal({
     email: false,
     phoneNumber: false,
   });
-  const [verificationFailed, setVerificationFailed] = useState(false);
   const [showUpdateNumber, setShowUpdateNumber] = useState(false);
 
   const { year, stream } = useSelector((state) => state.collegePredictor || {});
@@ -86,7 +85,6 @@ export default function OtpModal({
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error("Error saving user data:", error);
       throw error;
     }
   };
@@ -111,7 +109,6 @@ export default function OtpModal({
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error("Error saving utm data:", error);
       throw error;
     }
   };
@@ -143,12 +140,10 @@ export default function OtpModal({
         setStep("enterOTP");
         setSuccess("OTP sent successfully!");
         setIsLoading(false);
-        setVerificationFailed(false);
         setShowUpdateNumber(false);
         setTimeout(() => setSuccess(null), 3000);
       },
-      (error) => {
-        console.error("Error sending OTP:", error);
+      () => {
         setError("Failed to send OTP. Please try again.");
         setIsLoading(false);
       }
@@ -170,9 +165,7 @@ export default function OtpModal({
 
     window.verifyOtp(
       otp,
-      async (data) => {
-        console.log("OTP verified successfully:", data);
-
+      async () => {
         try {
           // Save user data to the database
           await saveUserData();
@@ -183,16 +176,13 @@ export default function OtpModal({
             setSuccess(null);
             onClose();
           }, 1500);
-        } catch (error) {
-          console.error("Error saving user data:", error);
+        } catch {
           setError("Verification successful but failed to save user data.");
           setIsLoading(false);
         }
       },
-      (error) => {
-        console.error("Error verifying OTP:", error);
+      () => {
         setError("Invalid OTP. Please try again.");
-        setVerificationFailed(true);
         setIsLoading(false);
       }
     );

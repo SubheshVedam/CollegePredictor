@@ -54,8 +54,8 @@ export default function CollegeSearchForm({ onSearchComplete }) {
       }).toString();
 
       router.replace(`/results?${queryParams}`);
-    } catch (error) {
-      console.error("Search failed:", error);
+    } catch {
+      // Search navigation failed
     }
   };
 

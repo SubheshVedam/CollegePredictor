@@ -1,8 +1,4 @@
 {
-  "/api/save-user/route": "app/api/save-user/route.js",
-  "/api/colleges/route": "app/api/colleges/route.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/api/utm-tracking/route": "app/api/utm-tracking/route.js",
   "/results/page": "app/results/page.js",
   "/page": "app/page.js"
 }

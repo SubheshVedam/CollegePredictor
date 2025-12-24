@@ -60,13 +60,11 @@ export default function ResultsPage() {
         widgetId: process.env.NEXT_PUBLIC_MSG91_WIDGET_ID,
         tokenAuth: process.env.NEXT_PUBLIC_MSG91_AUTH_KEY,
         exposeMethods: true,
-        success: (data) => {
-          console.log("Verification success:", data);
+        success: () => {
           localStorage.setItem("isVerified", "true");
           handleOtpVerificationSuccess();
         },
-        failure: (error) => {
-          console.error("Verification failed:", error);
+        failure: () => {
           dispatch(setError("OTP verification failed. Please try again."));
         },
       };

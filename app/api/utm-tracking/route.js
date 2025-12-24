@@ -1,8 +1,23 @@
 import { supabase } from "../../../lib/db";
 import { NextResponse } from "next/server";
 
+// Validate phone number (10 digits)
+const isValidPhone = (phone) => /^\d{10}$/.test(phone);
+
 export async function POST(req) {
-    const { utmParam, isVerified, phone } = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    }
+
+    const { utmParam, isVerified, phone } = body;
+
+    // Validate phone
+    if (!phone || !isValidPhone(phone)) {
+      return NextResponse.json({ error: "Invalid phone number" }, { status: 400 });
+    }
   
     try {
       // First check if phone number already exists
@@ -31,9 +46,9 @@ export async function POST(req) {
   
       return NextResponse.json({ success: true });
     } catch (error) {
-      console.error("Error in utm-tracking endpoint:", error);
+      console.error("Error in utm-tracking endpoint:", error?.message);
       return NextResponse.json(
-        { error: error.message || "Failed to process request" },
+        { error: "Failed to process request" },
         { status: 500 }
       );
     }
@@ -79,9 +94,9 @@ export async function GET(req) {
       });
       
     } catch (error) {
-      console.error("Error fetching UTM data:", error);
+      console.error("Error fetching UTM data:", error?.message);
       return NextResponse.json(
-        { error: error.message || "Failed to fetch UTM data" },
+        { error: "Failed to fetch UTM data" },
         { status: 500 }
       );
     }

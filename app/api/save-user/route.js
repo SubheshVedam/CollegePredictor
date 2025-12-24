@@ -1,8 +1,42 @@
 import { supabase } from "../../../lib/db";
 import { NextResponse } from "next/server";
 
+// Sanitize string input
+const sanitizeString = (str) => {
+  if (typeof str !== 'string') return '';
+  return str.trim().slice(0, 255);
+};
+
+// Validate phone number (10 digits)
+const isValidPhone = (phone) => /^\d{10}$/.test(phone);
+
+// Validate email
+const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
 export async function POST(req) {
-  const { phone, name, email, year, stream } = await req.json();
+  let body;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
+  const phone = sanitizeString(body.phone);
+  const name = sanitizeString(body.name);
+  const email = sanitizeString(body.email);
+  const year = sanitizeString(body.year);
+  const stream = sanitizeString(body.stream);
+
+  // Validate required fields
+  if (!phone || !isValidPhone(phone)) {
+    return NextResponse.json({ error: "Invalid phone number" }, { status: 400 });
+  }
+  if (!email || !isValidEmail(email)) {
+    return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+  }
+  if (!name || name.length < 2) {
+    return NextResponse.json({ error: "Invalid name" }, { status: 400 });
+  }
 
   try {
     // First check if phone number already exists
@@ -30,9 +64,9 @@ export async function POST(req) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error in save-user endpoint:", error);
+    console.error("Error in save-user endpoint:", error?.message);
     return NextResponse.json(
-      { error: error.message || "Failed to process request" },
+      { error: "Failed to process request" },
       { status: 500 }
     );
   }
