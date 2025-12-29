@@ -46,6 +46,22 @@ export default function RootLayout({ children }) {
         <head>
           <Suspense fallback={null}>{/* <GoogleAnalytics /> */}</Suspense>
           <link rel="icon" href="./favicon.ico" />
+
+          {/* Google Tag Manager */}
+          <Script
+            id="google-tag-manager"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-K7ZDF4K4');
+              `,
+            }}
+          />
+
           <Script
             id="microsoft-clarity"
             strategy="afterInteractive"
@@ -60,64 +76,20 @@ export default function RootLayout({ children }) {
             }}
           />
 
-          {/* ✅ Load the gtag.js script using next/script */}
-          <Script
-            src="https://www.googletagmanager.com/gtag/js?id=G-EJQV1XVPZC"
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-EJQV1XVPZC', { 
-                send_page_view: true,
-                cookie_flags: 'SameSite=None;Secure',
-                cookie_domain: 'auto'
-              });
-            `}
-          </Script>
-          <Script id="google-analytics-utm" strategy="afterInteractive">
-            {`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-EJQV1XVPZC');
-
-    function getQueryParams() {
-      return window.location.search
-        .substring(1)
-        .split("&")
-        .reduce(function(acc, pair) {
-          var [key, val] = pair.split("=");
-          if (key) acc[decodeURIComponent(key)] = decodeURIComponent(val || "");
-          return acc;
-        }, {});
-    }
-
-    (function() {
-      var params = getQueryParams();
-      var utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
-      var utmData = {};
-
-      utmKeys.forEach(function(k) {
-        if (params[k]) {
-          utmData[k] = params[k];
-          document.cookie = k + "=" + encodeURIComponent(params[k]) + "; path=/; max-age=" + (60*60*24*30);
-        }
-      });
-
-      gtag('event', 'page_view', {
-        'page_path': window.location.pathname + window.location.search,
-        ...utmData
-      });
-    })();
-  `}
-          </Script>
         </head>
         <body
           className={`${poppins.className} ${geistSans.variable} ${geistMono.variable}`}
         >
+          {/* Google Tag Manager (noscript) */}
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-K7ZDF4K4"
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+          </noscript>
+
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>{children}</ThemeProvider>
           </AppRouterCacheProvider>
