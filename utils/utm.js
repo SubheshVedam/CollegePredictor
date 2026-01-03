@@ -8,8 +8,16 @@ const UTM_PARAMS = [
   'utm_medium',
   'utm_campaign',
   'utm_term',
-  'utm_content'
+  'utm_content',
+  'utm_id'
 ];
+
+const UTM_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 30;
+
+function setUtmCookie(name, value) {
+  const encodedValue = encodeURIComponent(value);
+  document.cookie = `${name}=${encodedValue}; path=/; max-age=${UTM_COOKIE_MAX_AGE_SECONDS}; SameSite=Lax`;
+}
 
 /**
  * Extract UTM parameters from URL and return as an object
@@ -42,6 +50,9 @@ export function storeUtmParams() {
   
   if (Object.keys(utmParams).length > 0) {
     localStorage.setItem('utm_params', JSON.stringify(utmParams));
+    Object.entries(utmParams).forEach(([key, value]) => {
+      setUtmCookie(key, value);
+    });
   }
 }
 
