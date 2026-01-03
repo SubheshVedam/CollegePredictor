@@ -20,24 +20,7 @@ export async function POST(req) {
     }
   
     try {
-      // First check if phone number already exists
-      const { data: existingEntries, error: lookupError } = await supabase
-        .from("utm")
-        .select("phone")
-        .eq("phone", phone)
-        .limit(1);
-  
-      if (lookupError) throw lookupError;
-  
-      // If phone number exists, skip insertion
-      if (existingEntries && existingEntries.length > 0) {
-        return NextResponse.json(
-          { success: false, message: "Phone number already exists" },
-          { status: 200 }
-        );
-      }
-  
-      // If phone number doesn't exist, proceed with insertion
+      // Always insert a new entry to attribute multiple campaigns per phone
       const { error: insertError } = await supabase
         .from("utm")
         .insert([{ utm_param: utmParam, isVerified, phone }]);
