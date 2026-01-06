@@ -90,13 +90,49 @@ export default function OtpModal({
   };
   const saveUtmData = async () => {
     try {
+      // Extract only UTM parameters from cookies
+      const getAllCookies = () => {
+        if (typeof document === 'undefined') return '';
+        return document.cookie;
+      };
+
+      const parseCookies = (cookieString) => {
+        const cookies = {};
+        if (!cookieString) return cookies;
+        
+        cookieString.split(';').forEach(cookie => {
+          const [name, value] = cookie.trim().split('=');
+          if (name && value) {
+            cookies[name.trim()] = decodeURIComponent(value.trim());
+          }
+        });
+        return cookies;
+      };
+
+      const allCookies = parseCookies(getAllCookies());
+      
+      // Filter only UTM-related cookies
+      const utmCookies = {};
+      const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id'];
+      
+      utmKeys.forEach(key => {
+        if (allCookies[key]) {
+          utmCookies[key] = allCookies[key];
+        }
+      });
+
+      // Convert UTM cookies back to cookie string format
+      const utmParamString = Object.entries(utmCookies)
+        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+        .join('; ');
+
       const response = await fetch("/api/utm-tracking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          utmParam: window.document.cookie,
+          utmParam: utmParamString || '',
           isVerified: true,
           phone: phoneNumber,
         }),
