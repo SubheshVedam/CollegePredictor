@@ -52,6 +52,7 @@ export default function CollegePredictorPage() {
             height={45}
             src="/img/Vedam_Final_Logo_White.png"
             alt="Vedam Logo"
+            title="Vedam School of Technology"
             style={{ objectFit: 'contain' }}
           />
         </Box>
@@ -129,6 +130,7 @@ export default function CollegePredictorPage() {
                     height={40}
                     src={"/img/Google_Microsoft_with_White.png"}
                     alt="logo"
+                    title="Google and Microsoft"
                   />{" "}
                 </Box>
               </Box>
