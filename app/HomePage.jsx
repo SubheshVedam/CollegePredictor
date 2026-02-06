@@ -81,13 +81,14 @@ export default function CollegePredictorPage() {
               </Typography>
               <Typography
                 variant="h3"
+                component="h1"
                 sx={{
                   fontWeight: "medium",
                   fontSize: { xs: 32, sm: 45 },
                   color: "#FFFFFF",
                 }}
               >
-                College{" "}
+                JEE Main 2026 College{" "}
                 <span
                   style={{
                     background:
@@ -148,6 +149,13 @@ export default function CollegePredictorPage() {
             maxHeight: { xs: "none", sm: "100%" },
           }}
         >
+          <Typography
+            component="h2"
+            variant="h5"
+            sx={{ color: "#FFFFFF", fontWeight: "bold", mb: 2 }}
+          >
+            Start Your Prediction
+          </Typography>
           <CollegeSearchForm onSearchComplete={() => {}} />
         </Box>
       </Box>

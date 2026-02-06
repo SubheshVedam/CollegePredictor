@@ -64,7 +64,7 @@ export default function JEERankPredictorInfo() {
   ];
 
   return (
-    <Container maxWidth="md" sx={{ py: 6}}>
+    <Container maxWidth="md" sx={{ py: 6 }}>
       <Box>
         <Typography variant="body1" paragraph>
         Input your JEE Main 2026 rank and unlock a personalised list of engineering colleges and branches you're likely to get into. This powerful tool uses historical cutoffs and category-specific trends to help you make confident, data-driven choices during counselling.
@@ -77,8 +77,19 @@ export default function JEERankPredictorInfo() {
       </Box>
 
       {/* Features Section */}
-      <Box>
-        <Typography variant="h6" sx={{ color: "#6C10BC", fontWeight: "bold" }}>
+      <Box sx={{ mt: 4 }}>
+        <Typography
+          component="h2"
+          variant="h5"
+          sx={{ fontWeight: "bold", color: "#2F1B50" }}
+        >
+          Features
+        </Typography>
+        <Typography
+          component="h3"
+          variant="h6"
+          sx={{ color: "#6C10BC", fontWeight: "bold", mt: 1 }}
+        >
           JEE College Predictor 2026 (FREE)
         </Typography>
         <List sx={{ mt: 1 }}>
@@ -99,10 +110,18 @@ export default function JEERankPredictorInfo() {
         </List>
       </Box>
       {/* Numbered Section */}
-      <Box>
+      <Box sx={{ mt: 4 }}>
         <Typography
+          component="h2"
+          variant="h5"
+          sx={{ fontWeight: "bold", color: "#2F1B50" }}
+        >
+          How It Works
+        </Typography>
+        <Typography
+          component="h3"
           variant="h6"
-          sx={{ color: "#6C10BC", fontWeight: "bold", mt: 4 }}
+          sx={{ color: "#6C10BC", fontWeight: "bold", mt: 1 }}
         >
           How Does the JEE College Predictor Work?
         </Typography>
@@ -135,9 +154,20 @@ export default function JEERankPredictorInfo() {
       </Box>
 
       {/* Benefits Section */}
-      <Box sx={{mb:2}}>
-        <Typography variant="h6" sx={{ color: "#6C10BC", fontWeight: "bold" }}>
-          Benefit of the JEE College Predictor 2026
+      <Box sx={{ mb: 2, mt: 4 }}>
+        <Typography
+          component="h2"
+          variant="h5"
+          sx={{ fontWeight: "bold", color: "#2F1B50" }}
+        >
+          Benefits
+        </Typography>
+        <Typography
+          component="h3"
+          variant="h6"
+          sx={{ color: "#6C10BC", fontWeight: "bold", mt: 1 }}
+        >
+          Benefits of the JEE College Predictor 2026
         </Typography>
         <List sx={{ mt: 1 }}>
           {benefits.map((benefit, index) => (

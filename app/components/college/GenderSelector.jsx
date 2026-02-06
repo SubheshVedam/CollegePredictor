@@ -11,7 +11,7 @@ export default function GenderSelector({ value, onChange }) {
     >
       <Typography
         variant="subtitle1"
-        component="h3"
+        component="p"
         sx={{
           color: "white",
           fontSize: { xs: 14, sm: 16 },

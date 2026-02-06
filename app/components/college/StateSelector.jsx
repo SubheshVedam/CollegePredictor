@@ -12,7 +12,7 @@ export default function StateSelector({ value, onChange }) {
     >
       <Typography
         variant="subtitle1"
-        component="h4"
+        component="p"
         sx={{
           color: "white",
           fontSize: { xs: 14, sm: 16 },
