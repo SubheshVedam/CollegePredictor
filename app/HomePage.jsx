@@ -30,10 +30,12 @@ export default function CollegePredictorPage() {
           display: "flex",
           py: { xs: 0, sm: 10 },
           flexDirection: { xs: "column", sm: "row" },
-          height: { xs: "auto", sm: "80vh" },
+          minHeight: { xs: "auto", sm: "80vh" },
+          height: { xs: "auto", sm: "auto" },
           background:
             "linear-gradient(-45deg, #FF9900 0%,#6C10BC 28%,#401565 50%,#41007A 59%,#5F15A0 64%,#310756 80%,#52118B 86%,#6C10BC 94%)",
-          position: "relative"
+          position: "relative",
+          overflow: { xs: "visible", sm: "hidden" }
         }}
       >
         <Box
@@ -140,6 +142,10 @@ export default function CollegePredictorPage() {
             pb: 4,
             pr: { xs: "none", sm: "10%", lg: "20%" },
             background: "transparent",
+            display: "flex",
+            flexDirection: "column",
+            overflowY: { xs: "visible", sm: "auto" },
+            maxHeight: { xs: "none", sm: "100%" },
           }}
         >
           <CollegeSearchForm onSearchComplete={() => {}} />
