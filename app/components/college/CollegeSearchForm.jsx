@@ -44,6 +44,8 @@ export default function CollegeSearchForm({ onSearchComplete }) {
     onSearchComplete();
     try {
       let finalRank = rank;
+      let minRank = null;
+      let maxRank = null;
 
       // If marks mode is selected, convert marks to rank first
       if (inputMode === 'marks' && marks) {
@@ -66,6 +68,9 @@ export default function CollegeSearchForm({ onSearchComplete }) {
 
           const data = await response.json();
           finalRank = data.rank.toString();
+          minRank = data.minRank;
+          maxRank = data.maxRank;
+          
           // Update Redux state with the converted rank and rank range
           dispatch(setRank(finalRank));
           dispatch(setRankRange({
@@ -90,14 +95,12 @@ export default function CollegeSearchForm({ onSearchComplete }) {
       });
       
       // Add rank range if marks mode was used
-      if (inputMode === 'marks' && rankRange) {
-        queryParams.set('minRank', rankRange.min.toString());
-        queryParams.set('maxRank', rankRange.max.toString());
+      if (inputMode === 'marks' && minRank !== null && maxRank !== null) {
+        queryParams.set('minRank', minRank.toString());
+        queryParams.set('maxRank', maxRank.toString());
       }
 
       router.replace(`/results?${queryParams.toString()}`);
-
-      router.replace(`/results?${queryParams}`);
     } catch (error) {
       console.error("Search navigation failed:", error);
       dispatch(setIsLoading(false));

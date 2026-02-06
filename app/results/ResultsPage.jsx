@@ -35,7 +35,7 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: { xs: "95%", md: "70%" },
-  bgcolor: "background.paper",
+  bgcolor: "#2a135b", // Dark background to match form styling
   boxShadow: 24,
   p: 4,
   borderRadius: 2,
@@ -250,7 +250,7 @@ export default function ResultsPage() {
           <Box
             sx={{
               display: "flex",
-              width: { xs: "100%", sm: "25%" },
+              width: { xs: "100%", sm: "30%" },
               flexDirection: { xs: "row", sm: "column" },
               bgcolor: "#2a135b",
               py: 1,
@@ -276,7 +276,7 @@ export default function ResultsPage() {
                 variant="subtitle1"
                 sx={{
                   color: "white",
-                  fontSize: { xs: 12, sm: 18 },
+                  fontSize: { xs: 12, sm: 16 },
                 }}
               >
                 Category:&nbsp;{searchParams.get("category")}
@@ -286,7 +286,7 @@ export default function ResultsPage() {
                 sx={{
                   color: "white",
                   textAlign: "left",
-                  fontSize: { xs: 12, sm: 18 },
+                  fontSize: { xs: 12, sm: 15 },
                 }}
               >
                 JEE Main 2026 Rank:&nbsp;
@@ -328,6 +328,7 @@ export default function ResultsPage() {
               component="h2"
               gutterBottom
               fontWeight="bold"
+              sx={{ color: "white" }}
             >
               College Search
             </Typography>
