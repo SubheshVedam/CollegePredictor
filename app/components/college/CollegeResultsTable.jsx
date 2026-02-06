@@ -134,7 +134,7 @@ const interspersedMessagesMobile = [
 const adPositioningMob = [0, 4, 8, 12, 16, 20, 24, 28, 32];
 const adPositioning = [0, 2, 4, 6, 8, 10, 12, 14, 16];
 
-export default function CollegeResultsTable({ myRank }) {
+export default function CollegeResultsTable({ myRank, minRank, maxRank }) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -566,7 +566,7 @@ export default function CollegeResultsTable({ myRank }) {
               >
                 Your JEE Main Rank -&nbsp;
                 <span style={{ color: "#FFA41A", fontWeight: "bold" }}>
-                  {myRank}
+                  {minRank && maxRank ? `${minRank} - ${maxRank}` : myRank}
                 </span>
               </Typography>
             </Box>

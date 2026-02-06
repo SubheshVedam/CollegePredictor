@@ -289,7 +289,14 @@ export default function ResultsPage() {
                   fontSize: { xs: 12, sm: 18 },
                 }}
               >
-                JEE Main 2026 Rank:&nbsp;{searchParams.get("rank")}
+                JEE Main 2026 Rank:&nbsp;
+                {searchParams.get("minRank") && searchParams.get("maxRank") ? (
+                  <span>
+                    {searchParams.get("minRank")} - {searchParams.get("maxRank")}
+                  </span>
+                ) : (
+                  searchParams.get("rank")
+                )}
               </Typography>
             </Box>
           </Box>
@@ -299,6 +306,8 @@ export default function ResultsPage() {
           <CollegeResultsTable
             results={results}
             myRank={searchParams.get("rank")}
+            minRank={searchParams.get("minRank")}
+            maxRank={searchParams.get("maxRank")}
           />
         ) : (
           <Paper elevation={0} sx={{ p: 4, textAlign: "center" }}>

@@ -45,6 +45,9 @@ export const fetchProgramDetails = createAsyncThunk(
 
 const initialState = {
   rank: '',
+  marks: '',
+  inputMode: 'rank', // 'rank' or 'marks'
+  rankRange: null, // { min, max } for marks-based searches
   gender: 'Gender Neutral',
   category: 'OPEN',
   year: '2026',
@@ -71,6 +74,23 @@ const collegePredictorSlice = createSlice({
   reducers: {
     setRank: (state, action) => {
       state.rank = action.payload;
+    },
+    setMarks: (state, action) => {
+      state.marks = action.payload;
+    },
+    setInputMode: (state, action) => {
+      state.inputMode = action.payload;
+      // Clear the other field when switching modes
+      if (action.payload === 'rank') {
+        state.marks = '';
+        state.rankRange = null;
+      } else {
+        state.rank = '';
+        state.rankRange = null;
+      }
+    },
+    setRankRange: (state, action) => {
+      state.rankRange = action.payload;
     },
     setGender: (state, action) => {
       state.gender = action.payload;
@@ -155,6 +175,9 @@ const collegePredictorSlice = createSlice({
 
 export const {
   setRank,
+  setMarks,
+  setInputMode,
+  setRankRange,
   setGender,
   setCategory,
   setYear,

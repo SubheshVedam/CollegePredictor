@@ -7,6 +7,8 @@ import {
   setGender,
   setIsLoading,
   setRank,
+  setMarks,
+  setRankRange,
   setStream,
   setStateId,
 } from "../../../features/collegePredictor/collegePredictorSlice";
@@ -22,40 +24,83 @@ import YearSelector from "./YearSelector";
 export default function CollegeSearchForm({ onSearchComplete }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { rank, gender, category, year, stream, stateId, isLoading } = useSelector(
+  const { rank, marks, inputMode, rankRange, gender, category, year, stream, stateId, isLoading } = useSelector(
     (state) => state.collegePredictor || {}
   );
 
   // Check if all fields are selected
-  const isFormValid = rank && gender && category && year && stream && stateId;
+  // If inputMode is 'marks', check for marks; otherwise check for rank
+  const hasValidInput = inputMode === 'marks' ? marks : rank;
+  const isFormValid = hasValidInput && gender && category && year && stream && stateId;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(setIsLoading(true));
     if (!isFormValid) {
+      dispatch(setIsLoading(false));
       return; // Do nothing if form is invalid
     }
 
     onSearchComplete();
     try {
-      // Dispatch the search action
-      // await dispatch(
-      //   fetchCollegeResults({ rank, gender, category, stateId })
-      // ).unwrap();
+      let finalRank = rank;
+
+      // If marks mode is selected, convert marks to rank first
+      if (inputMode === 'marks' && marks) {
+        try {
+          const response = await fetch("/api/marks-to-rank", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              marks: parseFloat(marks),
+              year,
+              category,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to convert marks to rank");
+          }
+
+          const data = await response.json();
+          finalRank = data.rank.toString();
+          // Update Redux state with the converted rank and rank range
+          dispatch(setRank(finalRank));
+          dispatch(setRankRange({
+            min: data.minRank,
+            max: data.maxRank
+          }));
+        } catch (error) {
+          console.error("Error converting marks to rank:", error);
+          dispatch(setIsLoading(false));
+          return;
+        }
+      }
 
       // Redirect to results page with query parameters
       dispatch(setIsLoading(false));
       const queryParams = new URLSearchParams({
-        rank,
+        rank: finalRank,
         gender,
         category,
         stream,
         stateId,
-      }).toString();
+      });
+      
+      // Add rank range if marks mode was used
+      if (inputMode === 'marks' && rankRange) {
+        queryParams.set('minRank', rankRange.min.toString());
+        queryParams.set('maxRank', rankRange.max.toString());
+      }
+
+      router.replace(`/results?${queryParams.toString()}`);
 
       router.replace(`/results?${queryParams}`);
-    } catch {
-      // Search navigation failed
+    } catch (error) {
+      console.error("Search navigation failed:", error);
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -69,10 +114,7 @@ export default function CollegeSearchForm({ onSearchComplete }) {
           color: "white",
         }}
       >
-        <RankInput
-          value={rank}
-          onChange={(value) => dispatch(setRank(value))}
-        />
+        <RankInput />
         <GenderSelector
           value={gender}
           onChange={(value) => dispatch(setGender(value))}
