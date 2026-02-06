@@ -46,6 +46,21 @@ export default function RootLayout({ children }) {
         <head>
           <Suspense fallback={null}>{/* <GoogleAnalytics /> */}</Suspense>
           <link rel="icon" href="./favicon.ico" />
+          <title>
+            JEE Main 2026 College Predictor | AI-Based Rank Analysis – Vedam
+            School of Technology
+          </title>
+          <meta
+            name="description"
+            content="AI-powered JEE Main 2026 college predictor using past-year data trends. Built by ex-Google & Microsoft SDEs. Get instant results by uploading your rank."
+          />
+          <meta
+            name="keywords"
+            content="JEE college predictor, college admission predictor, best college for JEE rank, JEE Main College Predictor, JEE Advance College Predictor"
+          />
+          <meta name="robots" content="index, follow" />
+          <meta name="author" content="Vedam School of Technology" />
+          <meta name="publisher" content="Vedam School of Technology" />
 
           {/* Google Tag Manager */}
           <Script
