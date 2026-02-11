@@ -3,7 +3,7 @@ import { Box, Typography, Stack } from "@mui/material";
 import { useState, useEffect } from "react";
 
 export default function AnnouncementBanner() {
-  const targetDate = new Date("2026-02-09T23:59:59").getTime();
+  const targetDate = new Date("2026-03-16T23:59:59").getTime();
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
