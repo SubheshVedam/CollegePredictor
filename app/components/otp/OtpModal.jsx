@@ -246,8 +246,11 @@ export default function OtpModal({
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: { xs: "90%", sm: 400 },
-    bgcolor: "#fee5cd",
-    boxShadow: 24,
+    background: "rgba(254, 229, 205, 0.88)",
+    backdropFilter: "blur(20px)",
+    WebkitBackdropFilter: "blur(20px)",
+    border: "1px solid rgba(251, 127, 5, 0.35)",
+    boxShadow: "0 8px 32px rgba(108, 16, 188, 0.15)",
     borderRadius: 2,
     p: 3,
     outline: 0,
@@ -257,7 +260,14 @@ export default function OtpModal({
     <Modal
       open={open}
       onClose={onClose}
-      hideBackdrop={true}
+      slotProps={{
+        backdrop: {
+          sx: {
+            backdropFilter: "blur(4px)",
+            backgroundColor: "rgba(42, 19, 91, 0.25)",
+          },
+        },
+      }}
       aria-labelledby="otp-modal-title"
       aria-describedby="otp-modal-description"
     >

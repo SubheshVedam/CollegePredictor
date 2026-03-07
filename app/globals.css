@@ -1,4 +1,60 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Vedam theme colors */
+:root {
+  --vedam-purple: #6C10BC;
+  --vedam-purple-dark: #2a135b;
+  --vedam-purple-darker: #2F1B50;
+  --vedam-orange: #FB7F05;
+  --vedam-orange-alt: #FFA41A;
+  --vedam-cream: #fee5cd;
+}
+
+/* Glassmorphism variables and utilities (Vedam-themed) */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-bg-strong: rgba(255, 255, 255, 0.18);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-border-purple: rgba(108, 16, 188, 0.35);
+  --glass-shadow: 0 8px 32px rgba(108, 16, 188, 0.15);
+  --glass-blur: 12px;
+  --glass-blur-strong: 20px;
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(var(--glass-blur-strong));
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Light glass – Vedam purple tint (light backgrounds) */
+.glass-light {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid rgba(108, 16, 188, 0.18);
+  box-shadow: 0 8px 32px rgba(108, 16, 188, 0.1);
+}
+
+/* Dark glass – Vedam purple (gradient/dark backgrounds) */
+.glass-dark {
+  background: rgba(42, 19, 91, 0.65);
+  backdrop-filter: blur(var(--glass-blur-strong));
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(108, 16, 188, 0.25);
+}
+
 html,
 body {
   max-width: 100vw;

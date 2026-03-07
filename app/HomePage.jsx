@@ -32,10 +32,14 @@ export default function CollegePredictorPage() {
           flexDirection: { xs: "column", sm: "row" },
           minHeight: { xs: "auto", sm: "80vh" },
           height: { xs: "auto", sm: "auto" },
+          width: "100%",
+          maxWidth: "100vw",
+          boxSizing: "border-box",
           background:
             "linear-gradient(-45deg, #FF9900 0%,#6C10BC 28%,#401565 50%,#41007A 59%,#5F15A0 64%,#310756 80%,#52118B 86%,#6C10BC 94%)",
           position: "relative",
-          overflow: { xs: "visible", sm: "hidden" }
+          overflow: "hidden",
+          alignItems: { xs: "stretch", sm: "stretch" },
         }}
       >
         <Box
@@ -58,10 +62,25 @@ export default function CollegePredictorPage() {
         </Box>
         <Box
           sx={{
+            width: "100%",
+            maxWidth: 1024,
+            margin: "0 auto",
+            px: { xs: 0, sm: 3 },
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            flex: 1,
+            minWidth: 0,
+            pt: { xs: 0, sm: 0 },
+          }}
+        >
+        <Box
+          sx={{
             py: 5,
             p: { xs: 0, sm: 2 },
-            flex: 1,
-            pl: { xs: 2, sm: "10%", lg: "20%" },
+            flex: { xs: "none", sm: "1 1 50%" },
+            minWidth: 0,
+            pl: { xs: 2, sm: 0 },
+            pr: { xs: 0, sm: 2 },
             background: "transparent",
             mt: { xs: 13, sm: 6 },
           }}
@@ -138,17 +157,20 @@ export default function CollegePredictorPage() {
           </Box>
         </Box>
         <Box
+          className="glass-strong"
           sx={{
-            flex: 1,
+            flex: { xs: "none", sm: "1 1 50%" },
+            width: { xs: "100%", sm: "auto" },
+            minWidth: 0,
             py: 5,
             p: 2,
             pb: 4,
-            pr: { xs: "none", sm: "10%", lg: "20%" },
-            background: "transparent",
+            mx: { xs: 2, sm: 0 },
+            borderRadius: 3,
             display: "flex",
             flexDirection: "column",
-            overflowY: { xs: "visible", sm: "auto" },
-            maxHeight: { xs: "none", sm: "100%" },
+            alignSelf: { xs: "stretch", sm: "flex-start" },
+            boxSizing: "border-box",
           }}
         >
           <Typography
@@ -159,6 +181,7 @@ export default function CollegePredictorPage() {
             Start Your Prediction
           </Typography>
           <CollegeSearchForm onSearchComplete={() => {}} />
+        </Box>
         </Box>
       </Box>
 

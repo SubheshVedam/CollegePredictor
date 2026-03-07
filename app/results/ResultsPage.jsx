@@ -35,10 +35,13 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: { xs: "95%", md: "70%" },
-  bgcolor: "#2a135b", // Dark background to match form styling
-  boxShadow: 24,
+  background: "rgba(42, 19, 91, 0.82)",
+  backdropFilter: "blur(20px)",
+  WebkitBackdropFilter: "blur(20px)",
+  border: "1px solid rgba(251, 127, 5, 0.3)",
+  boxShadow: "0 8px 32px rgba(108, 16, 188, 0.35)",
   p: 4,
-  borderRadius: 2,
+  borderRadius: 3,
   maxHeight: "90vh",
   overflowY: "auto",
 };
@@ -201,6 +204,7 @@ export default function ResultsPage() {
 
         {/* title area  */}
         <Box
+          className="glass-light"
           sx={{
             display: "flex",
             flexDirection: { xs: "column", sm: "row" },
@@ -214,6 +218,8 @@ export default function ResultsPage() {
             backgroundRepeat: "no-repeat",
             py: { xs: 3, sm: 5 },
             borderRadius: 2,
+            border: "1px solid rgba(108, 16, 188, 0.2)",
+            boxShadow: "0 8px 32px rgba(108, 16, 188, 0.12)",
           }}
         >
           {/* Text Section */}
@@ -248,14 +254,13 @@ export default function ResultsPage() {
 
           {/* Image Section - Modified for mobile */}
           <Box
+            className="glass-dark"
             sx={{
               display: "flex",
               width: { xs: "100%", sm: "30%" },
               flexDirection: { xs: "row", sm: "column" },
-              bgcolor: "#2a135b",
               py: 1,
               borderRadius: "100px 100px 100px 100px",
-              boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.5)", // added bottom-only shadow
             }}
           >
             {/* Foreground content */}
@@ -321,6 +326,14 @@ export default function ResultsPage() {
           open={openSearchModal}
           onClose={handleCloseSearchModal}
           aria-labelledby="college-search-modal"
+          slotProps={{
+            backdrop: {
+              sx: {
+                backdropFilter: "blur(6px)",
+                backgroundColor: "rgba(42, 19, 91, 0.4)",
+              },
+            },
+          }}
         >
           <Box sx={modalStyle}>
             <Typography

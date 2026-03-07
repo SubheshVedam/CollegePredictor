@@ -64,8 +64,18 @@ export default function JEERankPredictorInfo() {
   ];
 
   return (
-    <Container maxWidth="md" sx={{ py: 6 }}>
-      <Box>
+    <Container maxWidth={false} sx={{ maxWidth: 1024, py: 6 }}>
+      <Box
+        sx={{
+          p: 3,
+          borderRadius: 3,
+          background: "rgba(255, 255, 255, 0.82)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          border: "none",
+          boxShadow: "0 8px 32px rgba(251, 127, 5, 0.18)",
+        }}
+      >
         <Typography variant="body1" paragraph>
         Input your JEE Main 2026 rank and unlock a personalised list of engineering colleges and branches you're likely to get into. This powerful tool uses historical cutoffs and category-specific trends to help you make confident, data-driven choices during counselling.
         </Typography>
@@ -74,7 +84,6 @@ export default function JEERankPredictorInfo() {
           this tool empowers you to make informed decisions during your JEE
           preparation and admissions process.
         </Typography>
-      </Box>
 
       {/* Features Section */}
       <Box sx={{ mt: 4 }}>
@@ -190,6 +199,7 @@ export default function JEERankPredictorInfo() {
       <Typography variant="body1" paragraph>
       Take the next step in your JEE journey—use the <strong>College Predictor 2026</strong> today to set yourself up for academic success!
         </Typography>
+      </Box>
     </Container>
   );
 }
