@@ -62,15 +62,17 @@ export default function CollegePredictorPage() {
         </Box>
         <Box
           sx={{
-            width: "100%",
+            // width: "100%",
             maxWidth: 1024,
             margin: "0 auto",
-            px: { xs: 0, sm: 3 },
+            my: { xs: 2, sm: 3 },
+            px: { xs: 2, sm: 3 },
             display: "flex",
             flexDirection: { xs: "column", sm: "row" },
             flex: 1,
             minWidth: 0,
             pt: { xs: 0, sm: 0 },
+            alignItems: { xs: "center", sm: "stretch" },
           }}
         >
         <Box
@@ -79,10 +81,11 @@ export default function CollegePredictorPage() {
             p: { xs: 0, sm: 2 },
             flex: { xs: "none", sm: "1 1 50%" },
             minWidth: 0,
-            pl: { xs: 2, sm: 0 },
-            pr: { xs: 0, sm: 2 },
+            width: { xs: "100%", sm: "auto" },
+            maxWidth: { xs: "calc(100vw - 20px)", sm: "none" },
             background: "transparent",
             mt: { xs: 13, sm: 6 },
+            textAlign: { xs: "center", sm: "left" },
           }}
         >
           <Box
@@ -91,9 +94,10 @@ export default function CollegePredictorPage() {
               gap: 5,
               flexDirection: "column",
               justifyContent: "space-between",
+              alignItems: { xs: "center", sm: "flex-start" },
             }}
           >
-            <Box sx={{ mt: { xs: 0, sm: 7 } }}>
+            <Box sx={{ mt: { xs: 0, sm: 7 }, width: "100%" }}>
               <Typography
                 sx={{ color: "#FFFFFF", fontSize: { xs: 18, sm: 24 } }}
               >
@@ -134,15 +138,15 @@ export default function CollegePredictorPage() {
                 </Typography>
               </Box>
             </Box>
-            <Box sx={{ mt: 4 }}>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Box sx={{ mt: 4, width: "100%" }}>
+              <Box sx={{ display: "flex", flexDirection: "column", alignItems: { xs: "center", sm: "flex-start" } }}>
                 <Typography
                   variant="subtitle1"
                   sx={{ fontSize: 14, mb: 1, color: "#FFFFFF" }}
                 >
                   Developed By Experts working at
                 </Typography>
-                <Box sx={{ display: "flex", gap: 3 }}>
+                <Box sx={{ display: "flex", gap: 3, mb: 2 }}>
                   {" "}
                   <Image
                     width={200}
@@ -161,22 +165,28 @@ export default function CollegePredictorPage() {
           sx={{
             flex: { xs: "none", sm: "1 1 50%" },
             width: { xs: "100%", sm: "auto" },
-            minWidth: 0,
-            py: 5,
+            maxWidth: { xs: "calc(100vw - 20px)", sm: "none" },
+            mx: { xs: "auto", sm: 0 },
+            pt: 5,
             p: 2,
             pb: 4,
-            mx: { xs: 2, sm: 0 },
             borderRadius: 3,
             display: "flex",
             flexDirection: "column",
-            alignSelf: { xs: "stretch", sm: "flex-start" },
+            alignSelf: { xs: "center", sm: "flex-start" },
             boxSizing: "border-box",
+            background: "rgba(255, 255, 255, 0.1)",
           }}
         >
           <Typography
             component="h2"
             variant="h5"
-            sx={{ color: "#FFFFFF", fontWeight: "bold", mb: 2 }}
+            sx={{
+              color: "#FFFFFF",
+              fontWeight: "bold",
+              mb: 2,
+              textAlign: { xs: "center", sm: "left" },
+            }}
           >
             Start Your Prediction
           </Typography>

@@ -1,5 +1,6 @@
 "use client";
-import { TextField, Typography } from "@mui/material";
+import { TextField, Typography, Box } from "@mui/material";
+import { liquidFieldSx, liquidFormLabelSx } from "./liquidGlassStyles";
 
 export default function StyledInput({
   label,
@@ -13,13 +14,18 @@ export default function StyledInput({
   ...rest
 }) {
   return (
-    <div style={{ marginBottom: "1rem" }}>
-      <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
+    <Box sx={{ backgroundColor: "transparent", mb: 1 }}>
+      <Typography
+        variant="subtitle1"
+        component="p"
+        sx={{ ...liquidFormLabelSx, mb: 1 }}
+      >
         {label}
       </Typography>
       <TextField
         fullWidth
         variant="outlined"
+        size="medium"
         value={value}
         onChange={onChange}
         placeholder={placeholder}
@@ -29,15 +35,17 @@ export default function StyledInput({
           startAdornment,
         }}
         sx={{
-          bgcolor : "white",
-          borderRadius: "10px", // Border radius 10px
-          "& .MuiOutlinedInput-root": {
-            borderRadius: "10px",
+          ...liquidFieldSx,
+          "& .MuiInputBase-input": {
+            ...liquidFieldSx["& .MuiInputBase-input, & .MuiSelect-select"],
+            py: 1.5,
           },
         }}
         {...rest}
       />
-      <Typography variant="caption" color="error">{helperText}</Typography>
-    </div>
+      <Typography variant="caption" color="error">
+        {helperText}
+      </Typography>
+    </Box>
   );
 }

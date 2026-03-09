@@ -5,7 +5,7 @@ import {
   Box,
   Typography,
   Button,
-  CircularProgress,
+
   Divider,
   Alert,
   InputAdornment,
@@ -14,6 +14,14 @@ import {
 import StyledInput from "../shared/StyledInput";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSelector } from "react-redux";
+import {
+  liquidIconButtonSx,
+  liquidPanelDarkSx,
+  liquidFormLabelSx,
+  orangeLiquidButtonSx,
+  smallPurpleLiquidButtonSx,
+} from "../shared/liquidGlassStyles";
+import LiquidGlassLoader from "../shared/LiquidGlassLoader";
 
 // Validation functions
 const validateEmail = (email) => {
@@ -241,17 +249,13 @@ export default function OtpModal({
   };
 
   const modalStyle = {
+    ...liquidPanelDarkSx,
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: { xs: "90%", sm: 400 },
-    background: "rgba(254, 229, 205, 0.88)",
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
-    border: "1px solid rgba(251, 127, 5, 0.35)",
-    boxShadow: "0 8px 32px rgba(108, 16, 188, 0.15)",
-    borderRadius: 2,
+    borderRadius: 3,
     p: 3,
     outline: 0,
   };
@@ -263,8 +267,9 @@ export default function OtpModal({
       slotProps={{
         backdrop: {
           sx: {
-            backdropFilter: "blur(4px)",
-            backgroundColor: "rgba(42, 19, 91, 0.25)",
+            backdropFilter: "saturate(120%) blur(12px)",
+            WebkitBackdropFilter: "saturate(120%) blur(12px)",
+            backgroundColor: "rgba(42, 19, 91, 0.35)",
           },
         },
       }}
@@ -274,12 +279,12 @@ export default function OtpModal({
       <Box sx={modalStyle} position="relative">
         <IconButton
           onClick={handleModalClose}
-          sx={{ position: "absolute", top: 12, right: 12 }}
+          sx={{ ...liquidIconButtonSx, position: "absolute", top: 12, right: 12 }}
           aria-label="close"
         >
           <CloseIcon />
         </IconButton>
-        <Typography id="otp-modal-title" variant="h6" mb={2}>
+        <Typography id="otp-modal-title" variant="h6" mb={2} sx={liquidFormLabelSx}>
           Sign in to view the list
         </Typography>
 
@@ -356,11 +361,10 @@ export default function OtpModal({
                 disabled={isLoading}
                 fullWidth
                 sx={{
-                  backgroundColor: "#FFA41A",
-                  borderRadius: "12px",
+                  ...orangeLiquidButtonSx,
                   height: "56px",
                 }}
-                startIcon={isLoading ? <CircularProgress size={20} /> : null}
+                startIcon={isLoading ? <LiquidGlassLoader size={20} /> : null}
               >
                 {isLoading ? "Sending..." : "Send OTP"}
               </Button>
@@ -391,7 +395,10 @@ export default function OtpModal({
                   size="small"
                   onClick={handleResendOTP}
                   disabled={isLoading}
-                  sx={{ mr: 1, color: "#6C10BC" }}
+                  sx={{
+                    ...smallPurpleLiquidButtonSx,
+                    mr: 1,
+                  }}
                 >
                   Resend OTP
                 </Button>
@@ -401,7 +408,10 @@ export default function OtpModal({
                   size="small"
                   onClick={handleUpdateNumber}
                   disabled={isLoading}
-                  sx={{ ml: 1, color: "#6C10BC" }}
+                  sx={{
+                    ...smallPurpleLiquidButtonSx,
+                    ml: 1,
+                  }}
                 >
                   Update Number
                 </Button>
@@ -418,11 +428,10 @@ export default function OtpModal({
                 disabled={isLoading || otp.length !== 4}
                 fullWidth
                 sx={{
-                  backgroundColor: "#FFA41A",
-                  borderRadius: "16px",
+                  ...orangeLiquidButtonSx,
                   height: "56px",
                 }}
-                startIcon={isLoading ? <CircularProgress size={20} /> : null}
+                startIcon={isLoading ? <LiquidGlassLoader size={20} /> : null}
               >
                 {isLoading ? "Verifying..." : "Verify"}
               </Button>

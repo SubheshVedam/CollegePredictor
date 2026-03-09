@@ -64,16 +64,16 @@ export default function JEERankPredictorInfo() {
   ];
 
   return (
-    <Container maxWidth={false} sx={{ maxWidth: 1024, py: 6 }}>
+    <Container maxWidth={false} sx={{ maxWidth: 1024, py: 6, }}>
       <Box
         sx={{
           p: 3,
           borderRadius: 3,
-          background: "rgba(255, 255, 255, 0.82)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          border: "none",
-          boxShadow: "0 8px 32px rgba(251, 127, 5, 0.18)",
+          background: "rgba(255, 255, 255, 0.72)",
+          backdropFilter: "saturate(180%) blur(20px)",
+          WebkitBackdropFilter: "saturate(180%) blur(20px)",
+          border: "1px solid rgba(255, 255, 255, 0.5)",
+          boxShadow: "0 1px 0 rgba(0, 0, 0, 0.04)",
         }}
       >
         <Typography variant="body1" paragraph>

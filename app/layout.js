@@ -3,7 +3,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
-import { Poppins } from "next/font/google";
+import { Outfit } from "next/font/google";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
 import { Provider } from "react-redux";
@@ -13,11 +13,11 @@ import { Suspense, useEffect } from "react";
 import { storeUtmParams, sendUtmToAnalytics } from "../utils/utm";
 import GoogleAnalytics from "./components/google-analytics";
 
-const poppins = Poppins({
+const outfit = Outfit({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-poppins",
+  variable: "--font-outfit",
 });
 
 const geistSans = Geist({
@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
 
   return (
     <Provider store={store}>
-      <html lang="en" className={poppins.variable}>
+      <html lang="en" className={outfit.variable}>
         <head>
           <Suspense fallback={null}>{/* <GoogleAnalytics /> */}</Suspense>
           <link rel="icon" href="./favicon.ico" />
@@ -93,7 +93,7 @@ export default function RootLayout({ children }) {
 
         </head>
         <body
-          className={`${poppins.className} ${geistSans.variable} ${geistMono.variable}`}
+          className={`${outfit.className} ${geistSans.variable} ${geistMono.variable}`}
         >
           {/* Google Tag Manager (noscript) */}
           <noscript>

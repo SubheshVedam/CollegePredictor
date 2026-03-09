@@ -1,6 +1,11 @@
 "use client";
 import { FormControl, Select, Box, Typography, MenuItem } from "@mui/material";
 import { stateOptions } from "@/lib/states";
+import {
+  liquidFieldSx,
+  liquidFormLabelSx,
+  liquidMenuProps,
+} from "../shared/liquidGlassStyles";
 
 export default function StateSelector({ value, onChange }) {
   return (
@@ -13,40 +18,25 @@ export default function StateSelector({ value, onChange }) {
       <Typography
         variant="subtitle1"
         component="p"
-        sx={{
-          color: "white",
-          fontSize: { xs: 14, sm: 16 },
-        }}
+        sx={liquidFormLabelSx}
       >
         Domicile State{" "}
       </Typography>
 
       <FormControl fullWidth>
         <Select
+          variant="outlined"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           displayEmpty
+          MenuProps={liquidMenuProps}
           sx={{
-            backgroundColor: "white",
-            borderRadius: 2,
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderColor: "grey.300",
-                borderRadius: 2,
-              },
-              "&:hover fieldset": {
-                borderColor: "primary.main",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "primary.main",
-                borderWidth: 2,
-              },
-            },
+            ...liquidFieldSx,
             "& .MuiSelect-select": {
+              ...liquidFieldSx["& .MuiInputBase-input, & .MuiSelect-select"],
               py: 1.5,
-              fontSize: "1rem",
-              color: value === "" ? "grey" : "black", // Placeholder color
-              opacity: value === "" ? 1 : undefined,
+              color: value === "" ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.96)",
+              opacity: 1,
             },
           }}
         >

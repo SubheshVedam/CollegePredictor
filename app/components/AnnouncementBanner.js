@@ -93,7 +93,7 @@ export default function AnnouncementBanner() {
                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
                 px: 2,
                 py: 0.5,
-                borderRadius: 1,
+                borderRadius: 10,
                 '&:hover': {
                   backgroundColor: 'rgba(255, 255, 255, 0.3)',
                 }

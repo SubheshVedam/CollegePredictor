@@ -3,7 +3,8 @@
 import React from 'react'
 import ResultsPage from './ResultsPage'
 import { Suspense } from 'react';
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
+import LiquidGlassLoader from "../components/shared/LiquidGlassLoader";
 
 export default function page() {
   return (
@@ -14,7 +15,7 @@ export default function page() {
         alignItems="center"
         minHeight="80vh"
       >
-        <CircularProgress size={60} />
+        <LiquidGlassLoader size={60} />
       </Box>
     }>
     <ResultsPage/>

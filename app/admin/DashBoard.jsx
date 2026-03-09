@@ -12,10 +12,10 @@ import {
   TextField,
   Typography,
   Alert,
-  CircularProgress,
   Tabs,
   Tab
 } from '@mui/material';
+import LiquidGlassLoader from '../components/shared/LiquidGlassLoader';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import {
   Chart as ChartJS,
@@ -252,7 +252,7 @@ const DashBoard = () => {
                   sx={{ mt: 3, mb: 2 }}
                   disabled={loading}
                 >
-                  {loading ? <CircularProgress size={24} /> : 'Sign In'}
+                  {loading ? <LiquidGlassLoader size={24} /> : 'Sign In'}
                 </Button>
               </Box>
             </Paper>
@@ -274,7 +274,7 @@ const DashBoard = () => {
             variant="contained"
             onClick={fetchUTMData}
             disabled={loading}
-            startIcon={loading ? <CircularProgress size={20} /> : null}
+            startIcon={loading ? <LiquidGlassLoader size={20} /> : null}
           >
             Refresh Data
           </Button>
@@ -288,7 +288,7 @@ const DashBoard = () => {
 
         {loading && !utmData ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-            <CircularProgress />
+            <LiquidGlassLoader size={48} />
           </Box>
         ) : utmData ? (
           <>

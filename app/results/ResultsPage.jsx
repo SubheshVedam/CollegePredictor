@@ -19,7 +19,7 @@ import {
   Box,
   Typography,
   Backdrop,
-  CircularProgress,
+
   Alert,
   Paper,
   Container,
@@ -28,22 +28,52 @@ import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
 import useUtmTracking from "@/hooks/useUtmTracking";
 import ShareButtons from "../components/shared/ShareButton";
+import {
+  liquidPanelDarkSx,
+  orangeLiquidButtonSx,
+  purpleLiquidButtonSx,
+} from "../components/shared/liquidGlassStyles";
+import LiquidGlassProgress from "../components/shared/LiquidGlassProgress";
 
 const modalStyle = {
+  ...liquidPanelDarkSx,
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: { xs: "95%", md: "70%" },
-  background: "rgba(42, 19, 91, 0.82)",
-  backdropFilter: "blur(20px)",
-  WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(251, 127, 5, 0.3)",
-  boxShadow: "0 8px 32px rgba(108, 16, 188, 0.35)",
+  maxWidth: "500px",
   p: 4,
   borderRadius: 3,
   maxHeight: "90vh",
   overflowY: "auto",
+};
+
+const glassMetaPillSx = {
+  position: "relative",
+  overflow: "hidden",
+  width: "82%",
+  px: 2,
+  py: 1.1,
+  borderRadius: "20px",
+  color: "white",
+  background:
+    "radial-gradient(140% 120% at 0% 20%, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 55%), linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.08)), rgba(255,255,255,0.1)",
+  backdropFilter: "blur(18px) saturate(190%)",
+  WebkitBackdropFilter: "blur(18px) saturate(190%)",
+  boxShadow:
+    "inset 0 1px 3px rgba(255,255,255,0.28), inset 0 -4px 8px rgba(0,0,0,0.12), 0 12px 22px -12px rgba(0,0,0,0.28)",
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    inset: 0,
+    height: "52%",
+    borderRadius: "inherit",
+    background:
+      "linear-gradient(rgba(255,255,255,0.42), rgba(255,255,255,0.04))",
+    opacity: 0.55,
+    pointerEvents: "none",
+  },
 };
 
 export default function ResultsPage() {
@@ -55,6 +85,34 @@ export default function ResultsPage() {
     useSelector((state) => state.collegePredictor);
 
   const [openSearchModal, setOpenSearchModal] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [showContent, setShowContent] = useState(true);
+
+  // Drive progress 0 → 90% while loading
+  useEffect(() => {
+    if (!isLoading) return;
+    setShowContent(false);
+    setProgress(0);
+    const duration = 2500;
+    const steps = 45;
+    const stepMs = duration / steps;
+    const stepValue = 90 / steps;
+    let step = 0;
+    const id = setInterval(() => {
+      step += 1;
+      setProgress((p) => Math.min(90, p + stepValue));
+      if (step >= steps) clearInterval(id);
+    }, stepMs);
+    return () => clearInterval(id);
+  }, [isLoading]);
+
+  // When loading finishes: go to 100% then reveal content
+  useEffect(() => {
+    if (isLoading) return;
+    setProgress(100);
+    const t = setTimeout(() => setShowContent(true), 400);
+    return () => clearTimeout(t);
+  }, [isLoading]);
 
   // Initialize Msg91 OTP widget
   useEffect(() => {
@@ -128,15 +186,31 @@ export default function ResultsPage() {
     dispatch(setPhoneNumber(number));
   };
 
-  if (isLoading) {
+  if (!showContent) {
     return (
       <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="80vh"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "80vh",
+          px: 3,
+        }}
       >
-        <CircularProgress size={60} />
+        <Typography
+          sx={{
+            color: "rgba(255,255,255,0.9)",
+            fontSize: { xs: 16, sm: 18 },
+            mb: 3,
+            fontFamily: "var(--font-outfit), sans-serif",
+          }}
+        >
+          Finding your colleges…
+        </Typography>
+        <Box sx={{ width: "100%", maxWidth: 360 }}>
+          <LiquidGlassProgress progress={progress} height={14} />
+        </Box>
       </Box>
     );
   }
@@ -174,12 +248,17 @@ export default function ResultsPage() {
             startIcon={<ArrowBackIcon />}
             onClick={() => router.push("/")}
             sx={{
-              borderRadius: "12px",
-              borderColor: "#FB7F05",
-              fontSize: "clamp(10px, 2.5vw, 16px)",
-              px: 2,
+              ...orangeLiquidButtonSx,
               textTransform: "none",
-              color: "#FB7F05",
+              border: "none",
+              boxShadow:
+                "inset 0 2px 5px rgba(255,255,255,0.58), inset 0 -4px 8px rgba(120,52,0,0.22), 0 10px 25px -8px rgba(0,0,0,0.4)",
+              "&:hover": {
+                ...orangeLiquidButtonSx["&:hover"],
+                border: "none",
+                boxShadow:
+                  "inset 0 3px 8px rgba(255,255,255,0.78), inset 0 -4px 8px rgba(120,52,0,0.16), 0 18px 30px -10px rgba(0,0,0,0.5)",
+              },
             }}
           >
             Home
@@ -188,15 +267,7 @@ export default function ResultsPage() {
             variant="contained"
             startIcon={<SearchIcon />}
             onClick={handleOpenSearchModal}
-            sx={{
-              fontSize: "clamp(10px, 2.5vw, 16px)",
-              color: "#F9F9F9",
-              background:
-                "linear-gradient(95.22deg, #FB7F05 2.91%, #6C10BC 99.18%)",
-              borderRadius: "12px",
-              boxShadow: "0px 0px 11.2px rgba(255, 255, 255, 0.25)",
-              textTransform: "capitalize",
-            }}
+            sx={{ ...purpleLiquidButtonSx, textTransform: "none" }}
           >
             New Search
           </Button>
@@ -218,8 +289,6 @@ export default function ResultsPage() {
             backgroundRepeat: "no-repeat",
             py: { xs: 3, sm: 5 },
             borderRadius: 2,
-            border: "1px solid rgba(108, 16, 188, 0.2)",
-            boxShadow: "0 8px 32px rgba(108, 16, 188, 0.12)",
           }}
         >
           {/* Text Section */}
@@ -231,7 +300,7 @@ export default function ResultsPage() {
               flexDirection: "column",
               alignItems: { xs: "center", sm: "flex-start" },
               justifyContent: "center",
-              gap:2
+              gap: 2
             }}
           >
             <Typography
@@ -248,7 +317,7 @@ export default function ResultsPage() {
             >
               College Predictor
             </Typography>
-            <ShareButtons/>
+            <ShareButtons variant="monochromeGlass" />
 
           </Box>
 
@@ -257,16 +326,16 @@ export default function ResultsPage() {
             className="glass-dark"
             sx={{
               display: "flex",
-              width: { xs: "100%", sm: "30%" },
+              minWidth: "30%",
               flexDirection: { xs: "row", sm: "column" },
               py: 1,
-              borderRadius: "100px 100px 100px 100px",
+              px:2,
+              borderRadius: "20px 20px 20px 20px",
             }}
           >
             {/* Foreground content */}
             <Box
               sx={{
-                position: "relative",
                 zIndex: 2,
                 height: "100%",
                 width: "100%",
@@ -274,35 +343,48 @@ export default function ResultsPage() {
                 flexDirection: "column",
                 alignItems: { xs: "center", sm: "flex-start" },
                 justifyContent: "center",
-                pl: { xs: 0, sm: 3 },
+                gap: 1,
               }}
             >
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  color: "white",
-                  fontSize: { xs: 12, sm: 16 },
-                }}
-              >
-                Category:&nbsp;{searchParams.get("category")}
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  color: "white",
-                  textAlign: "left",
-                  fontSize: { xs: 12, sm: 15 },
-                }}
-              >
-                JEE Main 2026 Rank:&nbsp;
-                {searchParams.get("minRank") && searchParams.get("maxRank") ? (
-                  <span>
-                    {searchParams.get("minRank")} - {searchParams.get("maxRank")}
-                  </span>
-                ) : (
-                  searchParams.get("rank")
-                )}
-              </Typography>
+              <Box sx={glassMetaPillSx}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    zIndex: 1,
+                    color: "white",
+                    fontSize: { xs: 12, sm: 16 },
+                  }}
+                >
+                  Category:&nbsp;
+                  <Box
+                    component="span"
+                    sx={{ fontWeight: 700, letterSpacing: "0.02em" }}
+                  >
+                    {searchParams.get("category")}
+                  </Box>
+                </Typography>
+              </Box>
+              <Box sx={glassMetaPillSx}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    zIndex: 1,
+                    color: "white",
+                    textAlign: "left",
+                    fontSize: { xs: 12, sm: 15 },
+                  }}
+                >
+                  JEE Main 2026 Rank:&nbsp;
+                  <Box
+                    component="span"
+                    sx={{ fontWeight: 700, letterSpacing: "0.02em" }}
+                  >
+                    {searchParams.get("minRank") && searchParams.get("maxRank")
+                      ? `${searchParams.get("minRank")} - ${searchParams.get("maxRank")}`
+                      : searchParams.get("rank")}
+                  </Box>
+                </Typography>
+              </Box>
             </Box>
           </Box>
         </Box>
@@ -315,7 +397,16 @@ export default function ResultsPage() {
             maxRank={searchParams.get("maxRank")}
           />
         ) : (
-          <Paper elevation={0} sx={{ p: 4, textAlign: "center" }}>
+          <Paper
+            elevation={0}
+            className="glass-light"
+            sx={{
+              p: 4,
+              textAlign: "center",
+              borderRadius: 4,
+              border: "1px solid rgba(255, 255, 255, 0.45)",
+            }}
+          >
             <Typography variant="h6" color="text.secondary">
               Please complete OTP verification to view results
             </Typography>
@@ -329,8 +420,9 @@ export default function ResultsPage() {
           slotProps={{
             backdrop: {
               sx: {
-                backdropFilter: "blur(6px)",
-                backgroundColor: "rgba(42, 19, 91, 0.4)",
+                backdropFilter: "saturate(120%) blur(12px)",
+                WebkitBackdropFilter: "saturate(120%) blur(12px)",
+                backgroundColor: "rgba(42, 19, 91, 0.35)",
               },
             },
           }}
