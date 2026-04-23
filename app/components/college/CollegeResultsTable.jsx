@@ -43,34 +43,34 @@ import {
 
 const interspersedMessages = [
   {
-    text: "99% of the Engineers will fail the AI revolution! Are you prepared?",
-    href: "https://tinyurl.com/collegepredictor-b6ytvideo",
-    imgurl: "/img/AD01.jpeg",
-  },
-  {
-    text: "VSAT: Your Gateway to Advanced Tech CS[AI] Program with 100% Scholarships!",
-    href: "https://tinyurl.com/collegepredictor-b2-scholar",
-    imgurl: "/img/AD02.jpg",
-  },
-  {
-    text: "Top engineers from Google and Microsoft built this college with AI-first curriculum.",
-    href: "https://tinyurl.com/collegepredictor-b8-techminds",
-    imgurl: "/img/AD06.jpeg",
-  },
-  {
-    text: "B.Tech in CS & AI that lets you build the next WhatsApp, not just study it.",
-    href: "https://tinyurl.com/collegepredictor-b9-wapp",
-    imgurl: "/img/AD03.jpeg",
-  },
-  {
-    text: "No chemistry or Physics! Start coding from day 1!",
-    href: "https://tinyurl.com/collegepredictor-b6nopcm",
-    imgurl: "/img/AD04.jpeg",
-  },
-  {
-    text: "50+ Real Projects. Build apps like Netflix, LinkedIn, Hotstar & more before you graduate.",
+    text: "Most students Learn.Few Build. Vedam Makes you one of the Top 5%",
     href: "https://tinyurl.com/collegepredictor-b10-realproj",
-    imgurl: "/img/AD10.jpg",
+    imgurl: "/img/AD01.webp",
+  },
+  {
+    text: "From students to builders in Year 1. Vedam students are already making 4+ Lakhs.!",
+    href: "https://tinyurl.com/collegepredictor-b2-scholar",
+    imgurl: "/img/AD02.webp",
+  },
+  {
+    text: "Graduate with skills companies pay for. Not just a degree -- a career",
+    href: "https://tinyurl.com/collegepredictor-b2-scholar",
+    imgurl: "/img/AD11.webp",
+  },
+  {
+    text: "8+ students got paid internship in Year 1. You could be Next! ",
+    href: "https://tinyurl.com/collegepredictor-b9-wapp",
+    imgurl: "/img/AD03.webp",
+  },
+  {
+    text: "Get Mentorship from MAANG Experts at top companies!",
+    href: "https://tinyurl.com/collegepredictor-b6nopcm",
+    imgurl: "/img/AD04.webp",
+  },
+  {
+    text: "1000+ Hiring partners. Your skills meets real opportunites",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD10.webp",
   },
   {
     text: "USPs",
@@ -78,46 +78,61 @@ const interspersedMessages = [
     imgurl: "/img/AD08.jpeg",
   },
   {
-    text: "Code over 1,00,000+ lines during your journey here.",
-    href: "https://tinyurl.com/collegepredictor-b1-code",
-    imgurl: "/img/AD05.jpg",
+    text: "Marks don't get you Jobs. Skills do. Start coding from day1 with vedam.",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD09.webp",
   },
   {
-    text: "Prepare for the jobs of 2029 and beyond with an AI-first curriculum.",
+    text: "Pune Gurugram 4 Years CS & AI Program",
     href: "https://tinyurl.com/collegepredictor-b3-jobs2029",
-    imgurl: "/img/AD09.jpg",
+    imgurl: "/img/AD05.webp",
+  },
+  {
+    text: "Don't Just Learn AI. Build a career in it. Start coding from day 1 at vedam.",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD07.webp",
+  },
+  {
+    text: "Level up your career Early. Real worlds projects. Paid internship from 1 Year.",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD06.webp",
+  },
+  {
+    text: "Build your Tech career with Vedam's Premium 4 Year CS and AI Program",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD12.webp",
   },
 ];
 const interspersedMessagesMobile = [
   {
     text: "99% of the Engineers will fail the AI revolution! Are you prepared?",
-    href: "https://tinyurl.com/collegepredictor-b6ytvideo",
-    imgurl: "/img/AD01_Mobile.jpg",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD01_Mobile.webp",
   },
   {
     text: "VSAT: Your Gateway to Advanced Tech CS[AI] Program with 100% Scholarships!",
     href: "https://tinyurl.com/collegepredictor-b2-scholar",
-    imgurl: "/img/AD02_Mobile.jpeg",
+    imgurl: "/img/AD02_Mobile.webp",
   },
   {
-    text: "Top engineers from Google and Microsoft built this college with AI-first curriculum.",
-    href: "https://tinyurl.com/collegepredictor-b8-techminds",
-    imgurl: "/img/AD06_Mobile.jpg",
+    text: "Graduate with skills companies pay for. Not just a degree -- a career",
+    href: "https://tinyurl.com/collegepredictor-b2-scholar",
+    imgurl: "/img/AD11_Mobile.webp",
   },
   {
     text: "B.Tech in CS & AI that lets you build the next WhatsApp, not just study it.",
     href: "https://tinyurl.com/collegepredictor-b9-wapp",
-    imgurl: "/img/AD03_Mobile.jpg",
+    imgurl: "/img/AD03_Mobile.webp",
   },
   {
-    text: "No chemistry or Physics! Start coding from day 1!",
+    text: "Get Mentorship from MAANG Experts at top companies!",
     href: "https://tinyurl.com/collegepredictor-b6nopcm",
-    imgurl: "/img/AD04_Mobile.jpg",
+    imgurl: "/img/AD04_Mobile.webp",
   },
   {
-    text: "50+ Real Projects. Build apps like Netflix, LinkedIn, Hotstar & more before you graduate.",
+    text: "1000+ Hiring partners. Your skills meets real opportunites",
     href: "https://tinyurl.com/collegepredictor-b10-realproj",
-    imgurl: "/img/AD10_Mobile.jpg",
+    imgurl: "/img/AD10_Mobile.webp",
   },
   {
     text: "USPs",
@@ -125,19 +140,34 @@ const interspersedMessagesMobile = [
     imgurl: "/img/AD08_Mobile.jpg",
   },
   {
-    text: "Code over 1,00,000+ lines during your journey here.",
-    href: "https://tinyurl.com/collegepredictor-b1-code",
-    imgurl: "/img/AD05_Mobile.jpeg",
+    text: "Marks don't get you Jobs. Skills do. Start coding from day1 with vedam.",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD09_Mobile.webp",
   },
   {
-    text: "Prepare for the jobs of 2029 and beyond with an AI-first curriculum.",
+    text: "Pune Gurugram 4 Years CS & AI Program",
     href: "https://tinyurl.com/collegepredictor-b3-jobs2029",
-    imgurl: "/img/AD09_Mobile.jpeg",
+    imgurl: "/img/AD05_Mobile.webp",
+  },
+  {
+    text: "Don't Just Learn AI. Build a career in it. Start coding from day 1 at vedam.",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD07_Mobile.webp",
+  },
+  {
+    text: "Level up your career Early. Real worlds projects. Paid internship from 1 Year.",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD06_Mobile.webp",
+  },
+  {
+    text: "Build your Tech career with Vedam's Premium 4 Year CS and AI Program",
+    href: "https://tinyurl.com/collegepredictor-b10-realproj",
+    imgurl: "/img/AD12.webp",
   },
 ];
 
-const adPositioningMob = [0, 4, 8, 12, 16, 20, 24, 28, 32];
-const adPositioning = [0, 2, 4, 6, 8, 10, 12, 14, 16];
+const adPositioningMob = [0, 2, 4, 6, 8, 10, 12, 16, 20, 22, 24, 28];
+const adPositioning = [0, 2, 4, 6, 8, 10, 12, 16, 20, 22, 24, 28];
 
 const glassTableContainerSx = {
   mt: 3,
