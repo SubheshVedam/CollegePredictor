@@ -84,7 +84,7 @@ export default function AnnouncementBanner() {
             component="span"
             sx={{ fontSize: { xs: 11, sm: 16 } }}
           >
-            Secure Your Spot in <strong>B.Tech CS (Al)</strong> | Get Up to{" "}
+            Secure Your Spot in <strong>UG Program in CS [AI]</strong> | Get Up to{" "}
             <strong>100% Scholarships</strong> | <strong>VSAT 2026</strong> exam
             — <strong>{vstDateDisplay}</strong> | Applications closing in
           </Typography>
