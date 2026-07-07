@@ -1,9 +1,9 @@
 import React from 'react'
-import DashBoard from './DashBoard'
+import page from '../page'
 
 const page = () => {
   return (
-    <DashBoard/>
+    <page />
   )
 }
 

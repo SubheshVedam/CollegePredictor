@@ -107,7 +107,7 @@ export default function OtpModal({
       const parseCookies = (cookieString) => {
         const cookies = {};
         if (!cookieString) return cookies;
-        
+
         cookieString.split(';').forEach(cookie => {
           const [name, value] = cookie.trim().split('=');
           if (name && value) {
@@ -118,11 +118,11 @@ export default function OtpModal({
       };
 
       const allCookies = parseCookies(getAllCookies());
-      
+
       // Filter only UTM-related cookies
       const utmCookies = {};
       const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id'];
-      
+
       utmKeys.forEach(key => {
         if (allCookies[key]) {
           utmCookies[key] = allCookies[key];
@@ -156,7 +156,6 @@ export default function OtpModal({
       throw error;
     }
   };
-
   const handleSendOTP = () => {
     // Mark all fields as touched to show errors
     setTouched({
@@ -209,9 +208,25 @@ export default function OtpModal({
 
     window.verifyOtp(
       otp,
-      async () => {
+      async (data) => {
         try {
-          // Save user data to the database
+          const accessToken = data?.message ?? data?.["access-token"];
+
+          if (!accessToken) {
+            throw new Error("No access token returned from OTP widget");
+          }
+
+          const verifyRes = await fetch("/api/verify-otp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token: accessToken }),
+          });
+          const verifyData = await verifyRes.json();
+
+          if (!verifyRes.ok || verifyData.type !== "success") {
+            throw new Error(verifyData.error || "Server-side verification failed");
+          }
+
           await saveUserData();
           await saveUtmData();
           setSuccess("Verification successful!");
@@ -220,8 +235,8 @@ export default function OtpModal({
             setSuccess(null);
             onClose();
           }, 1500);
-        } catch {
-          setError("Verification successful but failed to save user data.");
+        } catch (err) {
+          setError(err.message || "Verification failed. Please try again.");
           setIsLoading(false);
         }
       },
