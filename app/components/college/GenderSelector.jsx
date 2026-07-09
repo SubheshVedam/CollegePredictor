@@ -37,6 +37,7 @@ export default function GenderSelector({ value, onChange }) {
           }}
         >
           <MenuItem value="Gender Neutral">Gender Neutral</MenuItem>
+          <MenuItem value="Gender Neutral">Male</MenuItem>
           <MenuItem value="Female">Female Only</MenuItem>
         </Select>
       </FormControl>

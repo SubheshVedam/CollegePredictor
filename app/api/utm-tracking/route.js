@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import { verifyAdminSession } from "../../../lib/auth/admin";
 
 // Validate phone number (10 digits)
-const isValidPhone = (phone) => /^\d{10}$/.test(phone);
+const isValidPhone = (phone) =>
+  typeof phone === "string" && /^\d{10}$/.test(phone);
 
 export async function POST(req) {
   let body;
@@ -15,6 +16,29 @@ export async function POST(req) {
 
   const { utmParam, isVerified, phone } = body;
 
+  if (typeof utmParam !== "string") {
+    return NextResponse.json(
+      { error: "Invalid UTM parameter" },
+      { status: 400 }
+    );
+  }
+
+  const sanitizedUtm = utmParam.trim().replace(/[\r\n\t]/g, "");
+
+  if (sanitizedUtm.length === 0 || sanitizedUtm.length > 500) {
+    return NextResponse.json(
+      { error: "Invalid UTM parameter" },
+      { status: 400 }
+    );
+  }
+
+  if (typeof isVerified !== "boolean") {
+    return NextResponse.json(
+      { error: "Invalid verification status" },
+      { status: 400 }
+    );
+  }
+
   // Validate phone
   if (!phone || !isValidPhone(phone)) {
     return NextResponse.json({ error: "Invalid phone number" }, { status: 400 });
@@ -24,7 +48,13 @@ export async function POST(req) {
     // Always insert a new entry to attribute multiple campaigns per phone
     const { error: insertError } = await supabase
       .from("utm")
-      .insert([{ utm_param: utmParam, isVerified, phone }]);
+      .insert([
+        {
+          utm_param: sanitizedUtm,
+          isVerified,
+          phone,
+        },
+      ]);
 
     if (insertError) throw insertError;
 
@@ -62,8 +92,10 @@ export async function GET(req) {
     };
 
     data.forEach((item) => {
-      const campaignMatch = item.utm_param.match(/utm_campaign=([^;]+)/);
-      const mediumMatch = item.utm_param.match(/utm_medium=([^;]+)/);
+      const utm = item.utm_param || "";
+
+      const campaignMatch = utm.match(/utm_campaign=([^;]+)/);
+      const mediumMatch = utm.match(/utm_medium=([^;]+)/);
 
       const campaign = campaignMatch ? campaignMatch[1] : "unknown";
       const medium = mediumMatch ? mediumMatch[1] : "unknown";
