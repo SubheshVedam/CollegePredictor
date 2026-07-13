@@ -1,10 +1,9 @@
-// app/api/verify-otp/route.js
 import { NextResponse } from 'next/server';
-
+import { createOtpSession } from "@/lib/auth/otp";
 export async function POST(request) {
   try {
     const { token } = await request.json();
-    
+
     const response = await fetch('https://control.msg91.com/api/v5/widget/verifyAccessToken', {
       method: 'POST',
       headers: {
@@ -18,13 +17,35 @@ export async function POST(request) {
     });
 
     const data = await response.json();
-    
+
     if (!response.ok) {
+      console.error(data);
+
       return NextResponse.json(
-        { error: data.message || 'OTP verification failed' }, 
-        { status: response.status }
+        {
+          error: "OTP verification failed",
+        },
+        {
+          status: response.status,
+        }
       );
     }
+
+    const jwt = await createOtpSession(data.mobile || "verified");
+
+    const res = NextResponse.json({
+      success: true,
+    });
+
+    res.cookies.set("otp_token", jwt, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24,
+    });
+
+    return res;
 
     return NextResponse.json(data);
   } catch (error) {

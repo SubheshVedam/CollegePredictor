@@ -1,12 +1,42 @@
-import { supabase } from '../../../lib/db';
+import { supabaseAdmin } from '../../../lib/db';
+import { verifyOtpSession } from "../../../lib/auth/otp";
+import {
+  ALLOWED_GENDERS,
+  ALLOWED_CATEGORIES,
+} from "../../../lib/validation";
+
 
 export async function GET(req) {
+  const session = await verifyOtpSession();
+
+  if (!session) {
+    return new Response(
+      JSON.stringify({ error: "Unauthorized" }),
+      { status: 401 }
+    );
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const rank = parseInt(searchParams.get("rank"));
     const gender = searchParams.get("gender");
     const category = searchParams.get("category");
     const stateId = parseInt(searchParams.get("stateId"));
+
+
+    if (!ALLOWED_GENDERS.includes(gender)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid gender" }),
+        { status: 400 }
+      );
+    }
+
+    if (!ALLOWED_CATEGORIES.includes(category)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid category" }),
+        { status: 400 }
+      );
+    }
 
     if (isNaN(rank) || isNaN(stateId) || !gender || !category) {
       return new Response(
@@ -16,7 +46,7 @@ export async function GET(req) {
     }
 
     // Fetch all matching rows from `institute_cutoffs` joined with `institutes`
-    const { data: cutoffs, error } = await supabase
+    const { data: cutoffs, error } = await supabaseAdmin
       .from('institute_cutoffs')
       .select(`
         opening_rank,
@@ -39,8 +69,10 @@ export async function GET(req) {
 
     if (error) throw error;
 
+    const rows = cutoffs ?? [];
+
     // Filter and sort the results manually (since Supabase SQL JOINs have limits)
-    const filtered = cutoffs.filter(ic => {
+    const filtered = rows.filter(ic => {
       const instituteState = ic.institutes?.state_id;
       const isHS = instituteState === stateId && ic.sub_category === 'HS';
       const isOS = instituteState !== stateId && ic.sub_category === 'OS';

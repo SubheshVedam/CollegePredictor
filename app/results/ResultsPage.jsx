@@ -121,9 +121,27 @@ export default function ResultsPage() {
         widgetId: process.env.NEXT_PUBLIC_MSG91_WIDGET_ID,
         tokenAuth: process.env.NEXT_PUBLIC_MSG91_AUTH_KEY,
         exposeMethods: true,
-        success: () => {
-          localStorage.setItem("isVerified", "true");
-          handleOtpVerificationSuccess();
+        success: async (data) => {
+          try {
+            const response = await fetch("/api/verify-otp", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                token: data.token,
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error();
+            }
+
+            handleOtpVerificationSuccess();
+
+          } catch {
+            dispatch(setError("OTP verification failed."));
+          }
         },
         failure: () => {
           dispatch(setError("OTP verification failed. Please try again."));
@@ -154,14 +172,23 @@ export default function ResultsPage() {
     const stateId = searchParams.get("stateId");
 
     if (rank && gender && category && stream && stateId) {
-      const verified = localStorage.getItem("isVerified") === "true";
-      dispatch(setIsVerified(verified));
-
-      if (!verified) {
-        dispatch(setShowOtpModal(true));
-      } else {
-        dispatch(fetchCollegeResults({ rank, gender, category, stream, stateId }));
-      }
+      dispatch(
+        fetchCollegeResults({
+          rank,
+          gender,
+          category,
+          stream,
+          stateId,
+        })
+      )
+        .unwrap()
+        .catch((err) => {
+          if (err === "OTP_REQUIRED") {
+            dispatch(setShowOtpModal(true));
+          } else {
+            dispatch(setError(err));
+          }
+        });
     }
   }, [searchParams, dispatch]);
 
@@ -329,7 +356,7 @@ export default function ResultsPage() {
               minWidth: "30%",
               flexDirection: { xs: "row", sm: "column" },
               py: 1,
-              px:2,
+              px: 2,
               borderRadius: "20px 20px 20px 20px",
             }}
           >

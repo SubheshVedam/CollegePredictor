@@ -56,7 +56,7 @@ const barPercentagePlugin = {
   afterDatasetsDraw(chart) {
     const { ctx, data } = chart;
     const total = data.datasets[0].data.reduce((a, b) => a + b, 0);
-    
+
     ctx.font = '12px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
@@ -76,7 +76,7 @@ const piePercentagePlugin = {
   afterDatasetsDraw(chart) {
     const { ctx, data } = chart;
     const total = data.datasets[0].data.reduce((a, b) => a + b, 0);
-    
+
     ctx.font = 'bold 12px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -91,62 +91,23 @@ const piePercentagePlugin = {
 };
 
 const DashBoard = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [utmData, setUtmData] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      fetchUTMData();
-    }
-  }, [isAuthenticated]);
+    fetchUTMData();
+  }, []);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-
-    if (
-      username === process.env.NEXT_PUBLIC_AUTH_USERNAME &&
-      password === process.env.NEXT_PUBLIC_AUTH_PASSWORD
-    ) {
-      setIsAuthenticated(true);
-    } else {
-      setError('Invalid credentials');
-      setLoading(false);
-    }
-  };
-
-  const fetchUTMData = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/utm-tracking');
-      const { data } = await response.json();
-      if (data) {
-        setUtmData(data);
-      } else {
-        setError('Failed to fetch UTM data');
-      }
-    } catch (err) {
-      setError('API Error: ' + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const prepareChartData = (data) => {
     const labels = Object.keys(data || {});
     const values = Object.values(data || {});
     const total = values.reduce((sum, value) => sum + value, 0);
-    
+
     return {
       labels,
       datasets: [{
@@ -208,59 +169,31 @@ const DashBoard = () => {
     }
   };
 
-  if (!isAuthenticated) {
-    return (
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <Container component="main" maxWidth="xs">
-          <Box
-            sx={{
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Paper elevation={3} sx={{ p: 4, width: '100%' }}>
-              <Typography component="h1" variant="h5" align="center" gutterBottom>
-                UTM Analytics Login
-              </Typography>
-              {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-              <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  autoFocus
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  disabled={loading}
-                >
-                  {loading ? <LiquidGlassLoader size={24} /> : 'Sign In'}
-                </Button>
-              </Box>
-            </Paper>
-          </Box>
-        </Container>
-      </ThemeProvider>
-    );
-  }
+
+  const fetchUTMData = async () => {
+    try {
+      setLoading(true);
+
+      const response = await fetch('/api/utm-tracking');
+
+      if (response.status === 401) {
+        window.location.href = '/admin/login';
+        return;
+      }
+
+      const { data } = await response.json();
+
+      if (data) {
+        setUtmData(data);
+      } else {
+        setError('Failed to fetch UTM data');
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <ThemeProvider theme={darkTheme}>

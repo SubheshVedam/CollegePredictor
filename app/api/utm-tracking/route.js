@@ -1,86 +1,122 @@
-import { supabase } from "../../../lib/db";
+import { supabaseAdmin } from "../../../lib/db";
 import { NextResponse } from "next/server";
+import { verifyAdminSession } from "../../../lib/auth/admin";
 
 // Validate phone number (10 digits)
-const isValidPhone = (phone) => /^\d{10}$/.test(phone);
+const isValidPhone = (phone) =>
+  typeof phone === "string" && /^\d{10}$/.test(phone);
 
 export async function POST(req) {
-    let body;
-    try {
-      body = await req.json();
-    } catch {
-      return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
-    }
-
-    const { utmParam, isVerified, phone } = body;
-
-    // Validate phone
-    if (!phone || !isValidPhone(phone)) {
-      return NextResponse.json({ error: "Invalid phone number" }, { status: 400 });
-    }
-  
-    try {
-      // Always insert a new entry to attribute multiple campaigns per phone
-      const { error: insertError } = await supabase
-        .from("utm")
-        .insert([{ utm_param: utmParam, isVerified, phone }]);
-  
-      if (insertError) throw insertError;
-  
-      return NextResponse.json({ success: true });
-    } catch (error) {
-      console.error("Error in utm-tracking endpoint:", error?.message);
-      return NextResponse.json(
-        { error: "Failed to process request" },
-        { status: 500 }
-      );
-    }
+  let body;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
-  
+
+  const { utmParam, isVerified, phone } = body;
+
+  if (typeof utmParam !== "string") {
+    return NextResponse.json(
+      { error: "Invalid UTM parameter" },
+      { status: 400 }
+    );
+  }
+
+  const sanitizedUtm = utmParam.trim().replace(/[\r\n\t]/g, "");
+
+  if (sanitizedUtm.length === 0 || sanitizedUtm.length > 500) {
+    return NextResponse.json(
+      { error: "Invalid UTM parameter" },
+      { status: 400 }
+    );
+  }
+
+  if (typeof isVerified !== "boolean") {
+    return NextResponse.json(
+      { error: "Invalid verification status" },
+      { status: 400 }
+    );
+  }
+
+  // Validate phone
+  if (!phone || !isValidPhone(phone)) {
+    return NextResponse.json({ error: "Invalid phone number" }, { status: 400 });
+  }
+
+  try {
+    // Always insert a new entry to attribute multiple campaigns per phone
+    const { error: insertError } = await supabaseAdmin
+      .from("utm")
+      .insert([
+        {
+          utm_param: sanitizedUtm,
+          isVerified,
+          phone,
+        },
+      ]);
+
+    if (insertError) throw insertError;
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error in utm-tracking endpoint:", error?.message);
+    return NextResponse.json(
+      { error: "Failed to process request" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function GET(req) {
-    try {
-      const { data, error } = await supabase
-        .from("utm")
-        .select("utm_param, created_at")
-        .order("created_at", { ascending: false });
-  
-      if (error) throw error;
-  
-      const groupedData = {
-        byCampaign: {},
-        byMedium: {}
-      };
-  
-      data.forEach(item => {
-        const campaignMatch = item.utm_param.match(/utm_campaign=([^;]+)/);
-        const mediumMatch = item.utm_param.match(/utm_medium=([^;]+)/);
-        
-        const campaign = campaignMatch ? campaignMatch[1] : 'unknown';
-        const medium = mediumMatch ? mediumMatch[1] : 'unknown';
-  
-        // Count by Campaign
-        if (!groupedData.byCampaign[campaign]) {
-          groupedData.byCampaign[campaign] = 0;
-        }
-        groupedData.byCampaign[campaign]++;
-  
-        // Count by Medium
-        if (!groupedData.byMedium[medium]) {
-          groupedData.byMedium[medium] = 0;
-        }
-        groupedData.byMedium[medium]++;
-      });
-  
-      return NextResponse.json({ 
-        success: true,
-        data: groupedData
-      });
-      
-    } catch (error) {
-      console.error("Error fetching UTM data:", error?.message);
-      return NextResponse.json(
-        { error: "Failed to fetch UTM data" },
-        { status: 500 }
-      );
-    }
+  const admin = await verifyAdminSession();
+
+  if (!admin) {
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401 }
+    );
   }
+
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("utm")
+      .select("utm_param, created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    const groupedData = {
+      byCampaign: {},
+      byMedium: {},
+    };
+
+    data.forEach((item) => {
+      const utm = item.utm_param || "";
+
+      const campaignMatch = utm.match(/utm_campaign=([^;]+)/);
+      const mediumMatch = utm.match(/utm_medium=([^;]+)/);
+
+      const campaign = campaignMatch ? campaignMatch[1] : "unknown";
+      const medium = mediumMatch ? mediumMatch[1] : "unknown";
+
+      groupedData.byCampaign[campaign] =
+        (groupedData.byCampaign[campaign] || 0) + 1;
+
+      groupedData.byMedium[medium] =
+        (groupedData.byMedium[medium] || 0) + 1;
+    });
+
+    return NextResponse.json({
+      success: true,
+      data: groupedData,
+    });
+  } catch (error) {
+    console.error("Error fetching UTM data:", error?.message);
+
+    return NextResponse.json(
+      { error: "Failed to fetch UTM data" },
+      { status: 500 }
+    );
+  }
+}

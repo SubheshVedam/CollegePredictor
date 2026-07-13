@@ -1,10 +1,10 @@
 import React from 'react'
-import DashBoard from './DashBoard'
+import Adminpage from '../page'
 
 const page = () => {
   return (
-    <DashBoard/>
+    <Adminpage />
   )
 }
 
-export default page
+export default page;

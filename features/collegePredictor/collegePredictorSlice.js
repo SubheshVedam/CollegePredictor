@@ -7,11 +7,17 @@ export const fetchCollegeResults = createAsyncThunk(
     try {
       const params = new URLSearchParams(searchParams);
       const response = await fetch(`/api/colleges?${params.toString()}`);
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch results');
+
+      if (response.status === 401) {
+        return rejectWithValue("OTP_REQUIRED");
       }
-      
+
+      if (!response.ok) {
+        return rejectWithValue("Failed to fetch results");
+      }
+
+      return await response.json();
+
       return await response.json();
     } catch (error) {
       return rejectWithValue(error.message);
@@ -31,11 +37,11 @@ export const fetchProgramDetails = createAsyncThunk(
       });
 
       const response = await fetch(`/api/program-details?${params.toString()}`);
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch program details');
       }
-      
+
       return await response.json();
     } catch (error) {
       return rejectWithValue(error.message);
@@ -136,7 +142,7 @@ const collegePredictorSlice = createSlice({
     },
     setProgramDetailsModalOpen: (state, action) => {
       state.programDetailsModalOpen = action.payload;
-    },  
+    },
     clearProgramDetails: (state) => {
       state.programDetails = null;
       state.programDetailsError = null;
@@ -152,6 +158,7 @@ const collegePredictorSlice = createSlice({
       .addCase(fetchCollegeResults.fulfilled, (state, action) => {
         state.isLoading = false;
         state.results = action.payload;
+        state.isVerified = true;
       })
       .addCase(fetchCollegeResults.rejected, (state, action) => {
         state.isLoading = false;

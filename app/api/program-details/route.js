@@ -1,6 +1,22 @@
-import { supabase } from '../../../lib/db';
+import { supabaseAdmin } from '../../../lib/db';
+import { verifyOtpSession } from "../../../lib/auth/otp";
+
 
 export async function GET(req) {
+
+  const session = await verifyOtpSession();
+
+  if (!session) {
+    return new Response(
+      JSON.stringify({
+        error: "Unauthorized"
+      }),
+      {
+        status: 401
+      }
+    );
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const instituteId = searchParams.get("institute_id");
@@ -15,7 +31,27 @@ export async function GET(req) {
       });
     }
 
-    const { data, error } = await supabase
+    if (Number.isInteger(instituteId) || instituteId <= 0) {
+      return new Response(
+        JSON.stringify({ error: "Invalid institute id" }),
+        { status: 400 }
+      );
+    }
+
+    if (
+      typeof programName !== "string" ||
+      programName.trim().length === 0 ||
+      programName.length > 150
+    ) {
+      return new Response(
+        JSON.stringify({ error: "Invalid program name" }),
+        { status: 400 }
+      );
+    }
+
+    const sanitizedProgramName = programName.trim();
+
+    const { data, error } = await supabaseAdmin
       .from("institute_cutoffs")
       .select(`
         round,
@@ -26,7 +62,7 @@ export async function GET(req) {
         sub_category
       `)
       .eq("institute_id", instituteId)
-      .eq("program_name", programName)
+      .eq("program_name", sanitizedProgramName)
       .eq("gender", gender)
       .eq("category", category)
       .eq("sub_category", sub_category)
