@@ -1,10 +1,10 @@
 import React from 'react'
-import page from '../page'
+import Adminpage from '../page'
 
 const page = () => {
   return (
-    <page />
+    <Adminpage />
   )
 }
 
-export default page
+export default page;
