@@ -1,4 +1,4 @@
-import { supabase } from "../../../lib/db";
+import { supabaseAdmin } from "../../../lib/db";
 import { NextResponse } from "next/server";
 
 // Sanitize string input
@@ -40,7 +40,7 @@ export async function POST(req) {
 
   try {
     // First check if phone number already exists
-    const { data: existingUser, error: lookupError } = await supabase
+    const { data: existingUser, error: lookupError } = await supabaseAdmin
       .from("verified_users")
       .select("phone_number")
       .eq("phone_number", phone)
@@ -53,7 +53,7 @@ export async function POST(req) {
 
     // If user doesn't exist, insert them
     if (!existingUser) {
-      const { error: insertError } = await supabase
+      const { error: insertError } = await supabaseAdmin
         .from("verified_users")
         .insert([
           { phone_number: phone, name, email, twelfth_passing_year: year, stream },

@@ -1,4 +1,4 @@
-import { supabase } from "../../../lib/db";
+import { supabaseAdmin } from "../../../lib/db";
 import { NextResponse } from "next/server";
 import { verifyAdminSession } from "../../../lib/auth/admin";
 
@@ -46,7 +46,7 @@ export async function POST(req) {
 
   try {
     // Always insert a new entry to attribute multiple campaigns per phone
-    const { error: insertError } = await supabase
+    const { error: insertError } = await supabaseAdmin
       .from("utm")
       .insert([
         {
@@ -79,7 +79,7 @@ export async function GET(req) {
   }
 
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("utm")
       .select("utm_param, created_at")
       .order("created_at", { ascending: false });

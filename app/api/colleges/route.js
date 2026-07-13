@@ -1,4 +1,4 @@
-import { supabase } from '../../../lib/db';
+import { supabaseAdmin } from '../../../lib/db';
 import { verifyOtpSession } from "../../../lib/auth/otp";
 import {
   ALLOWED_GENDERS,
@@ -46,7 +46,7 @@ export async function GET(req) {
     }
 
     // Fetch all matching rows from `institute_cutoffs` joined with `institutes`
-    const { data: cutoffs, error } = await supabase
+    const { data: cutoffs, error } = await supabaseAdmin
       .from('institute_cutoffs')
       .select(`
         opening_rank,

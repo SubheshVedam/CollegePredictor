@@ -1,4 +1,4 @@
-import { supabase } from '../../../lib/db';
+import { supabaseAdmin } from '../../../lib/db';
 import { verifyOtpSession } from "../../../lib/auth/otp";
 
 
@@ -51,7 +51,7 @@ export async function GET(req) {
 
     const sanitizedProgramName = programName.trim();
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("institute_cutoffs")
       .select(`
         round,
